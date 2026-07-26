@@ -938,16 +938,15 @@
         <div class="screen-top">📱 微信扫一扫</div>
         <div class="screen-body" style="text-align:center;">
           <div style="font-size:13px;color:#555;margin-bottom:10px;">长按识别或扫下方二维码<br>添加微信后，把两串密钥粘贴发送</div>
-          <!-- 微信二维码区域 -->
+          <!-- 微信二维码 - 替换为你的真实二维码图片 -->
           <div
-            style="width:140px;height:140px;background:#f0f4ff;border:2px solid #d0d8f0;border-radius:12px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
-            <div
-              style="width:44px;height:44px;background:#1677ff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
-              微</div>
-            <div style="font-size:12px;font-weight:700;color:#333;">老板（本人回复）</div>
-            <div style="font-size:9px;color:#999;">扫二维码，添加我为朋友。</div>
+            style="width:180px;height:180px;margin:0 auto;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1);">
+            <img src="wechat-qr.png" alt="微信二维码 - 老板（本人回复）"
+              style="width:100%;height:100%;object-fit:contain;display:block;"
+              onerror="this.parentElement.innerHTML='<div style=width:180px;height:180px;background:#f0f4ff;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;font-size:13px;color:#999;text-align:center;>📷<br>微信二维码<br>wechat-qr.png</div>'">
           </div>
-          <div style="font-size:11px;color:#999;margin-top:6px;">👆 此处替换为你的真实微信二维码</div>
+          <div style="font-size:12px;font-weight:700;color:#333;margin-top:6px;">老板（本人回复）</div>
+          <div style="font-size:11px;color:#999;">扫二维码，添加我为朋友。</div>
           <div
             style="background:#e8f5e9;border-radius:8px;padding:10px;margin-top:10px;font-size:12px;color:#2e7d32;text-align:left;line-height:1.6;">
             发过来大概长这样：<br>
@@ -973,9 +972,9 @@
   <!-- 返回顶部 -->
   <div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 
-<!-- QR Code 生成库 - bootcdn国内CDN + jsdelivr备用 -->
-<script>window._qrCDN=0;</script>
-<script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="window._qrCDN=1" onerror="
+  <!-- QR Code 生成库 - bootcdn国内CDN + jsdelivr备用 -->
+  <script>window._qrCDN = 0;</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="window._qrCDN=1" onerror="
 var s=document.createElement('script');
 s.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';
 s.onload=function(){window._qrCDN=2};
