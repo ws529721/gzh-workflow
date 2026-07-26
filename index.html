@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,7 +18,10 @@
       --border: #e5e7eb;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -25,11 +29,13 @@
       color: var(--text);
       line-height: 1.7;
     }
+
     .container {
       max-width: 780px;
       margin: 0 auto;
       padding: 24px 16px 40px;
     }
+
     .hero {
       background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       color: white;
@@ -38,22 +44,25 @@
       box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
       text-align: center;
     }
+
     .hero h1 {
       margin: 0 0 10px;
       font-size: 24px;
       line-height: 1.35;
     }
+
     .hero p {
       margin: 0;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 15px;
     }
+
     .chip {
       display: inline-block;
       margin-top: 12px;
       padding: 7px 12px;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 999px;
       font-size: 12px;
       letter-spacing: 1px;
@@ -66,8 +75,9 @@
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 18px;
-      box-shadow: 0 8px 22px rgba(15,23,42,0.05);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
     }
+
     .card-title {
       display: flex;
       align-items: center;
@@ -76,9 +86,11 @@
       font-weight: 800;
       margin-bottom: 8px;
     }
+
     .card-title .icon {
       font-size: 22px;
     }
+
     .card p {
       color: var(--muted);
       margin: 0 0 12px;
@@ -89,6 +101,7 @@
       display: grid;
       gap: 12px;
     }
+
     .btn {
       display: flex;
       align-items: center;
@@ -103,14 +116,27 @@
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
     }
-    .btn-blue { background: linear-gradient(135deg, var(--blue), var(--blue-deep)); }
-    .btn-orange { background: linear-gradient(135deg, var(--orange), #e04d16); }
-    .btn-green { background: linear-gradient(135deg, var(--green), #059669); }
-    .btn-purple { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+
+    .btn-blue {
+      background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    }
+
+    .btn-orange {
+      background: linear-gradient(135deg, var(--orange), #e04d16);
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, var(--green), #059669);
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+    }
 
     .btn .right {
       font-size: 20px;
@@ -136,16 +162,25 @@
     }
 
     @media (max-width: 600px) {
-      .container { padding: 16px 12px 30px; }
-      .hero { padding: 24px 16px; }
-      .hero h1 { font-size: 22px; }
+      .container {
+        padding: 16px 12px 30px;
+      }
+
+      .hero {
+        padding: 24px 16px;
+      }
+
+      .hero h1 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="hero">
-      <h1>文员专属入口<br/>这里不会再直接跳到某个旧页面</h1>
+      <h1>文员专属入口<br />这里不会再直接跳到某个旧页面</h1>
       <p>你可以先选要看哪一页：项目介绍、操作指引，还是文员手册。</p>
       <div class="chip">专为文员/客户对接使用</div>
     </div>
@@ -160,10 +195,6 @@
         </a>
         <a class="btn btn-orange" href="扫码工作流_一步步操作指引.html" target="_blank">
           <span>公众号操作指引</span>
-          <span class="right">›</span>
-        </a>
-        <a class="btn btn-green" href="项目详细操作指引.html" target="_blank">
-          <span>扫码/注册操作细节</span>
           <span class="right">›</span>
         </a>
         <a class="btn btn-purple" href="文员手册.html" target="_blank">
@@ -182,4 +213,5 @@
     <div class="footer">这个页面已改成独立入口，后续可继续在这里加新的跳转内容。</div>
   </div>
 </body>
+
 </html>
