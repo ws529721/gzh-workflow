@@ -290,6 +290,57 @@
       margin-top: 2px;
     }
 
+    /* 长按识别提示 */
+    .long-press-tip {
+      margin: 0 18px 12px;
+      padding: 10px 14px;
+      background: #e8f5e9;
+      border: 1px solid #c8e6c9;
+      border-radius: 10px;
+      font-size: 12px;
+      color: #2e7d32;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .long-press-tip strong {
+      color: #1b5e20;
+    }
+
+    /* 文字链接替代 */
+    .text-link-fallback {
+      text-align: center;
+      padding: 0 18px 8px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .text-link-fallback a {
+      display: inline-block;
+      color: #1677ff;
+      font-weight: 600;
+      text-decoration: underline;
+      padding: 4px 8px;
+      margin: 0 4px;
+    }
+
+    /* 返回首页按钮 */
+    .back-home-btn {
+      display: block;
+      width: calc(100% - 36px);
+      margin: 0 18px 20px;
+      padding: 14px;
+      background: linear-gradient(135deg, #1677ff, #0f5ed8);
+      color: #fff;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 14px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 20px rgba(22, 119, 255, 0.25);
+    }
+
     /* 图片占位 */
     .img-placeholder {
       background: #f5f5f5;
@@ -444,6 +495,12 @@
       <h1>📱 公众号注册 · 扫码操作</h1>
       <p>每一步扫一个码 → 看图操作 → 再扫下一个码</p>
       <div class="mode-toggle" id="modeToggle" style="display:none;"></div>
+    </div>
+
+    <!-- 手机端扫码提示 -->
+    <div class="long-press-tip">
+      💡 <strong>手机端操作提示：</strong>同一个手机上没法「截图再扫码」。请<strong>长按二维码图片 →
+        点「识别图中二维码」</strong>，即可跳转下一步。每步下方也提供了<strong>文字链接</strong>作为备用。
     </div>
 
     <!-- ========== 进度条 ========== -->
@@ -957,7 +1014,11 @@
       </div>
       <div class="done-check">🎉</div>
       <div style="text-align:center;padding:0 18px 16px;font-size:14px;font-weight:700;color:#2e7d32;">
-        发完密钥就完成了！<br>我们5分钟配置好，明天文章就出现在你的草稿箱！
+        发完密钥就完成了！<br>我们会尽快完成配置，明天文章就出现在你的草稿箱！
+      </div>
+      <a class="back-home-btn" href="index.html">🏠 注册完成 · 返回首页</a>
+      <div style="text-align:center;padding:0 18px 8px;font-size:11px;color:#bbb;">
+        首页可查看项目介绍、操作指引等全部内容
       </div>
     </div>
 
@@ -980,17 +1041,27 @@
         var boxes = document.querySelectorAll('.qr-box-sm');
         boxes.forEach(function (box, i) {
           if (box.querySelector('img')) return;
-          var url = BASE + '#step' + (i + 1);
+          var stepNum = i + 1;
+          var url = BASE + '#step' + stepNum;
           var img = document.createElement('img');
           img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=88x88&data=' + encodeURIComponent(url);
           img.width = 88; img.height = 88;
           img.style.display = 'block';
-          img.alt = 'QR-' + (i + 1);
+          img.alt = 'QR-' + stepNum;
           img.onerror = function () {
-            box.innerHTML = '<div style="font-size:9px;color:#999;text-align:center;padding:4px;">扫码→步骤' + (i + 1) + '</div>';
+            box.innerHTML = '<div style="font-size:9px;color:#999;text-align:center;padding:4px;">扫码→步骤' + stepNum + '</div>';
           };
           box.innerHTML = '';
           box.appendChild(img);
+
+          // 在 QR 区域后面添加文字链接备用
+          var qrArea = box.closest('.qr-area');
+          if (qrArea && !qrArea.nextElementSibling?.classList?.contains('text-link-fallback')) {
+            var fallback = document.createElement('div');
+            fallback.className = 'text-link-fallback';
+            fallback.innerHTML = '📋 扫不了码？<a href="' + url + '">点这里直接进入第' + stepNum + '步</a>';
+            qrArea.parentNode.insertBefore(fallback, qrArea.nextSibling);
+          }
         });
       }
       if (document.readyState === 'loading') {
