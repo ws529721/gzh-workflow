@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>文员专属入口 · 选择你要看的内容</title>
+  <title>公众号合作 · 内容支持计划</title>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -143,6 +143,69 @@
       opacity: 0.95;
     }
 
+    /* 前置条件 */
+    .req-card {
+      margin-top: 16px;
+      background: #fffdf0;
+      border: 2px solid #ffc107;
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 16px rgba(255, 193, 7, 0.15);
+    }
+
+    .req-card .req-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #e65100;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .req-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .req-item {
+      flex: 1 1 auto;
+      min-width: 100px;
+      background: #fff;
+      border: 1px solid #ffe0b0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #e65100;
+    }
+
+    .req-item .req-icon {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* 文员小入口 */
+    .clerk-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #b0b8c1;
+    }
+
+    .clerk-link a {
+      color: #b0b8c1;
+      text-decoration: none;
+    }
+
+    .clerk-link a:hover {
+      color: #7a869a;
+      text-decoration: underline;
+    }
+
     .meta {
       margin-top: 10px;
       padding: 10px 12px;
@@ -180,25 +243,37 @@
 <body>
   <div class="container">
     <div class="hero">
-      <h1>文员专属入口<br />这里不会再直接跳到某个旧页面</h1>
-      <p>你可以先选要看哪一页：项目介绍、操作指引，还是文员手册。</p>
-      <div class="chip">专为文员/客户对接使用</div>
+      <h1>公众号内容合作</h1>
+      <p>你提供账号 · 我们提供内容 · 合作共赢</p>
+      <div class="chip">简单 · 透明 · 可控</div>
+    </div>
+
+    <!-- 前置硬性条件 -->
+    <div class="req-card">
+      <div class="req-title"><span>⚠️</span> 合作前请确认以下条件：</div>
+      <div class="req-grid">
+        <div class="req-item">
+          <span class="req-icon">🪪</span>微信实名认证
+        </div>
+        <div class="req-item">
+          <span class="req-icon">🎂</span>本人满18周岁
+        </div>
+        <div class="req-item">
+          <span class="req-icon">💳</span>已绑定本人银行卡
+        </div>
+      </div>
     </div>
 
     <div class="card">
-      <div class="card-title"><span class="icon">📌</span> 先看什么</div>
-      <p>进入这个入口后，系统会直接显示这里的选择页，不会再被某个旧链接强制跳转。</p>
+      <div class="card-title"><span class="icon">📌</span> 请选择你要看的内容</div>
+      <p>先了解合作方式，再按指引操作。每一步都清晰明了。</p>
       <div class="btn-grid">
         <a class="btn btn-blue" href="项目介绍.html" target="_blank">
-          <span>项目介绍</span>
+          <span>📖 项目介绍</span>
           <span class="right">›</span>
         </a>
         <a class="btn btn-orange" href="扫码工作流_一步步操作指引.html" target="_blank">
-          <span>公众号操作指引</span>
-          <span class="right">›</span>
-        </a>
-        <a class="btn btn-purple" href="文员手册.html" target="_blank">
-          <span>文员手册</span>
+          <span>📋 公众号操作指引</span>
           <span class="right">›</span>
         </a>
       </div>
@@ -206,11 +281,16 @@
 
     <div class="card">
       <div class="card-title"><span class="icon">🔗</span> 推荐发给客户的入口</div>
-      <p>如果你想把这个入口发给客户，建议直接使用下面这个地址：</p>
+      <p>把下面这个地址发给客户，对方打开就能看到所有内容：</p>
       <div class="meta">https://ws529721.github.io/gzh-workflow/</div>
     </div>
 
-    <div class="footer">这个页面已改成独立入口，后续可继续在这里加新的跳转内容。</div>
+    <!-- 文员入口缩小 -->
+    <div class="clerk-link">
+      文员招募（名额有限）→ <a href="文员手册.html" target="_blank">点击查看</a>
+    </div>
+
+    <div class="footer">持续更新中 · 合作咨询请加微信</div>
   </div>
 </body>
 
