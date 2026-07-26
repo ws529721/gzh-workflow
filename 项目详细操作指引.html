@@ -1,1069 +1,1369 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>公众号合作操作指引 · 小白也能看懂</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
-    background: #f6f6f6;
-    color: #333;
-    line-height: 1.8;
-    font-size: 16px;
-    -webkit-text-size-adjust: 100%;
-  }
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    background: #fff;
-    box-shadow: 0 0 20px rgba(0,0,0,0.05);
-    min-height: 100vh;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>公众号合作操作指引 · 小白也能看懂</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* ===== Hero ===== */
-  .hero {
-    background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #0d1b2a 100%);
-    padding: 44px 24px 38px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: ''; position: absolute;
-    top: -60px; right: -40px;
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(0,200,255,0.08) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 5px 16px;
-    font-size: 12px;
-    color: #8ef;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
-    position: relative; z-index: 1;
-  }
-  .hero h1 {
-    font-size: 26px; font-weight: 800; color: #fff;
-    margin-bottom: 10px; letter-spacing: 1px;
-    position: relative; z-index: 1; line-height: 1.4;
-  }
-  .hero h1 .hl {
-    background: linear-gradient(90deg, #00d4aa, #00aaff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .hero-subtitle {
-    font-size: 14px; color: rgba(255,255,255,0.6);
-    position: relative; z-index: 1;
-  }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      background: #f6f6f6;
+      color: #333;
+      line-height: 1.8;
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
 
-  /* ===== 通用 Section ===== */
-  .section { padding: 28px 20px; }
-  .section-title {
-    text-align: center; font-size: 20px; font-weight: 800;
-    margin-bottom: 4px; color: #1a1a2e;
-  }
-  .section-sub {
-    text-align: center; font-size: 12px; color: #999; margin-bottom: 18px;
-  }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      min-height: 100vh;
+    }
 
-  /* ===== 角色标签 ===== */
-  .role-tag {
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-  }
-  .role-client { background: #e8f5e9; color: #2e7d32; }
-  .role-server { background: #e3f2fd; color: #1565c0; }
+    /* ===== Hero ===== */
+    .hero {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #0d1b2a 100%);
+      padding: 44px 24px 38px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-  /* ===== 手机模拟框 ===== */
-  .phone-frame {
-    background: #1a1a2e;
-    border-radius: 24px;
-    padding: 12px;
-    margin: 16px auto;
-    max-width: 280px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-    position: relative;
-  }
-  .phone-notch {
-    width: 80px; height: 6px;
-    background: #333;
-    border-radius: 3px;
-    margin: 0 auto 10px;
-  }
-  .phone-screen {
-    background: #fff;
-    border-radius: 14px;
-    overflow: hidden;
-    min-height: 200px;
-  }
-  .phone-statusbar {
-    background: #f8f8f8;
-    padding: 6px 12px;
-    font-size: 10px;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #eee;
-  }
-  .phone-content {
-    padding: 14px 12px;
-    text-align: center;
-  }
-  .phone-content .app-icon {
-    font-size: 40px;
-    display: block;
-    margin-bottom: 6px;
-  }
-  .phone-content .app-name {
-    font-size: 13px; font-weight: 700; color: #333; margin-bottom: 2px;
-  }
-  .phone-content .app-desc {
-    font-size: 11px; color: #999; margin-bottom: 10px;
-  }
-  .phone-btn {
-    display: inline-block;
-    background: #07c160;
-    color: #fff;
-    font-size: 13px;
-    padding: 8px 24px;
-    border-radius: 20px;
-    font-weight: 600;
-  }
-  .phone-btn.blue { background: #1677ff; }
-  .phone-btn.orange { background: #ff6b35; }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -40px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(0, 200, 255, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
 
-  /* 截图模拟区 */
-  .screenshot-box {
-    background: #f5f5f5;
-    border: 2px dashed #ddd;
-    border-radius: 12px;
-    padding: 16px 12px;
-    margin: 10px 0;
-    text-align: center;
-    position: relative;
-  }
-  .screenshot-box .screen-title {
-    font-size: 12px; color: #999; margin-bottom: 6px;
-    letter-spacing: 1px;
-  }
-  .screen-row {
-    display: flex;
-    align-items: center;
-    padding: 6px 8px;
-    background: #fff;
-    border-radius: 6px;
-    margin: 4px 0;
-    text-align: left;
-    font-size: 12px;
-    color: #555;
-    border: 1px solid #eee;
-  }
-  .screen-row .s-icon {
-    font-size: 18px; margin-right: 8px; flex-shrink: 0;
-  }
-  .screen-row .s-arrow {
-    margin-left: auto; color: #ccc; font-size: 12px;
-  }
-  .screen-highlight {
-    background: #fffde7;
-    border: 2px solid #ffc107;
-    border-radius: 8px;
-    padding: 8px 12px;
-    margin: 6px 0;
-    font-size: 12px;
-    color: #e65100;
-    font-weight: 600;
-    text-align: center;
-    animation: blink 1.5s ease-in-out infinite;
-  }
-  @keyframes blink {
-    0%,100% { border-color: #ffc107; }
-    50% { border-color: #ff9800; box-shadow: 0 0 12px rgba(255,152,0,0.3); }
-  }
-  .screen-input {
-    background: #fff;
-    border: 1px solid #07c160;
-    border-radius: 4px;
-    padding: 6px 10px;
-    margin: 4px 0;
-    font-size: 11px;
-    color: #999;
-    text-align: left;
-  }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 12px;
+      color: #8ef;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
 
-  /* 箭头指示 */
-  .arrow-down {
-    text-align: center;
-    font-size: 20px;
-    color: #bbb;
-    margin: 4px 0;
-    animation: bounce 1.5s infinite;
-  }
-  @keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
-  }
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+      line-height: 1.4;
+    }
 
-  /* ===== 步骤卡片 ===== */
-  .step-card {
-    background: #fafafa;
-    border-radius: 16px;
-    padding: 20px 16px;
-    margin-bottom: 18px;
-    border-left: 4px solid #1677ff;
-    position: relative;
-  }
-  .step-card.client { border-left-color: #2e7d32; }
-  .step-card.server { border-left-color: #1565c0; }
-  .step-num {
-    position: absolute;
-    top: -12px; left: -12px;
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    background: #1677ff;
-    color: #fff;
-    font-weight: 800;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(22,119,255,0.3);
-  }
-  .step-card.client .step-num { background: #2e7d32; box-shadow: 0 2px 8px rgba(46,125,50,0.3); }
-  .step-card.server .step-num { background: #1565c0; box-shadow: 0 2px 8px rgba(21,101,192,0.3); }
-  .step-card h4 {
-    font-size: 15px; color: #222; margin-bottom: 4px;
-    margin-left: 10px;
-  }
-  .step-card p {
-    font-size: 13px; color: #777; line-height: 1.7;
-    margin-left: 10px;
-  }
-  .step-card .tip {
-    background: #fffde7;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 11px;
-    color: #e65100;
-    margin-top: 8px;
-    margin-left: 10px;
-  }
+    .hero h1 .hl {
+      background: linear-gradient(90deg, #00d4aa, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-  /* ===== 流程总览 ===== */
-  .overview-flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 16px 0;
-    font-size: 12px;
-  }
-  .overview-step {
-    background: #e8f0fe;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-weight: 600;
-    color: #1565c0;
-    white-space: nowrap;
-  }
-  .overview-arrow {
-    color: #ccc;
-    font-weight: 700;
-  }
+    .hero-subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      position: relative;
+      z-index: 1;
+    }
 
-  /* ===== 二维码区 ===== */
-  .qr-section {
-    background: #fafafa;
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    margin: 16px 0;
-    border: 2px solid #eee;
-  }
-  .qr-box {
-    width: 140px; height: 140px;
-    background: #fff;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    margin: 12px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 60px;
-    position: relative;
-  }
-  .qr-box::after {
-    content: '扫码';
-    position: absolute;
-    bottom: -22px;
-    font-size: 11px;
-    color: #999;
-    letter-spacing: 2px;
-  }
+    /* ===== 通用 Section ===== */
+    .section {
+      padding: 28px 20px;
+    }
 
-  /* ===== 对比表 ===== */
-  .info-table {
-    width: 100%; border-collapse: collapse;
-    margin: 12px 0; font-size: 13px;
-    border-radius: 10px; overflow: hidden;
-  }
-  .info-table th {
-    background: #1a1a2e; color: #fff; padding: 10px 8px; font-weight: 600;
-  }
-  .info-table td {
-    padding: 10px 8px; text-align: center;
-    border-bottom: 1px solid #eee;
-  }
-  .info-table tr:nth-child(even) td { background: #fafafa; }
+    .section-title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: #1a1a2e;
+    }
 
-  /* ===== FAQ ===== */
-  .faq-item {
-    border: 1px solid #eee;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  .faq-q {
-    background: #fafafa;
-    padding: 14px 16px;
-    font-weight: 700; font-size: 15px; color: #333;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .faq-q .q-icon { color: #1677ff; font-size: 18px; }
-  .faq-a {
-    padding: 14px 16px;
-    font-size: 14px; color: #666; line-height: 1.8;
-    border-top: 1px solid #f0f0f0;
-  }
+    .section-sub {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 18px;
+    }
 
-  /* ===== CTA ===== */
-  .footer-cta {
-    background: linear-gradient(135deg, #0d1b2a 0%, #1a1040 100%);
-    padding: 36px 24px; text-align: center; color: #fff;
-  }
-  .footer-cta h3 {
-    font-size: 20px; margin-bottom: 8px; font-weight: 800;
-  }
-  .footer-cta p {
-    font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 18px;
-  }
-  .footer-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #07c160, #00bfa5);
-    color: #fff;
-    font-size: 17px; font-weight: 700;
-    padding: 14px 40px; border-radius: 30px;
-    text-decoration: none; letter-spacing: 2px;
-    box-shadow: 0 8px 24px rgba(7,193,96,0.3);
-  }
-  .footer-info {
-    margin-top: 16px; font-size: 12px;
-    color: rgba(255,255,255,0.4); line-height: 1.8;
-  }
+    /* ===== 角色标签 ===== */
+    .role-tag {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
 
-  .divider {
-    text-align: center; color: #ccc; font-size: 12px;
-    letter-spacing: 4px; padding: 8px 0;
-  }
+    .role-client {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
 
-  /* 分割标识 */
-  .phase-divider {
-    background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
-    height: 1px;
-    margin: 8px 20px;
-    position: relative;
-    text-align: center;
-  }
-  .phase-divider span {
-    background: #fff;
-    padding: 0 16px;
-    font-size: 13px;
-    color: #999;
-    position: relative;
-    top: -9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-  }
+    .role-server {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
 
-  /* ===== 真实APP图标绘制 ===== */
-  .real-app-icon {
-    width: 60px; height: 60px;
-    background: #07C160;
-    border-radius: 13px;
-    margin: 0 auto 8px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(7,193,96,0.3);
-  }
-  .real-app-icon::before {
-    content: '';
-    position: absolute;
-    top: 12px; left: 14px;
-    width: 20px; height: 16px;
-    background: #fff;
-    border-radius: 3px 3px 0 0;
-  }
-  .real-app-icon::after {
-    content: '';
-    position: absolute;
-    bottom: 14px; left: 14px;
-    width: 32px; height: 3px;
-    background: #fff;
-    border-radius: 2px;
-    box-shadow: 0 7px 0 #fff, 0 14px 0 #fff;
-  }
-  .real-app-icon .chat-bubble {
-    position: absolute;
-    top: 10px; right: 10px;
-    width: 18px; height: 14px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 7px 7px 7px 2px;
-  }
+    /* ===== 手机模拟框 ===== */
+    .phone-frame {
+      background: #1a1a2e;
+      border-radius: 24px;
+      padding: 12px;
+      margin: 16px auto;
+      max-width: 280px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
 
-  /* App Store 搜索框模拟 */
-  .appstore-search {
-    background: #f0f0f0;
-    border-radius: 20px;
-    padding: 8px 16px;
-    margin: 8px 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #999;
-  }
-  .appstore-result {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #fff;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #eee;
-    margin: 8px 0;
-  }
+    .phone-notch {
+      width: 80px;
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      margin: 0 auto 10px;
+    }
 
-  /* 注册流程专用 */
-  .reg-step {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .reg-step:last-child { border-bottom: none; }
-  .reg-num {
-    width: 28px; height: 28px;
-    background: #07C160;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .reg-info h5 {
-    font-size: 14px; color: #333; margin-bottom: 2px;
-  }
-  .reg-info p {
-    font-size: 12px; color: #888; line-height: 1.6;
-  }
+    .phone-screen {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 200px;
+    }
 
-  /* 浏览器地址栏模拟 */
-  .browser-bar {
-    background: #f5f5f5;
-    border-radius: 8px;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 8px 0;
-    font-size: 12px;
-  }
-  .browser-bar .url-text {
-    background: #fff;
-    flex: 1;
-    padding: 6px 10px;
-    border-radius: 4px;
-    color: #07C160;
-    font-weight: 600;
-    font-size: 12px;
-  }
+    .phone-statusbar {
+      background: #f8f8f8;
+      padding: 6px 12px;
+      font-size: 10px;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+    }
 
-  /* 强调框 */
-  .highlight-box {
-    background: #fff;
-    border: 2px solid #07C160;
-    border-radius: 10px;
-    padding: 12px;
-    margin: 10px 0;
-    text-align: center;
-  }
+    .phone-content {
+      padding: 14px 12px;
+      text-align: center;
+    }
 
-  /* ===== QR工作流专属样式 ===== */
-  .qr-workflow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
+    .phone-content .app-icon {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 6px;
+    }
 
-  .wf-step {
-    width: 100%;
-    background: #fff;
-    border-radius: 20px;
-    padding: 20px 16px 0;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    margin-bottom: 0;
-  }
+    .phone-content .app-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 2px;
+    }
 
-  .wf-step-num {
-    position: absolute;
-    top: -14px; left: 20px;
-    background: #1677ff;
-    color: #fff;
-    font-size: 16px; font-weight: 900;
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(22,119,255,0.4);
-    z-index: 2;
-  }
+    .phone-content .app-desc {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 10px;
+    }
 
-  .wf-phone {
-    width: 220px;
-    background: #1a1a2e;
-    border-radius: 20px;
-    padding: 8px;
-    margin: 18px auto 0;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  }
-  .wf-phone-screen {
-    background: #fff;
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .wf-phone-top {
-    background: #f8f8f8;
-    padding: 4px 10px;
-    font-size: 9px;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-  }
-  .wf-phone-body {
-    padding: 10px;
-    text-align: center;
-    font-size: 11px;
-  }
+    .phone-btn {
+      display: inline-block;
+      background: #07c160;
+      color: #fff;
+      font-size: 13px;
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
 
-  /* QR码卡片 */
-  .wf-qr-card {
-    width: 100%;
-    background: #fff;
-    border: 2px solid #e0e0e0;
-    border-radius: 16px;
-    padding: 16px;
-    text-align: center;
-    margin: 10px 0;
-  }
-  .wf-qr-img {
-    width: 120px; height: 120px;
-    margin: 8px auto;
-    background: #f8f8f8;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    color: #bbb;
-    position: relative;
-  }
-  .wf-qr-img .qr-pattern {
-    width: 80px; height: 80px;
-    background: repeating-conic-gradient(#333 0% 2%, #fff 2% 4%) 50% / 8px 8px;
-    border-radius: 4px;
-    opacity: 0.3;
-  }
-  .wf-qr-label {
-    font-size: 11px;
-    color: #999;
-    margin-top: 4px;
-  }
+    .phone-btn.blue {
+      background: #1677ff;
+    }
 
-  /* 连接箭头 */
-  .wf-connector {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 8px 0;
-    color: #1677ff;
-    font-size: 20px;
-    font-weight: 700;
-  }
-  .wf-connector .line {
-    width: 2px; height: 24px;
-    background: linear-gradient(to bottom, #1677ff, #ddd);
-  }
+    .phone-btn.orange {
+      background: #ff6b35;
+    }
 
-  /* 简易标签 */
-  .wf-tag {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 10px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-  .wf-tag.you { background: #e3f2fd; color: #1565c0; }
-  .wf-tag.us { background: #e8f5e9; color: #2e7d32; }
+    /* 截图模拟区 */
+    .screenshot-box {
+      background: #f5f5f5;
+      border: 2px dashed #ddd;
+      border-radius: 12px;
+      padding: 16px 12px;
+      margin: 10px 0;
+      text-align: center;
+      position: relative;
+    }
 
-  /* 按钮模拟 */
-  .wf-btn {
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .wf-btn.green { background: #07c160; color: #fff; }
-  .wf-btn.gray { background: #e0e0e0; color: #999; }
-  .wf-btn.white { background: #fff; color: #07c160; border: 1px solid #07c160; }
+    .screenshot-box .screen-title {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
 
-  @media (max-width: 480px) {
-    .hero h1 { font-size: 22px; }
-    .wf-phone { width: 200px; }
-  }
-</style>
+    .screen-row {
+      display: flex;
+      align-items: center;
+      padding: 6px 8px;
+      background: #fff;
+      border-radius: 6px;
+      margin: 4px 0;
+      text-align: left;
+      font-size: 12px;
+      color: #555;
+      border: 1px solid #eee;
+    }
+
+    .screen-row .s-icon {
+      font-size: 18px;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .screen-row .s-arrow {
+      margin-left: auto;
+      color: #ccc;
+      font-size: 12px;
+    }
+
+    .screen-highlight {
+      background: #fffde7;
+      border: 2px solid #ffc107;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 6px 0;
+      font-size: 12px;
+      color: #e65100;
+      font-weight: 600;
+      text-align: center;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        border-color: #ffc107;
+      }
+
+      50% {
+        border-color: #ff9800;
+        box-shadow: 0 0 12px rgba(255, 152, 0, 0.3);
+      }
+    }
+
+    .screen-input {
+      background: #fff;
+      border: 1px solid #07c160;
+      border-radius: 4px;
+      padding: 6px 10px;
+      margin: 4px 0;
+      font-size: 11px;
+      color: #999;
+      text-align: left;
+    }
+
+    /* 箭头指示 */
+    .arrow-down {
+      text-align: center;
+      font-size: 20px;
+      color: #bbb;
+      margin: 4px 0;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(6px);
+      }
+    }
+
+    /* ===== 步骤卡片 ===== */
+    .step-card {
+      background: #fafafa;
+      border-radius: 16px;
+      padding: 20px 16px;
+      margin-bottom: 18px;
+      border-left: 4px solid #1677ff;
+      position: relative;
+    }
+
+    .step-card.client {
+      border-left-color: #2e7d32;
+    }
+
+    .step-card.server {
+      border-left-color: #1565c0;
+    }
+
+    .step-num {
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #1677ff;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(22, 119, 255, 0.3);
+    }
+
+    .step-card.client .step-num {
+      background: #2e7d32;
+      box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+    }
+
+    .step-card.server .step-num {
+      background: #1565c0;
+      box-shadow: 0 2px 8px rgba(21, 101, 192, 0.3);
+    }
+
+    .step-card h4 {
+      font-size: 15px;
+      color: #222;
+      margin-bottom: 4px;
+      margin-left: 10px;
+    }
+
+    .step-card p {
+      font-size: 13px;
+      color: #777;
+      line-height: 1.7;
+      margin-left: 10px;
+    }
+
+    .step-card .tip {
+      background: #fffde7;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      color: #e65100;
+      margin-top: 8px;
+      margin-left: 10px;
+    }
+
+    /* ===== 流程总览 ===== */
+    .overview-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+      font-size: 12px;
+    }
+
+    .overview-step {
+      background: #e8f0fe;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-weight: 600;
+      color: #1565c0;
+      white-space: nowrap;
+    }
+
+    .overview-arrow {
+      color: #ccc;
+      font-weight: 700;
+    }
+
+    /* ===== 二维码区 ===== */
+    .qr-section {
+      background: #fafafa;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin: 16px 0;
+      border: 2px solid #eee;
+    }
+
+    .qr-box {
+      width: 140px;
+      height: 140px;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      margin: 12px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      position: relative;
+    }
+
+    .qr-box::after {
+      content: '扫码';
+      position: absolute;
+      bottom: -22px;
+      font-size: 11px;
+      color: #999;
+      letter-spacing: 2px;
+    }
+
+    /* ===== 对比表 ===== */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .info-table th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 10px 8px;
+      font-weight: 600;
+    }
+
+    .info-table td {
+      padding: 10px 8px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .info-table tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-item {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      background: #fafafa;
+      padding: 14px 16px;
+      font-weight: 700;
+      font-size: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .faq-q .q-icon {
+      color: #1677ff;
+      font-size: 18px;
+    }
+
+    .faq-a {
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.8;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    /* ===== CTA ===== */
+    .footer-cta {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1a1040 100%);
+      padding: 36px 24px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .footer-cta h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    .footer-cta p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 18px;
+    }
+
+    .footer-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #07c160, #00bfa5);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      padding: 14px 40px;
+      border-radius: 30px;
+      text-decoration: none;
+      letter-spacing: 2px;
+      box-shadow: 0 8px 24px rgba(7, 193, 96, 0.3);
+    }
+
+    .footer-info {
+      margin-top: 16px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.8;
+    }
+
+    .divider {
+      text-align: center;
+      color: #ccc;
+      font-size: 12px;
+      letter-spacing: 4px;
+      padding: 8px 0;
+    }
+
+    /* 分割标识 */
+    .phase-divider {
+      background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+      height: 1px;
+      margin: 8px 20px;
+      position: relative;
+      text-align: center;
+    }
+
+    .phase-divider span {
+      background: #fff;
+      padding: 0 16px;
+      font-size: 13px;
+      color: #999;
+      position: relative;
+      top: -9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    /* ===== 真实APP图标绘制 ===== */
+    .real-app-icon {
+      width: 60px;
+      height: 60px;
+      background: #07C160;
+      border-radius: 13px;
+      margin: 0 auto 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(7, 193, 96, 0.3);
+    }
+
+    .real-app-icon::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      width: 20px;
+      height: 16px;
+      background: #fff;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .real-app-icon::after {
+      content: '';
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      width: 32px;
+      height: 3px;
+      background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 7px 0 #fff, 0 14px 0 #fff;
+    }
+
+    .real-app-icon .chat-bubble {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 18px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 7px 7px 7px 2px;
+    }
+
+    /* App Store 搜索框模拟 */
+    .appstore-search {
+      background: #f0f0f0;
+      border-radius: 20px;
+      padding: 8px 16px;
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #999;
+    }
+
+    .appstore-result {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #eee;
+      margin: 8px 0;
+    }
+
+    /* 注册流程专用 */
+    .reg-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .reg-step:last-child {
+      border-bottom: none;
+    }
+
+    .reg-num {
+      width: 28px;
+      height: 28px;
+      background: #07C160;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .reg-info h5 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 2px;
+    }
+
+    .reg-info p {
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* 浏览器地址栏模拟 */
+    .browser-bar {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      font-size: 12px;
+    }
+
+    .browser-bar .url-text {
+      background: #fff;
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 4px;
+      color: #07C160;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    /* 强调框 */
+    .highlight-box {
+      background: #fff;
+      border: 2px solid #07C160;
+      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    /* ===== QR工作流专属样式 ===== */
+    .qr-workflow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .wf-step {
+      width: 100%;
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px 16px 0;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 0;
+    }
+
+    .wf-step-num {
+      position: absolute;
+      top: -14px;
+      left: 20px;
+      background: #1677ff;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(22, 119, 255, 0.4);
+      z-index: 2;
+    }
+
+    .wf-phone {
+      width: 220px;
+      background: #1a1a2e;
+      border-radius: 20px;
+      padding: 8px;
+      margin: 18px auto 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .wf-phone-screen {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .wf-phone-top {
+      background: #f8f8f8;
+      padding: 4px 10px;
+      font-size: 9px;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .wf-phone-body {
+      padding: 10px;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    /* QR码卡片 */
+    .wf-qr-card {
+      width: 100%;
+      background: #fff;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .wf-qr-img {
+      width: 120px;
+      height: 120px;
+      margin: 8px auto;
+      background: #f8f8f8;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: #bbb;
+      position: relative;
+    }
+
+    .wf-qr-img .qr-pattern {
+      width: 80px;
+      height: 80px;
+      background: repeating-conic-gradient(#333 0% 2%, #fff 2% 4%) 50% / 8px 8px;
+      border-radius: 4px;
+      opacity: 0.3;
+    }
+
+    .wf-qr-label {
+      font-size: 11px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    /* 连接箭头 */
+    .wf-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px 0;
+      color: #1677ff;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .wf-connector .line {
+      width: 2px;
+      height: 24px;
+      background: linear-gradient(to bottom, #1677ff, #ddd);
+    }
+
+    /* 简易标签 */
+    .wf-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .wf-tag.you {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .wf-tag.us {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    /* 按钮模拟 */
+    .wf-btn {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .wf-btn.green {
+      background: #07c160;
+      color: #fff;
+    }
+
+    .wf-btn.gray {
+      background: #e0e0e0;
+      color: #999;
+    }
+
+    .wf-btn.white {
+      background: #fff;
+      color: #07c160;
+      border: 1px solid #07c160;
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 22px;
+      }
+
+      .wf-phone {
+        width: 200px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
+  <div class="container">
 
-<!-- ==================== HERO ==================== -->
-<div class="hero">
-  <div class="hero-badge">📱 扫码即走 · 无需阅读长文</div>
-  <h1>公众号合作<span class="hl">操作指引</span></h1>
-  <p class="hero-subtitle">每一步扫二维码 → 对着截图操作 → 搞定</p>
-  <p class="hero-subtitle" style="font-size:12px;color:rgba(255,255,255,0.4);">从注册到收钱 · 纯扫码工作流 · 甲乙双端</p>
-</div>
-
-<!-- ==================== 快速选择 ==================== -->
-<div class="section" style="background:#f8fafb;padding:20px;">
-  <div style="display:flex;gap:10px;">
-    <div style="flex:1;background:#fff;border-radius:14px;padding:16px 10px;text-align:center;border:2px solid #ff9800;">
-      <div style="font-size:28px;">🅰️</div>
-      <div style="font-size:13px;font-weight:800;color:#e65100;">我还没有公众号</div>
-      <div style="font-size:11px;color:#888;">扫下方第①个码开始</div>
+    <!-- ==================== HERO ==================== -->
+    <div class="hero">
+      <div class="hero-badge">📱 扫码即走 · 无需阅读长文</div>
+      <h1>公众号合作<span class="hl">操作指引</span></h1>
+      <p class="hero-subtitle">每一步扫二维码 → 对着截图操作 → 搞定</p>
+      <p class="hero-subtitle" style="font-size:12px;color:rgba(255,255,255,0.4);">从注册到收钱 · 纯扫码工作流 · 甲乙双端</p>
     </div>
-    <div style="flex:1;background:#fff;border-radius:14px;padding:16px 10px;text-align:center;border:2px solid #07C160;">
-      <div style="font-size:28px;">🅱️</div>
-      <div style="font-size:13px;font-weight:800;color:#2e7d32;">我已有公众号</div>
-      <div style="font-size:11px;color:#888;">跳到第⑥步</div>
-    </div>
-  </div>
-</div>
 
-<!-- ==================== QR 工作流 ==================== -->
-<div class="qr-workflow" style="padding:0 12px 20px;">
-
-  <!-- ===== 第1步：浏览器打开注册页 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">①</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你操作</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">手机浏览器打开注册页</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body">
-          <div style="background:#f0f0f0;border-radius:6px;padding:6px;font-size:10px;color:#666;margin-bottom:6px;">🔍 mp.weixin.qq.com</div>
-          <div style="font-size:13px;font-weight:700;color:#333;">微信公众平台</div>
-          <div style="font-size:10px;color:#999;margin:4px 0;">登录 · 注册</div>
-          <div class="wf-btn green" style="margin-top:6px;">立即注册 →</div>
+    <!-- ==================== 快速选择 ==================== -->
+    <div class="section" style="background:#f8fafb;padding:20px;">
+      <div style="display:flex;gap:10px;">
+        <div
+          style="flex:1;background:#fff;border-radius:14px;padding:16px 10px;text-align:center;border:2px solid #ff9800;">
+          <div style="font-size:28px;">🅰️</div>
+          <div style="font-size:13px;font-weight:800;color:#e65100;">我还没有公众号</div>
+          <div style="font-size:11px;color:#888;">扫下方第①个码开始</div>
+        </div>
+        <div
+          style="flex:1;background:#fff;border-radius:14px;padding:16px 10px;text-align:center;border:2px solid #07C160;">
+          <div style="font-size:28px;">🅱️</div>
+          <div style="font-size:13px;font-weight:800;color:#2e7d32;">我已有公众号</div>
+          <div style="font-size:11px;color:#888;">跳到第⑥步</div>
         </div>
       </div>
     </div>
-    <div class="wf-qr-card">
-      <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码直接打开注册页</div>
-      <div class="wf-qr-img"><div class="qr-pattern"></div></div>
-      <div class="wf-qr-label">微信扫一扫 → 自动跳转到 mp.weixin.qq.com</div>
-    </div>
-  </div>
 
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">扫码后看到下图</span>
-    <div class="line"></div>
-  </div>
+    <!-- ==================== QR 工作流 ==================== -->
+    <div class="qr-workflow" style="padding:0 12px 20px;">
 
-  <!-- ===== 第2步：选择账号类型 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">②</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你操作</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">选择账号类型</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body">
-          <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:8px;">请选择注册的账号类型</div>
-          <div style="display:flex;gap:4px;">
-            <div style="flex:1;background:#e8f5e9;border:2px solid #07c160;border-radius:8px;padding:8px 4px;">
-              <div style="font-size:16px;">📢</div>
-              <div style="font-size:9px;font-weight:700;color:#2e7d32;">公众号</div>
-              <div style="font-size:8px;color:#666;">信息发布</div>
-              <div style="font-size:8px;color:#07c160;">👈 点这里</div>
-            </div>
-            <div style="flex:1;background:#fafafa;border:1px solid #eee;border-radius:8px;padding:8px 4px;opacity:0.5;">
-              <div style="font-size:16px;">🏢</div>
-              <div style="font-size:9px;color:#999;">服务号</div>
-              <div style="font-size:8px;color:#999;">企业管理</div>
-            </div>
-            <div style="flex:1;background:#fafafa;border:1px solid #eee;border-radius:8px;padding:8px 4px;opacity:0.5;">
-              <div style="font-size:16px;">📦</div>
-              <div style="font-size:9px;color:#999;">小程序</div>
-              <div style="font-size:8px;color:#999;">应用开发</div>
+      <!-- ===== 第1步：浏览器打开注册页 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">①</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你操作</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">手机浏览器打开注册页</div>
+        </div>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body">
+              <div
+                style="background:#f0f0f0;border-radius:6px;padding:6px;font-size:10px;color:#666;margin-bottom:6px;">🔍
+                mp.weixin.qq.com</div>
+              <div style="font-size:13px;font-weight:700;color:#333;">微信公众平台</div>
+              <div style="font-size:10px;color:#999;margin:4px 0;">登录 · 注册</div>
+              <div class="wf-btn green" style="margin-top:6px;">立即注册 →</div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="wf-qr-card">
-      <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
-      <div class="wf-qr-img"><div class="qr-pattern"></div></div>
-      <div class="wf-qr-label">选「公众号」后 → 扫此码看下一屏</div>
-    </div>
-  </div>
-
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">扫码后看到下图</span>
-    <div class="line"></div>
-  </div>
-
-  <!-- ===== 第3步：选择主体类型 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">③</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你操作</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">选择主体类型 → 扫码验证</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body">
-          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:4px;">选择主体类型</div>
-          <div style="font-size:9px;color:#888;margin-bottom:6px;">账号类型：公众号</div>
-          <div style="display:flex;gap:3px;flex-wrap:wrap;justify-content:center;">
-            <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">政府</span>
-            <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">媒体</span>
-            <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">企业</span>
-            <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">其他组织</span>
-            <span style="background:#07c160;color:#fff;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;">个人 👈</span>
+        <div class="wf-qr-card">
+          <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码直接打开注册页</div>
+          <div class="wf-qr-img">
+            <div class="qr-pattern"></div>
           </div>
-          <div style="margin-top:8px;padding:6px;background:#f9f9f9;border-radius:6px;">
-            <div style="font-size:9px;color:#666;">请用管理员微信扫码</div>
-            <div style="width:50px;height:50px;background:#f0f0f0;margin:4px auto;border:1px solid #ddd;"></div>
-            <div style="font-size:8px;color:#999;">扫码完成身份验证</div>
-          </div>
+          <div class="wf-qr-label">微信扫一扫 → 自动跳转到 mp.weixin.qq.com</div>
         </div>
       </div>
-    </div>
-    <div class="wf-qr-card">
-      <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
-      <div class="wf-qr-img"><div class="qr-pattern"></div></div>
-      <div class="wf-qr-label">选「个人」→ 管理员微信扫码 → 扫此码继续</div>
-    </div>
-  </div>
 
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">扫码后看到下图</span>
-    <div class="line"></div>
-  </div>
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">扫码后看到下图</span>
+        <div class="line"></div>
+      </div>
 
-  <!-- ===== 第4步：创建公众号-填信息 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">④</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你操作</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">创建公众号 · 填写信息</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body" style="text-align:left;">
-          <div style="font-size:12px;font-weight:700;color:#333;text-align:center;margin-bottom:8px;">创建公众号</div>
-          <div style="text-align:center;margin-bottom:8px;">
-            <div style="width:44px;height:44px;background:#e0e0e0;border-radius:50%;margin:0 auto 2px;"></div>
-            <div style="font-size:9px;color:#07c160;">更换头像</div>
-          </div>
-          <div style="font-size:10px;color:#666;padding:3px 0;border-bottom:1px solid #eee;">名称 <span style="float:right;color:#333;">小锐A的日常</span></div>
-          <div style="font-size:10px;color:#666;padding:3px 0;border-bottom:1px solid #eee;">性别 <span style="float:right;color:#333;">男</span></div>
-          <div style="font-size:10px;color:#666;padding:3px 0;border-bottom:1px solid #eee;">地区 <span style="float:right;color:#333;">中国 河南 信阳</span></div>
-          <div style="font-size:9px;color:#999;margin-top:6px;">☐ 我同意《微信公众平台服务协议》</div>
-          <div class="wf-btn gray" style="display:block;text-align:center;margin-top:6px;">创建</div>
+      <!-- ===== 第2步：选择账号类型 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">②</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你操作</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">选择账号类型</div>
         </div>
-      </div>
-    </div>
-    <div style="font-size:11px;color:#666;text-align:center;margin-top:6px;">
-      ⚠️ 填真实信息 → 勾选同意协议 → 点「创建」
-    </div>
-    <div class="wf-qr-card">
-      <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
-      <div class="wf-qr-img"><div class="qr-pattern"></div></div>
-      <div class="wf-qr-label">提交创建后 → 扫此码继续</div>
-    </div>
-  </div>
-
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">等待审核（一般几小时）→ 通过后继续</span>
-    <div class="line"></div>
-  </div>
-
-  <!-- ===== 第5步：下载订阅号助手 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">⑤</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你操作</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">下载「订阅号助手」APP</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body">
-          <div style="background:#f0f0f0;border-radius:12px;padding:4px 8px;font-size:9px;color:#999;margin-bottom:6px;">🔍 订阅号助手</div>
-          <div style="display:flex;align-items:center;gap:8px;text-align:left;">
-            <div style="width:40px;height:40px;background:#07c160;border-radius:10px;flex-shrink:0;"></div>
-            <div>
-              <div style="font-size:11px;font-weight:700;color:#333;">订阅号助手</div>
-              <div style="font-size:8px;color:#999;">Tencent Technology</div>
-            </div>
-            <div class="wf-btn green" style="font-size:9px;padding:3px 10px;">获取</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="font-size:11px;color:#e65100;text-align:center;margin-top:4px;">
-      ⚠️ 图标是<strong>绿色方块+白色图案</strong>，开发者是<strong>腾讯</strong>
-    </div>
-    <div class="wf-qr-card">
-      <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码直达App Store下载页</div>
-      <div class="wf-qr-img"><div class="qr-pattern"></div></div>
-      <div class="wf-qr-label">下载后用<strong>公众号绑定的微信</strong>登录</div>
-    </div>
-  </div>
-
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">扫码后看到下图</span>
-    <div class="line"></div>
-  </div>
-
-  <!-- ===== 第6步：获取密钥 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">⑥</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你操作</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">获取 AppID 和 AppSecret</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body">
-          <div style="background:#f0f0f0;border-radius:4px;padding:3px 6px;font-size:9px;color:#07c160;margin-bottom:6px;">mp.weixin.qq.com</div>
-          <div style="font-size:10px;font-weight:700;color:#333;margin-bottom:4px;">设置与开发 → 基本配置</div>
-          <div style="background:#f9f9f9;border-radius:4px;padding:6px;margin:4px 0;text-align:left;">
-            <div style="font-size:8px;color:#999;">AppID</div>
-            <div style="font-size:9px;color:#333;">wxabc123def4567890</div>
-          </div>
-          <div style="background:#fff3e0;border-radius:4px;padding:6px;margin:4px 0;text-align:left;">
-            <div style="font-size:8px;color:#999;">AppSecret</div>
-            <div style="font-size:9px;color:#999;">点「重置」→ 扫码显示</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="font-size:11px;color:#e65100;text-align:center;margin-top:4px;">
-      ⚠️ AppSecret 点「重置」后才显示完整，<strong>立刻截图</strong>！
-    </div>
-    <div class="wf-qr-card">
-      <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
-      <div class="wf-qr-img"><div class="qr-pattern"></div></div>
-      <div class="wf-qr-label">复制好 AppID 和 AppSecret 后 → 扫此码</div>
-    </div>
-  </div>
-
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">扫码后看到下图</span>
-    <div class="line"></div>
-  </div>
-
-  <!-- ===== 第7步：发给运营 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">⑦</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你操作</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">把密钥发给运营</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body">
-          <div style="font-size:10px;font-weight:700;color:#333;margin-bottom:4px;">💬 老板（本人回复）</div>
-          <div style="background:#e8f5e9;border-radius:6px;padding:8px;text-align:left;font-size:9px;color:#333;line-height:1.6;">
-            AppID：wxabc123def4567890<br>
-            AppSecret：a1b2c3d4e5f67890ab
-          </div>
-          <div style="font-size:8px;color:#999;margin-top:4px;">粘贴发送即可</div>
-        </div>
-      </div>
-    </div>
-    <div class="wf-qr-card" style="border-color:#07c160;background:#f8fff8;">
-      <div style="font-size:13px;font-weight:800;color:#2e7d32;">📷 加运营微信 · 发密钥</div>
-      <div class="wf-qr-img" style="border-color:#07c160;">
-        <div style="font-size:11px;color:#07c160;text-align:center;">
-          <div style="width:40px;height:40px;background:#1677ff;border-radius:50%;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;">微</div>
-          老板<br>（本人回复）
-        </div>
-      </div>
-      <div class="wf-qr-label" style="color:#2e7d32;">扫二维码 · 添加为朋友 · 发密钥</div>
-    </div>
-  </div>
-
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">以下由运营操作 · 你等即可</span>
-    <div class="line"></div>
-  </div>
-
-  <!-- ===== 第8步：运营配置 ===== -->
-  <div class="wf-step" style="background:#f8faff;">
-    <div class="wf-step-num" style="background:#2e7d32;">⑧</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag us">⚙️ 运营操作</span>
-      <div style="font-size:16px;font-weight:800;color:#333;margin:6px 0;">运营配置 + 每日发文</div>
-      <div style="font-size:12px;color:#888;line-height:1.8;">
-        ① 录入密钥（加密存储）<br>
-        ② 上传封面图素材<br>
-        ③ 每日自动推送文章到你的<strong>草稿箱</strong><br>
-        ④ 完成！你去看「订阅号助手」APP 即可
-      </div>
-      <div style="font-size:11px;color:#07c160;margin-top:6px;">⏱️ 5-10分钟配置完成</div>
-    </div>
-  </div>
-
-  <div class="wf-connector">
-    <div class="line"></div>
-    <span style="font-size:11px;color:#999;">配置完成后 · 你每天只需要做一件事</span>
-    <div class="line"></div>
-  </div>
-
-  <!-- ===== 第9步：群发收钱 ===== -->
-  <div class="wf-step">
-    <div class="wf-step-num">⑨</div>
-    <div style="text-align:center;margin-top:6px;">
-      <span class="wf-tag you">🧑 你每天30秒</span>
-      <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">打开草稿箱 → 点群发 → 收钱</div>
-    </div>
-    <div class="wf-phone">
-      <div class="wf-phone-screen">
-        <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
-        <div class="wf-phone-body" style="text-align:left;">
-          <div style="font-size:11px;font-weight:700;color:#333;text-align:center;margin-bottom:4px;">📝 草稿（共2篇）</div>
-          <div style="background:#f9f9f9;border-radius:6px;padding:8px;margin:4px 0;">
-            <div style="font-size:10px;font-weight:600;">职场人必看：5个提升...</div>
-            <div style="display:flex;gap:4px;margin-top:4px;">
-              <span class="wf-btn green" style="font-size:8px;padding:2px 8px;">群发</span>
-              <span style="font-size:8px;color:#999;">预览</span>
-              <span style="font-size:8px;color:#e74c3c;">删除</span>
-            </div>
-          </div>
-          <div style="background:#f9f9f9;border-radius:6px;padding:8px;margin:4px 0;">
-            <div style="font-size:10px;font-weight:600;">未来3年最值得做的...</div>
-            <div style="display:flex;gap:4px;margin-top:4px;">
-              <span class="wf-btn green" style="font-size:8px;padding:2px 8px;">群发</span>
-              <span style="font-size:8px;color:#999;">预览</span>
-              <span style="font-size:8px;color:#e74c3c;">删除</span>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body">
+              <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:8px;">请选择注册的账号类型</div>
+              <div style="display:flex;gap:4px;">
+                <div style="flex:1;background:#e8f5e9;border:2px solid #07c160;border-radius:8px;padding:8px 4px;">
+                  <div style="font-size:16px;">📢</div>
+                  <div style="font-size:9px;font-weight:700;color:#2e7d32;">公众号</div>
+                  <div style="font-size:8px;color:#666;">信息发布</div>
+                  <div style="font-size:8px;color:#07c160;">👈 点这里</div>
+                </div>
+                <div
+                  style="flex:1;background:#fafafa;border:1px solid #eee;border-radius:8px;padding:8px 4px;opacity:0.5;">
+                  <div style="font-size:16px;">🏢</div>
+                  <div style="font-size:9px;color:#999;">服务号</div>
+                  <div style="font-size:8px;color:#999;">企业管理</div>
+                </div>
+                <div
+                  style="flex:1;background:#fafafa;border:1px solid #eee;border-radius:8px;padding:8px 4px;opacity:0.5;">
+                  <div style="font-size:16px;">📦</div>
+                  <div style="font-size:9px;color:#999;">小程序</div>
+                  <div style="font-size:8px;color:#999;">应用开发</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="wf-qr-card">
+          <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
+          <div class="wf-qr-img">
+            <div class="qr-pattern"></div>
+          </div>
+          <div class="wf-qr-label">选「公众号」后 → 扫此码看下一屏</div>
+        </div>
+      </div>
+
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">扫码后看到下图</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- ===== 第3步：选择主体类型 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">③</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你操作</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">选择主体类型 → 扫码验证</div>
+        </div>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body">
+              <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:4px;">选择主体类型</div>
+              <div style="font-size:9px;color:#888;margin-bottom:6px;">账号类型：公众号</div>
+              <div style="display:flex;gap:3px;flex-wrap:wrap;justify-content:center;">
+                <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">政府</span>
+                <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">媒体</span>
+                <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">企业</span>
+                <span style="background:#f5f5f5;color:#999;padding:2px 6px;border-radius:3px;font-size:8px;">其他组织</span>
+                <span
+                  style="background:#07c160;color:#fff;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;">个人
+                  👈</span>
+              </div>
+              <div style="margin-top:8px;padding:6px;background:#f9f9f9;border-radius:6px;">
+                <div style="font-size:9px;color:#666;">请用管理员微信扫码</div>
+                <div style="width:50px;height:50px;background:#f0f0f0;margin:4px auto;border:1px solid #ddd;"></div>
+                <div style="font-size:8px;color:#999;">扫码完成身份验证</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-qr-card">
+          <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
+          <div class="wf-qr-img">
+            <div class="qr-pattern"></div>
+          </div>
+          <div class="wf-qr-label">选「个人」→ 管理员微信扫码 → 扫此码继续</div>
+        </div>
+      </div>
+
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">扫码后看到下图</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- ===== 第4步：创建公众号-填信息 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">④</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你操作</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">创建公众号 · 填写信息</div>
+        </div>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body" style="text-align:left;">
+              <div style="font-size:12px;font-weight:700;color:#333;text-align:center;margin-bottom:8px;">创建公众号</div>
+              <div style="text-align:center;margin-bottom:8px;">
+                <div style="width:44px;height:44px;background:#e0e0e0;border-radius:50%;margin:0 auto 2px;"></div>
+                <div style="font-size:9px;color:#07c160;">更换头像</div>
+              </div>
+              <div style="font-size:10px;color:#666;padding:3px 0;border-bottom:1px solid #eee;">名称 <span
+                  style="float:right;color:#333;">小锐A的日常</span></div>
+              <div style="font-size:10px;color:#666;padding:3px 0;border-bottom:1px solid #eee;">性别 <span
+                  style="float:right;color:#333;">男</span></div>
+              <div style="font-size:10px;color:#666;padding:3px 0;border-bottom:1px solid #eee;">地区 <span
+                  style="float:right;color:#333;">中国 河南 信阳</span></div>
+              <div style="font-size:9px;color:#999;margin-top:6px;">☐ 我同意《微信公众平台服务协议》</div>
+              <div class="wf-btn gray" style="display:block;text-align:center;margin-top:6px;">创建</div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#666;text-align:center;margin-top:6px;">
+          ⚠️ 填真实信息 → 勾选同意协议 → 点「创建」
+        </div>
+        <div class="wf-qr-card">
+          <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
+          <div class="wf-qr-img">
+            <div class="qr-pattern"></div>
+          </div>
+          <div class="wf-qr-label">提交创建后 → 扫此码继续</div>
+        </div>
+      </div>
+
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">等待审核（一般几小时）→ 通过后继续</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- ===== 第5步：下载订阅号助手 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">⑤</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你操作</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">下载「订阅号助手」APP</div>
+        </div>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body">
+              <div
+                style="background:#f0f0f0;border-radius:12px;padding:4px 8px;font-size:9px;color:#999;margin-bottom:6px;">
+                🔍 订阅号助手</div>
+              <div style="display:flex;align-items:center;gap:8px;text-align:left;">
+                <div style="width:40px;height:40px;background:#07c160;border-radius:10px;flex-shrink:0;"></div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;color:#333;">订阅号助手</div>
+                  <div style="font-size:8px;color:#999;">Tencent Technology</div>
+                </div>
+                <div class="wf-btn green" style="font-size:9px;padding:3px 10px;">获取</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#e65100;text-align:center;margin-top:4px;">
+          ⚠️ 图标是<strong>绿色方块+白色图案</strong>，开发者是<strong>腾讯</strong>
+        </div>
+        <div class="wf-qr-card">
+          <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码直达App Store下载页</div>
+          <div class="wf-qr-img">
+            <div class="qr-pattern"></div>
+          </div>
+          <div class="wf-qr-label">下载后用<strong>公众号绑定的微信</strong>登录</div>
+        </div>
+      </div>
+
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">扫码后看到下图</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- ===== 第6步：获取密钥 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">⑥</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你操作</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">获取 AppID 和 AppSecret</div>
+        </div>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body">
+              <div
+                style="background:#f0f0f0;border-radius:4px;padding:3px 6px;font-size:9px;color:#07c160;margin-bottom:6px;">
+                mp.weixin.qq.com</div>
+              <div style="font-size:10px;font-weight:700;color:#333;margin-bottom:4px;">设置与开发 → 基本配置</div>
+              <div style="background:#f9f9f9;border-radius:4px;padding:6px;margin:4px 0;text-align:left;">
+                <div style="font-size:8px;color:#999;">AppID</div>
+                <div style="font-size:9px;color:#333;">wxabc123def4567890</div>
+              </div>
+              <div style="background:#fff3e0;border-radius:4px;padding:6px;margin:4px 0;text-align:left;">
+                <div style="font-size:8px;color:#999;">AppSecret</div>
+                <div style="font-size:9px;color:#999;">点「重置」→ 扫码显示</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#e65100;text-align:center;margin-top:4px;">
+          ⚠️ AppSecret 点「重置」后才显示完整，<strong>立刻截图</strong>！
+        </div>
+        <div class="wf-qr-card">
+          <div style="font-size:12px;font-weight:700;color:#333;">📷 扫码进入下一步</div>
+          <div class="wf-qr-img">
+            <div class="qr-pattern"></div>
+          </div>
+          <div class="wf-qr-label">复制好 AppID 和 AppSecret 后 → 扫此码</div>
+        </div>
+      </div>
+
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">扫码后看到下图</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- ===== 第7步：发给运营 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">⑦</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你操作</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">把密钥发给运营</div>
+        </div>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body">
+              <div style="font-size:10px;font-weight:700;color:#333;margin-bottom:4px;">💬 老板（本人回复）</div>
+              <div
+                style="background:#e8f5e9;border-radius:6px;padding:8px;text-align:left;font-size:9px;color:#333;line-height:1.6;">
+                AppID：wxabc123def4567890<br>
+                AppSecret：a1b2c3d4e5f67890ab
+              </div>
+              <div style="font-size:8px;color:#999;margin-top:4px;">粘贴发送即可</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-qr-card" style="border-color:#07c160;background:#f8fff8;">
+          <div style="font-size:13px;font-weight:800;color:#2e7d32;">📷 加运营微信 · 发密钥</div>
+          <div class="wf-qr-img" style="border-color:#07c160;">
+            <div style="font-size:11px;color:#07c160;text-align:center;">
+              <div
+                style="width:40px;height:40px;background:#1677ff;border-radius:50%;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;">
+                微</div>
+              老板<br>（本人回复）
+            </div>
+          </div>
+          <div class="wf-qr-label" style="color:#2e7d32;">扫二维码 · 添加为朋友 · 发密钥</div>
+        </div>
+      </div>
+
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">内容准备中 · 你等即可</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- ===== 第8步：运营配置 ===== -->
+      <div class="wf-step" style="background:#f8faff;">
+        <div class="wf-step-num" style="background:#2e7d32;">⑧</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag us">⚙️ 运营操作</span>
+          <div style="font-size:16px;font-weight:800;color:#333;margin:6px 0;">内容准备 + 持续更新</div>
+          <div style="font-size:12px;color:#888;line-height:1.8;">
+            ① 完成配置对接<br>
+            ② 准备配套内容素材<br>
+            ③ 每日更新内容到你的<strong>草稿箱</strong><br>
+            ④ 完成！你去看「订阅号助手」APP 即可
+          </div>
+          <div style="font-size:11px;color:#07c160;margin-top:6px;">⏱️ 配置完成后即刻运行</div>
+        </div>
+      </div>
+
+      <div class="wf-connector">
+        <div class="line"></div>
+        <span style="font-size:11px;color:#999;">配置完成后 · 你每天只需要做一件事</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- ===== 第9步：群发收钱 ===== -->
+      <div class="wf-step">
+        <div class="wf-step-num">⑨</div>
+        <div style="text-align:center;margin-top:6px;">
+          <span class="wf-tag you">🧑 你每天30秒</span>
+          <div style="font-size:18px;font-weight:800;color:#333;margin:6px 0;">打开草稿箱 → 点群发 → 收钱</div>
+        </div>
+        <div class="wf-phone">
+          <div class="wf-phone-screen">
+            <div class="wf-phone-top"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="wf-phone-body" style="text-align:left;">
+              <div style="font-size:11px;font-weight:700;color:#333;text-align:center;margin-bottom:4px;">📝 草稿（共2篇）
+              </div>
+              <div style="background:#f9f9f9;border-radius:6px;padding:8px;margin:4px 0;">
+                <div style="font-size:10px;font-weight:600;">职场人必看：5个提升...</div>
+                <div style="display:flex;gap:4px;margin-top:4px;">
+                  <span class="wf-btn green" style="font-size:8px;padding:2px 8px;">群发</span>
+                  <span style="font-size:8px;color:#999;">预览</span>
+                  <span style="font-size:8px;color:#e74c3c;">删除</span>
+                </div>
+              </div>
+              <div style="background:#f9f9f9;border-radius:6px;padding:8px;margin:4px 0;">
+                <div style="font-size:10px;font-weight:600;">未来3年最值得做的...</div>
+                <div style="display:flex;gap:4px;margin-top:4px;">
+                  <span class="wf-btn green" style="font-size:8px;padding:2px 8px;">群发</span>
+                  <span style="font-size:8px;color:#999;">预览</span>
+                  <span style="font-size:8px;color:#e74c3c;">删除</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#e8f5e9;border-radius:10px;padding:12px;text-align:center;margin-top:8px;">
+          <div style="font-size:14px;font-weight:800;color:#2e7d32;">🤝 收益 5:5 分账</div>
+          <div style="font-size:11px;color:#555;">你拿 50% · 0投入 · 纯分成</div>
+        </div>
+      </div>
+
+    </div><!-- /.qr-workflow -->
+
+    <!-- ==================== 完整链路表 ==================== -->
+    <div class="section" style="padding-top:8px;">
+      <h2 class="section-title">🔗 完整链路一览</h2>
+
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>步骤</th>
+            <th>🧑 你做什么</th>
+            <th>⚙️ 运营做什么</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>①</td>
+            <td>浏览器打开注册页</td>
+            <td>——</td>
+          </tr>
+          <tr>
+            <td>②</td>
+            <td>选账号类型：公众号</td>
+            <td>——</td>
+          </tr>
+          <tr>
+            <td>③</td>
+            <td>选主体类型：个人 → 扫码</td>
+            <td>——</td>
+          </tr>
+          <tr>
+            <td>④</td>
+            <td>填信息 → 创建公众号</td>
+            <td>——</td>
+          </tr>
+          <tr>
+            <td>⑤</td>
+            <td>等审核 → 下载订阅号助手</td>
+            <td>——</td>
+          </tr>
+          <tr>
+            <td>⑥</td>
+            <td>获取 AppID + AppSecret</td>
+            <td>——</td>
+          </tr>
+          <tr>
+            <td>⑦</td>
+            <td>微信发给运营</td>
+            <td>——</td>
+          </tr>
+          <tr>
+            <td>⑧</td>
+            <td>——</td>
+            <td>配置系统 · 每日推文到草稿箱</td>
+          </tr>
+          <tr>
+            <td>⑨</td>
+            <td>草稿箱 → 点群发 → 收钱</td>
+            <td>每月对账 · 10号前打款</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ==================== CTA ==================== -->
+    <div class="footer-cta">
+      <h3>📱 扫这个码 · 开始第一步</h3>
+      <p>每个步骤都有对应的二维码<br>扫码 → 看截图 → 跟着操作 → 搞定</p>
+      <div
+        style="width:130px;height:130px;background:#f0f4ff;border:2px solid #d0d8f0;border-radius:12px;margin:14px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+        <div
+          style="width:44px;height:44px;background:#1677ff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
+          微</div>
+        <div style="font-size:12px;font-weight:700;color:#333;">老板（本人回复）</div>
+        <div style="font-size:9px;color:#999;">扫二维码，添加我为朋友。</div>
+      </div>
+      <div class="footer-info">
+        加微信后 · 发每一步的操作截图给你<br>
+        <em>没有公众号？发注册截图给你对照</em><br>
+        <em>已有公众号？发密钥过来 · 明天见文章</em>
       </div>
     </div>
-    <div style="background:#e8f5e9;border-radius:10px;padding:12px;text-align:center;margin-top:8px;">
-      <div style="font-size:14px;font-weight:800;color:#2e7d32;">🤝 收益 5:5 分账</div>
-      <div style="font-size:11px;color:#555;">你拿 50% · 0投入 · 纯分成</div>
-    </div>
-  </div>
 
-</div><!-- /.qr-workflow -->
-
-<!-- ==================== 完整链路表 ==================== -->
-<div class="section" style="padding-top:8px;">
-  <h2 class="section-title">🔗 完整链路一览</h2>
-
-  <table class="info-table">
-    <thead>
-      <tr><th>步骤</th><th>🧑 你做什么</th><th>⚙️ 运营做什么</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>①</td><td>浏览器打开注册页</td><td>——</td></tr>
-      <tr><td>②</td><td>选账号类型：公众号</td><td>——</td></tr>
-      <tr><td>③</td><td>选主体类型：个人 → 扫码</td><td>——</td></tr>
-      <tr><td>④</td><td>填信息 → 创建公众号</td><td>——</td></tr>
-      <tr><td>⑤</td><td>等审核 → 下载订阅号助手</td><td>——</td></tr>
-      <tr><td>⑥</td><td>获取 AppID + AppSecret</td><td>——</td></tr>
-      <tr><td>⑦</td><td>微信发给运营</td><td>——</td></tr>
-      <tr><td>⑧</td><td>——</td><td>配置系统 · 每日推文到草稿箱</td></tr>
-      <tr><td>⑨</td><td>草稿箱 → 点群发 → 收钱</td><td>每月对账 · 10号前打款</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- ==================== CTA ==================== -->
-<div class="footer-cta">
-  <h3>📱 扫这个码 · 开始第一步</h3>
-  <p>每个步骤都有对应的二维码<br>扫码 → 看截图 → 跟着操作 → 搞定</p>
-  <div style="width:130px;height:130px;background:#f0f4ff;border:2px solid #d0d8f0;border-radius:12px;margin:14px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
-    <div style="width:44px;height:44px;background:#1677ff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">微</div>
-    <div style="font-size:12px;font-weight:700;color:#333;">老板（本人回复）</div>
-    <div style="font-size:9px;color:#999;">扫二维码，添加我为朋友。</div>
-  </div>
-  <div class="footer-info">
-    加微信后 · 发每一步的操作截图给你<br>
-    <em>没有公众号？发注册截图给你对照</em><br>
-    <em>已有公众号？发密钥过来 · 明天见文章</em>
-  </div>
-</div>
-
-</div><!-- /.container -->
+  </div><!-- /.container -->
 
 </body>
+
 </html>
