@@ -975,7 +975,7 @@
   <!-- QR码：直接用api.qrserver.com生成图片，无需任何CDN JS库，手机端完美支持 -->
   <script>
     (function () {
-      var BASE = 'https://wlgongchuang1281.github.io/gzh-workflow/%E6%89%AB%E7%A0%81%E5%B7%A5%E4%BD%9C%E6%B5%81_%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%8C%87%E5%BC%95.html';
+      var BASE = window.location.href.split('#')[0];
       function fillQRs() {
         var boxes = document.querySelectorAll('.qr-box-sm');
         boxes.forEach(function (box, i) {
