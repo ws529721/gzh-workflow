@@ -1,1 +1,185 @@
-<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=扫码工作流_一步步操作指引.html"></head><body><a href="扫码工作流_一步步操作指引.html">点击进入</a></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文员专属入口 · 选择你要看的内容</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2a37;
+      --muted: #6b7280;
+      --blue: #1677ff;
+      --blue-deep: #0f5ed8;
+      --orange: #ff6b35;
+      --green: #07c160;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: white;
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      text-align: center;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.35;
+    }
+    .hero p {
+      margin: 0;
+      color: rgba(255,255,255,0.8);
+      font-size: 15px;
+    }
+    .chip {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 7px 12px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #dbeafe;
+    }
+
+    .card {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 22px rgba(15,23,42,0.05);
+    }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .card-title .icon {
+      font-size: 22px;
+    }
+    .card p {
+      color: var(--muted);
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+
+    .btn-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    }
+    .btn-blue { background: linear-gradient(135deg, var(--blue), var(--blue-deep)); }
+    .btn-orange { background: linear-gradient(135deg, var(--orange), #e04d16); }
+    .btn-green { background: linear-gradient(135deg, var(--green), #059669); }
+    .btn-purple { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+
+    .btn .right {
+      font-size: 20px;
+      opacity: 0.95;
+    }
+
+    .meta {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px dashed #d6dee8;
+      font-size: 13px;
+      color: #4b5563;
+      word-break: break-all;
+    }
+
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 13px;
+      color: #7a869a;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 16px 12px 30px; }
+      .hero { padding: 24px 16px; }
+      .hero h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>文员专属入口<br/>这里不会再直接跳到某个旧页面</h1>
+      <p>你可以先选要看哪一页：项目介绍、操作指引，还是文员手册。</p>
+      <div class="chip">专为文员/客户对接使用</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📌</span> 先看什么</div>
+      <p>进入这个入口后，系统会直接显示这里的选择页，不会再被某个旧链接强制跳转。</p>
+      <div class="btn-grid">
+        <a class="btn btn-blue" href="项目介绍.html" target="_blank">
+          <span>项目介绍</span>
+          <span class="right">›</span>
+        </a>
+        <a class="btn btn-orange" href="扫码工作流_一步步操作指引.html" target="_blank">
+          <span>公众号操作指引</span>
+          <span class="right">›</span>
+        </a>
+        <a class="btn btn-green" href="项目详细操作指引.html" target="_blank">
+          <span>扫码/注册操作细节</span>
+          <span class="right">›</span>
+        </a>
+        <a class="btn btn-purple" href="文员手册.html" target="_blank">
+          <span>文员手册</span>
+          <span class="right">›</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔗</span> 推荐发给客户的入口</div>
+      <p>如果你想把这个入口发给客户，建议直接使用下面这个地址：</p>
+      <div class="meta">https://ws529721.github.io/gzh-workflow/</div>
+    </div>
+
+    <div class="footer">这个页面已改成独立入口，后续可继续在这里加新的跳转内容。</div>
+  </div>
+</body>
+</html>
