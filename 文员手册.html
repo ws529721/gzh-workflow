@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>文员招募 · 公众号代运营合伙人</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-text-size-adjust: 100%;
+  }
+  .container { max-width: 500px; margin: 0 auto; padding: 0 0 30px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    padding: 40px 20px 35px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -60px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,215,0,0.15);
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 12px;
+    color: #ffd700;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 800; letter-spacing: 1px; }
+  .hero h1 span {
+    background: linear-gradient(90deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 6px; }
+
+  /* Card */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    margin: 14px 12px;
+    padding: 20px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .card-title {
+    font-size: 18px; font-weight: 800; color: #1a1a2e;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .card-title .icon { font-size: 22px; }
+
+  /* 高亮数字 */
+  .big-num {
+    font-size: 36px; font-weight: 900;
+    background: linear-gradient(135deg, #ff6b35, #ff3d6f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+  }
+
+  /* 角色卡片 */
+  .role-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .role-item {
+    background: #f8f9fb;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    border: 2px solid transparent;
+  }
+  .role-item.highlight { border-color: #ffd700; background: #fffdf0; }
+  .role-item .ri-icon { font-size: 32px; display: block; margin-bottom: 4px; }
+  .role-item .ri-title { font-size: 14px; font-weight: 700; color: #333; }
+  .role-item .ri-desc { font-size: 11px; color: #999; margin-top: 2px; }
+
+  /* 流程图 */
+  .flow-mini {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .flow-mini .fm-step {
+    display: flex; align-items: center; gap: 10px;
+    background: #f8f9fb;
+    border-radius: 10px;
+    padding: 10px 12px;
+    border-left: 3px solid #1677ff;
+  }
+  .fm-num {
+    width: 26px; height: 26px;
+    background: #1677ff; color: #fff;
+    border-radius: 50%;
+    font-size: 12px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .fm-text { font-size: 13px; color: #555; }
+  .fm-text strong { color: #1677ff; }
+
+  /* 脚本文本框 */
+  .script-box {
+    background: #f0f7ff;
+    border: 1px solid #d0e3f7;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.9;
+    position: relative;
+  }
+  .script-box::before {
+    content: '💬 话术参考';
+    display: block;
+    font-size: 11px;
+    color: #1677ff;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .script-box .highlight { color: #e65100; font-weight: 600; }
+
+  /* 链接按钮 */
+  .link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #1677ff, #0055cc);
+    color: #fff;
+    padding: 14px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 8px 0;
+    box-shadow: 0 4px 16px rgba(22,119,255,0.2);
+  }
+  .link-btn.orange { background: linear-gradient(135deg, #ff6b35, #e0451a); }
+  .link-btn .lb-arrow { font-size: 20px; }
+
+  /* 收益表格 */
+  .split-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    border-radius: 10px; overflow: hidden;
+  }
+  .split-table th {
+    background: #1a1a2e; color: #fff; padding: 10px;
+  }
+  .split-table td {
+    padding: 10px; text-align: center; border-bottom: 1px solid #eee;
+  }
+  .split-table .gold { color: #e65100; font-weight: 700; }
+
+  /* 提示框 */
+  .tip-box {
+    background: #fffde7;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #e65100;
+    margin: 10px 0;
+  }
+
+  /* FAQ */
+  .faq-item {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 12px 0;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-size: 14px; font-weight: 700; color: #333;
+    display: flex; align-items: flex-start; gap: 6px;
+  }
+  .faq-q .q-mark { color: #1677ff; flex-shrink: 0; }
+  .faq-a {
+    font-size: 13px; color: #777; margin-top: 6px;
+    padding-left: 18px; line-height: 1.8;
+  }
+
+  /* CTA */
+  .cta-bar {
+    background: linear-gradient(135deg, #0f0c29, #302b63);
+    margin: 14px 12px;
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    color: #fff;
+  }
+  .cta-bar h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+  .cta-bar p { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 14px; }
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #1a1a2e;
+    font-size: 16px; font-weight: 800;
+    padding: 12px 32px; border-radius: 25px;
+    text-decoration: none; letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(255,200,0,0.3);
+  }
+
+  /* 进度/状态标记 */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px; font-weight: 600;
+  }
+  .tag-green { background: #e8f5e9; color: #2e7d32; }
+  .tag-blue { background: #e3f2fd; color: #1565c0; }
+  .tag-orange { background: #fff3e0; color: #e65100; }
+
+  /* 可复制区域 */
+  .copy-area {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 11px;
+    color: #555;
+    word-break: break-all;
+    position: relative;
+    user-select: all;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <div class="hero-badge">🔥 限时招募 · 文员合伙人</div>
+  <h1>一部手机<span>跑市场</span></h1>
+  <p>零成本 · 零门槛 · 纯分成 · 每单都有收益</p>
+</div>
+
+<!-- ========== 项目是什么 ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">📌</span> 我们在做什么？</div>
+  <p style="font-size:13px;color:#666;line-height:1.8;">
+    简单说：帮那些<strong>有公众号但没时间写文章的人</strong>，提供每日内容更新服务。我们负责写文章、配图、排版、推送到草稿箱，号主每天只需花30秒点一下「群发」。
+  </p>
+  <div class="role-grid" style="margin-top:12px;">
+    <div class="role-item">
+      <span class="ri-icon">👤</span>
+      <span class="ri-title">终端用户</span>
+      <span class="ri-desc">有公众号的人<br>不会写/没时间写</span>
+    </div>
+    <div class="role-item">
+      <span class="ri-icon">✍️</span>
+      <span class="ri-title">运营方</span>
+      <span class="ri-desc">我们写文章<br>自动推到草稿箱</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 你的角色 ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">🎯</span> 你（文员）要做什么？</div>
+  <p style="font-size:13px;color:#666;margin-bottom:10px;">
+    你的工作<strong>只需要一部手机</strong>，三件事：
+  </p>
+  <div class="flow-mini">
+    <div class="fm-step">
+      <div class="fm-num">1</div>
+      <div class="fm-text"><strong>找到终端用户</strong> — 身边有公众号的人、朋友圈、微信群</div>
+    </div>
+    <div class="fm-step">
+      <div class="fm-num">2</div>
+      <div class="fm-text"><strong>发送项目介绍</strong> — 把下面的介绍链接发给对方</div>
+    </div>
+    <div class="fm-step">
+      <div class="fm-num">3</div>
+      <div class="fm-text"><strong>解答简单问题</strong> — 对方不懂的，照着本页回答</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 怎么跟客户说 ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">💬</span> 怎么跟客户聊？（直接复制这段话）</div>
+  <div class="script-box">
+    你好！我看你有公众号，想问一下你平时有在更新吗？<br><br>
+    我这边合作了一个<strong>公众号内容代运营团队</strong>，他们专门帮有公众号但没时间写文章的人做<strong>每日更新</strong>。文章直接发到你的草稿箱，你<strong>预览满意了再手动点群发</strong>，完全可控。<br><br>
+    关键是<span class="highlight">0前期费用，纯收益分成</span>——你赚到广告费了才分一半，赚不到他们一分不要。<br><br>
+    我把介绍发你看看？<br>
+    <span class="highlight" style="font-size:12px;">👉 然后把下面的「项目介绍链接」发过去</span>
+  </div>
+</div>
+
+<!-- ========== 发送链接 ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">🔗</span> 发给客户的两个链接</div>
+  <p style="font-size:12px;color:#999;margin-bottom:8px;">先发项目介绍，对方有兴趣了再发操作指引</p>
+
+  <a class="link-btn" href="https://ws529721.github.io/gzh-workflow/项目介绍.html" target="_blank">
+    <span>📖 项目介绍<br><small style="font-weight:400;opacity:0.8;">让对方了解是什么、有什么好处</small></span>
+    <span class="lb-arrow">›</span>
+  </a>
+  <div class="copy-area" style="margin:4px 0 10px;">https://ws529721.github.io/gzh-workflow/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D.html</div>
+
+  <a class="link-btn orange" href="https://ws529721.github.io/gzh-workflow/" target="_blank">
+    <span>📱 操作指引<br><small style="font-weight:400;opacity:0.8;">对方决定合作了，发这个一步步操作</small></span>
+    <span class="lb-arrow">›</span>
+  </a>
+  <div class="copy-area">https://ws529721.github.io/gzh-workflow/</div>
+</div>
+
+<!-- ========== 收益怎么分 ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">💰</span> 收益怎么分？</div>
+  <table class="split-table">
+    <thead>
+      <tr>
+        <th>角色</th>
+        <th>做什么</th>
+        <th>分多少</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>🧑 号主</td>
+        <td>提供公众号</td>
+        <td class="gold">50%</td>
+      </tr>
+      <tr>
+        <td>✍️ 运营方</td>
+        <td>写文章+全流程</td>
+        <td class="gold">40%</td>
+      </tr>
+      <tr style="background:#fffdf0;">
+        <td>🎯 <strong>你（文员）</strong></td>
+        <td>对接客户</td>
+        <td class="gold" style="font-size:18px;">10%</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#999;margin-top:8px;text-align:center;">
+    单号月收益 ¥300~¥3000 → 你每号每月拿 ¥30~¥300<br>
+    你对接10个号 → 每月躺赚 ¥300~¥3000
+  </p>
+  <div class="tip-box">
+    💡 号主收益完全透明，每月5号截图对账，10号前打款。你对接的号越多，你的分成越稳定。
+  </div>
+</div>
+
+<!-- ========== 常见问题怎么回答 ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">📋</span> 客户常问问题 · 标准回答</div>
+  <p style="font-size:12px;color:#999;margin-bottom:8px;">照着回答，不用自己编</p>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 这靠谱吗？会不会是骗人的？</div>
+    <div class="faq-a"><strong>A：</strong>文章只发到你的<strong>草稿箱</strong>，你自己预览满意了才手动点群发。不放心随时删。而且<strong>0前期费用</strong>，你赚到钱才分，赚不到一分不要。没有任何风险。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 文章质量怎么样？</div>
+    <div class="faq-a"><strong>A：</strong>专业内容团队创作，涵盖职场、科技、生活等热门方向。风格自然，配图精美。可以让他先看几篇样文再决定。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 会不会封号？</div>
+    <div class="faq-a"><strong>A：</strong>文章先进草稿箱，号主亲自审核后才发。内容合规，已稳定运行，0封号记录。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 收益怎么算？一个月能赚多少？</div>
+    <div class="faq-a"><strong>A：</strong>公众号流量主广告费+赞赏等，号主拿50%，我们拿50%。一个普通号月收益 ¥300~¥3000，看粉丝量和内容方向。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 我不会技术，能操作吗？</div>
+    <div class="faq-a"><strong>A：</strong>零门槛。发操作指引链接给他，全程手机操作，对着截图一步步来。实在不会我们远程帮。</div>
+  </div>
+</div>
+
+<!-- ========== 你（文员）的FAQ ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">❓</span> 文员自己的常见问题</div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 我要去哪里找客户？</div>
+    <div class="faq-a"><strong>A：</strong>朋友圈、微信群、小红书、抖音评论区、本地社群……任何人只要有公众号就是你的目标客户。身边朋友有公众号的最容易谈。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 需要每天花多少时间？</div>
+    <div class="faq-a"><strong>A：</strong>完全自由，有空就发发链接聊聊。发一条介绍链接只需要10秒。有人回复了再聊几句。一部手机随时随地能做。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 分成怎么结算给我？</div>
+    <div class="faq-a"><strong>A：</strong>每月10号统一结算。你对接的号主收益截图发你核对，确认后当天打款。微信/支付宝都行。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 需要签合同吗？</div>
+    <div class="faq-a"><strong>A：</strong>简单微信确认即可开始。纯线上合作，没有复杂流程。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q"><span class="q-mark">Q</span> 我怎么知道号主赚了多少？</div>
+    <div class="faq-a"><strong>A：</strong>每月5号号主截图收益数据，我们转发给你。三方对账，完全透明。</div>
+  </div>
+</div>
+
+<!-- ========== 操作速查 ========== -->
+<div class="card">
+  <div class="card-title"><span class="icon">⚡</span> 操作速查卡（长按复制）</div>
+
+  <div style="margin-bottom:12px;">
+    <span class="tag tag-blue">项目介绍链接</span>
+    <div class="copy-area" style="margin-top:4px;">https://ws529721.github.io/gzh-workflow/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D.html</div>
+  </div>
+  <div style="margin-bottom:12px;">
+    <span class="tag tag-green">操作指引链接</span>
+    <div class="copy-area" style="margin-top:4px;">https://ws529721.github.io/gzh-workflow/</div>
+  </div>
+  <div>
+    <span class="tag tag-orange">文员手册（本页）</span>
+    <div class="copy-area" style="margin-top:4px;">https://ws529721.github.io/gzh-workflow/%E6%96%87%E5%91%98%E6%89%8B%E5%86%8C.html</div>
+  </div>
+</div>
+
+<!-- ========== CTA ========== -->
+<div class="cta-bar">
+  <h3>📱 现在就开始</h3>
+  <p>加微信，拉你进文员群<br>有问题随时问，24小时在线</p>
+  <a class="cta-btn" href="#">💬 加微信 · 开始接单</a>
+  <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:10px;line-height:1.8;">
+    微信：<strong style="color:#ffd700;">老板（本人回复）</strong><br>
+    扫下方二维码添加
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
