@@ -972,14 +972,32 @@
   <!-- 返回顶部 -->
   <div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 
-  <!-- QR Code 生成库 - bootcdn国内CDN + jsdelivr备用 -->
-  <script>window._qrCDN = 0;</script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="window._qrCDN=1" onerror="
-var s=document.createElement('script');
-s.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';
-s.onload=function(){window._qrCDN=2};
-document.head.appendChild(s);
-"></script>
+  <!-- QR码：直接用api.qrserver.com生成图片，无需任何CDN JS库，手机端完美支持 -->
+  <script>
+    (function () {
+      var BASE = 'https://ws529721.github.io/gzh-workflow/%E6%89%AB%E7%A0%81%E5%B7%A5%E4%BD%9C%E6%B5%81_%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%8C%87%E5%BC%95.html';
+      function fillQRs() {
+        var boxes = document.querySelectorAll('.qr-box-sm');
+        boxes.forEach(function (box, i) {
+          if (box.querySelector('img')) return;
+          var url = BASE + '#step' + (i + 1);
+          var img = document.createElement('img');
+          img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=88x88&data=' + encodeURIComponent(url);
+          img.width = 88; img.height = 88;
+          img.style.display = 'block';
+          img.alt = 'QR-' + (i + 1);
+          img.onerror = function () {
+            box.innerHTML = '<div style="font-size:9px;color:#999;text-align:center;padding:4px;">扫码→步骤' + (i + 1) + '</div>';
+          };
+          box.innerHTML = '';
+          box.appendChild(img);
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fillQRs);
+      } else { fillQRs(); }
+    })();
+  </script>
 
   <script>
     (function () {
@@ -995,54 +1013,6 @@ document.head.appendChild(s);
         var hashIdx = url.indexOf('#');
         if (hashIdx > -1) url = url.substring(0, hashIdx);
         return url;
-      }
-
-      // ========== 为每个步骤生成真实二维码 ==========
-      function generateQRCodes() {
-        var baseUrl = getBaseUrl();
-        var qrBoxes = document.querySelectorAll('.qr-box-sm');
-        qrBoxes.forEach(function (box, index) {
-          box.innerHTML = '';
-          var stepNum = index;
-          var targetHash = '#step' + (stepNum + 1);
-          var targetUrl = baseUrl + targetHash;
-
-          // 备用方案：使用QR图片API生成
-          function fallbackQR() {
-            var img = document.createElement('img');
-            img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=88x88&data=' + encodeURIComponent(targetUrl);
-            img.width = 88; img.height = 88;
-            img.style.display = 'block';
-            img.onerror = function () {
-              box.innerHTML = '<div style="font-size:10px;color:#e74c3c;text-align:center;padding:8px;">⚠️<br>请刷新</div>';
-            };
-            box.appendChild(img);
-          }
-
-          // 等待CDN加载（最多3秒）
-          var waited = 0;
-          function waitAndGenerate() {
-            waited++;
-            if (window._qrCDN > 0 && typeof QRCode !== 'undefined') {
-              try {
-                new QRCode(box, {
-                  text: targetUrl,
-                  width: 88, height: 88,
-                  colorDark: '#1a1a2e', colorLight: '#ffffff',
-                  correctLevel: QRCode.CorrectLevel.L
-                });
-                return;
-              } catch (e) { /* fall through to fallback */ }
-            }
-            if (waited >= 15) {
-              fallbackQR();
-            } else {
-              box.innerHTML = '<div style="font-size:10px;color:#999;text-align:center;padding:10px;">⏳</div>';
-              setTimeout(waitAndGenerate, 200);
-            }
-          }
-          waitAndGenerate();
-        });
       }
 
       // ========== Hash 导航处理 ==========
