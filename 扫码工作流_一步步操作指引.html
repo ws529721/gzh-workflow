@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>公众号注册 · 扫码一步步操作</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #e8ecf1;
+      color: #333;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 16px 12px 40px;
+    }
+
+    /* 顶部 */
+    .header {
+      text-align: center;
+      padding: 20px 0 12px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1a1a2e;
+    }
+
+    .header p {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    /* 步骤卡片 */
+    .step-card {
+      background: #fff;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      position: relative;
+    }
+
+    /* 步骤编号 */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 18px 0;
+    }
+
+    .step-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #1677ff;
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-badge.green {
+      background: #07C160;
+    }
+
+    .step-badge.orange {
+      background: #ff9800;
+    }
+
+    .step-badge.purple {
+      background: #7c3aed;
+    }
+
+    .step-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+
+    .step-sub {
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* 界面模拟区 */
+    .screen-mock {
+      margin: 14px 18px;
+      border: 2px solid #e8e8e8;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fafbfc;
+    }
+
+    .screen-mock .screen-top {
+      background: #f0f0f0;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .screen-mock .screen-body {
+      padding: 14px;
+    }
+
+    /* 选项卡片 */
+    .option-cards {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .option-card {
+      flex: 1;
+      min-width: 80px;
+      background: #fff;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 12px 6px;
+      text-align: center;
+    }
+
+    .option-card.selected {
+      border-color: #07C160;
+      background: #f0fdf4;
+      box-shadow: 0 0 0 3px rgba(7, 193, 96, 0.15);
+    }
+
+    .option-card.selected::after {
+      content: '👈 选这个';
+      display: block;
+      font-size: 10px;
+      color: #07C160;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .option-card .oc-icon {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .option-card .oc-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .option-card .oc-desc {
+      font-size: 10px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    /* 按钮样式 */
+    .mock-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 6px 0;
+    }
+
+    .mock-btn.green {
+      background: #07C160;
+      color: #fff;
+    }
+
+    .mock-btn.white {
+      background: #fff;
+      color: #07C160;
+      border: 1px solid #07C160;
+    }
+
+    .mock-btn.gray {
+      background: #f5f5f5;
+      color: #999;
+    }
+
+    .mock-btn.blue {
+      background: #1677ff;
+      color: #fff;
+    }
+
+    /* 输入框模拟 */
+    .mock-input {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #999;
+      margin: 6px 0;
+    }
+
+    .mock-input.filled {
+      color: #333;
+      border-color: #07C160;
+    }
+
+    /* 高亮提示 */
+    .highlight-tip {
+      background: #fffde7;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 10px 18px;
+      font-size: 12px;
+      color: #e65100;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* 箭头 */
+    .arrow-icon {
+      text-align: center;
+      font-size: 18px;
+      color: #ccc;
+      margin: 6px 0;
+    }
+
+    /* 二维码区 */
+    .qr-area {
+      margin: 12px 18px 16px;
+      padding: 14px;
+      background: #f8faff;
+      border: 2px dashed #c8d6e5;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .qr-area .qr-label {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .qr-box-sm {
+      width: 100px;
+      height: 100px;
+      background: #fff;
+      border: 2px solid #d0d8f0;
+      border-radius: 10px;
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qr-box-sm canvas {
+      width: 88px !important;
+      height: 88px !important;
+    }
+
+    .qr-action {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1677ff;
+      margin-top: 2px;
+    }
+
+    .qr-hint {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    /* 图片占位 */
+    .img-placeholder {
+      background: #f5f5f5;
+      border: 2px dashed #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      color: #bbb;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+
+    .img-placeholder .ph-icon {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* 完成标记 */
+    .done-check {
+      text-align: center;
+      font-size: 40px;
+      padding: 16px;
+    }
+
+    @media (max-width: 400px) {
+      .option-cards {
+        flex-direction: column;
+      }
+
+      .option-card {
+        min-width: auto;
+      }
+
+      .step-title {
+        font-size: 15px;
+      }
+    }
+
+    /* 进度条 */
+    .progress-wrap {
+      background: #fff;
+      border-radius: 20px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .progress-bar-outer {
+      height: 6px;
+      background: #eee;
+      border-radius: 3px;
+      margin: 8px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, #07C160, #00bfa5);
+      border-radius: 3px;
+      transition: width 0.5s;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* 单步查看模式 */
+    .step-card.solo-mode {
+      border: 3px solid #07C160;
+      box-shadow: 0 6px 30px rgba(7, 193, 96, 0.15);
+    }
+
+    .step-card.hidden-step {
+      display: none;
+    }
+
+    /* 导航按钮 */
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      padding: 10px 18px;
+      justify-content: center;
+    }
+
+    .nav-btn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav-btn.prev {
+      background: #f0f0f0;
+      color: #666;
+    }
+
+    .nav-btn.next {
+      background: #07C160;
+      color: #fff;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* 模式切换 */
+    .mode-toggle {
+      text-align: center;
+      padding: 6px;
+      font-size: 11px;
+      color: #999;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-bottom: 8px;
+    }
+
+    /* 返回顶部按钮 */
+    .back-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: #1677ff;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 16px rgba(22, 119, 255, 0.3);
+      cursor: pointer;
+      z-index: 100;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- ========== 标题 ========== -->
+    <div class="header">
+      <h1>📱 公众号注册 · 扫码操作</h1>
+      <p>每一步扫一个码 → 看图操作 → 再扫下一个码</p>
+      <div class="mode-toggle" id="modeToggle" style="display:none;"></div>
+    </div>
+
+    <!-- ========== 进度条 ========== -->
+    <div class="progress-wrap">
+      <div class="progress-text">
+        <span id="progressText">准备开始</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressInner" style="width:0%;"></div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 0：入口二维码 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge">0</div>
+        <div>
+          <div class="step-title">📷 从这里开始</div>
+          <div class="step-sub">用微信扫下面的码，进入第1步</div>
+        </div>
+      </div>
+      <div class="qr-area">
+        <div class="qr-label">🔽 微信扫一扫 🔽</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner">
+            <span class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span>
+            <span class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span>
+            <span class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span>
+            <span class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span>
+            <span class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span>
+            <span class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span>
+            <span class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span>
+          </div>
+        </div>
+        <div class="qr-action">📱 扫我 → 看第1步</div>
+        <div class="qr-hint">（此处替换为真实二维码）</div>
+      </div>
+      <div style="padding:0 18px 14px;font-size:12px;color:#999;text-align:center;">
+        每个步骤结束后，页面底部都有一个二维码<br>扫它就能进入下一步，一路扫到底！
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 1：打开浏览器 → 立即注册 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge green">1</div>
+        <div>
+          <div class="step-title">🌐 打开注册网址</div>
+          <div class="step-sub">手机浏览器操作</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">📱 手机浏览器</div>
+        <div class="screen-body">
+          <div class="mock-input filled" style="text-align:center;font-weight:700;color:#07C160;">mp.weixin.qq.com</div>
+          <div class="arrow-icon">⬇️</div>
+          <div style="text-align:center;padding:20px;font-size:14px;color:#555;">
+            打开网页后<br>点右上角那个<br>
+            <span
+              style="display:inline-block;background:#07C160;color:#fff;padding:8px 24px;border-radius:6px;font-size:16px;font-weight:700;margin-top:6px;">立即注册</span>
+          </div>
+        </div>
+      </div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 做完后，扫我进入下一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 第2步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 2：界面一 — 选「公众号」 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge">2</div>
+        <div>
+          <div class="step-title">📢 选择账号类型</div>
+          <div class="step-sub">3个选项，选第1个</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">请选择注册的账号类型</div>
+        <div class="screen-body">
+          <div class="option-cards">
+            <div class="option-card selected">
+              <span class="oc-icon">📢</span>
+              <span class="oc-name">公众号</span>
+              <span class="oc-desc">个人可注册</span>
+            </div>
+            <div class="option-card" style="opacity:0.5;">
+              <span class="oc-icon">🏢</span>
+              <span class="oc-name">服务号</span>
+              <span class="oc-desc">需营业执照</span>
+            </div>
+            <div class="option-card" style="opacity:0.5;">
+              <span class="oc-icon">📦</span>
+              <span class="oc-name">小程序</span>
+              <span class="oc-desc">需开发能力</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-tip">⚠️ 点第一个「公众号」！不要点「服务号」！</div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 选好后，扫我进入下一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 第3步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 3：填邮箱 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge green">3</div>
+        <div>
+          <div class="step-title">📧 填写邮箱并激活</div>
+          <div class="step-sub">用没注册过公众号的邮箱</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">📱 填写邮箱</div>
+        <div class="screen-body">
+          <div class="mock-input filled">📧 你的邮箱地址（如 xxx@qq.com）</div>
+          <div class="mock-btn green" style="width:auto;display:inline-block;padding:8px 20px;">激活邮箱</div>
+          <div class="arrow-icon">⬇️</div>
+          <div style="font-size:12px;color:#555;text-align:center;line-height:1.8;">
+            切换到你的邮箱APP<br>找到微信发来的验证码邮件<br>把验证码填回来
+          </div>
+          <div class="mock-input">🔢 输入邮箱验证码</div>
+          <div class="mock-btn green">下一步</div>
+        </div>
+      </div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 填好后，扫我进入下一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 第4步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 4：界面二 — 选「个人」 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge orange">4</div>
+        <div>
+          <div class="step-title">👤 选择主体类型</div>
+          <div class="step-sub">5个选项，选「个人」</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">选择主体类型 · 账号类型：公众号</div>
+        <div class="screen-body">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+            <span class="mock-btn gray" style="width:auto;padding:8px 14px;">政府</span>
+            <span class="mock-btn gray" style="width:auto;padding:8px 14px;">媒体</span>
+            <span class="mock-btn gray" style="width:auto;padding:8px 14px;">企业</span>
+            <span class="mock-btn gray" style="width:auto;padding:8px 14px;">其他组织</span>
+            <span class="mock-btn green" style="width:auto;padding:8px 18px;">个人 👈</span>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-tip">⚠️ 5个里面只点「个人」！其他要营业执照！</div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 选好后，扫我进入下一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 第5步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 5：实名认证 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge purple">5</div>
+        <div>
+          <div class="step-title">🆔 实名认证</div>
+          <div class="step-sub">填信息 + 上传身份证照片</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">📱 实名认证</div>
+        <div class="screen-body">
+          <div class="mock-input filled">👤 真实姓名</div>
+          <div class="mock-input filled">🆔 身份证号码</div>
+          <div class="img-placeholder">
+            <span class="ph-icon">📷</span>
+            上传身份证正面（人像面）
+            <div style="font-size:10px;color:#e65100;">提前用手机拍好存相册</div>
+          </div>
+          <div class="img-placeholder">
+            <span class="ph-icon">📷</span>
+            上传身份证反面（国徽面）
+            <div style="font-size:10px;color:#e65100;">正反面各一张，不要重复</div>
+          </div>
+          <div class="mock-btn blue">📱 微信扫码进行人脸识别</div>
+        </div>
+      </div>
+      <div class="highlight-tip">⚠️ 身份证照片要四角完整、字迹清晰、无反光！人脸识别时摘掉眼镜帽子。</div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 认证通过后，扫我进入下一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 第6步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 6：填信息 → 提交 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge green">6</div>
+        <div>
+          <div class="step-title">📝 设置公众号信息</div>
+          <div class="step-sub">起个好名字，传个头像</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">📱 填写公众号信息</div>
+        <div class="screen-body">
+          <div class="mock-input filled">📛 公众号名称（2-16个字）</div>
+          <div style="font-size:10px;color:#999;margin:2px 0 6px;">如"小明的职场笔记"，不要含违禁词</div>
+          <div class="mock-input filled">📝 简介（一句话介绍你的号）</div>
+          <div class="img-placeholder">
+            <span class="ph-icon">🎨</span>
+            上传公众号头像（正方形图片）
+            <div style="font-size:10px;color:#999;">从相册随便选一张就行</div>
+          </div>
+          <div class="mock-btn green">✅ 提交审核</div>
+        </div>
+      </div>
+      <div class="highlight-tip">提交后等审核，一般几小时内通过。通过后公众号就开通了！</div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 提交后，扫我进入下一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 第7步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 7：下载订阅号助手 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge">7</div>
+        <div>
+          <div class="step-title">📥 下载「订阅号助手」APP</div>
+          <div class="step-sub">审核通过后下载管理工具</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">📱 App Store / 应用商店</div>
+        <div class="screen-body">
+          <div style="background:#f0f0f0;border-radius:20px;padding:8px 16px;font-size:13px;color:#999;">🔍 订阅号助手</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px;margin-top:8px;">
+            <div style="width:50px;height:50px;background:#07C160;border-radius:11px;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:14px;font-weight:700;">订阅号助手</div>
+              <div style="font-size:10px;color:#999;">腾讯 · 官方出品</div>
+            </div>
+            <div
+              style="margin-left:auto;background:#07C160;color:#fff;font-size:11px;padding:4px 14px;border-radius:14px;">
+              获取</div>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-tip">图标是绿色方块+白色图案，开发者是腾讯！不要下错！</div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 下载安装后，扫我进入下一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 第8步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 8：获取密钥 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge orange">8</div>
+        <div>
+          <div class="step-title">🔑 获取 AppID 和 AppSecret</div>
+          <div class="step-sub">手机浏览器操作</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">📱 手机浏览器 → mp.weixin.qq.com</div>
+        <div class="screen-body">
+          <div style="font-size:12px;color:#555;line-height:1.8;">
+            📍 登录后 → 左侧菜单 → <strong>「设置与开发」</strong><br>
+            📍 → <strong>「基本配置」</strong><br>
+            📍 找到两个东西：
+          </div>
+          <div style="background:#fff;border:1px solid #ff9800;border-radius:8px;padding:10px;margin:8px 0;">
+            <div style="font-size:11px;color:#999;">📌 AppID（直接复制）</div>
+            <div style="font-size:12px;font-weight:600;word-break:break-all;">wxXXXXXXXXXXXXXXXX</div>
+          </div>
+          <div style="background:#fff;border:1px solid #e74c3c;border-radius:8px;padding:10px;margin:8px 0;">
+            <div style="font-size:11px;color:#999;">🔐 AppSecret</div>
+            <div style="font-size:12px;color:#999;">如果显示****，点旁边的<span
+                style="color:#e74c3c;font-weight:700;">「重置」</span>→微信扫码→显示完整字符串→立刻截图！</div>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-tip">⚠️ AppSecret 只完整显示一次！立刻截图或复制！</div>
+      <div class="qr-area">
+        <div class="qr-label">✅ 复制好密钥后，扫我进入最后一步</div>
+        <div class="qr-box-sm">
+          <div class="qr-inner"><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot empty"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot empty"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot empty"></span><span class="qr-dot"></span><span
+              class="qr-dot"></span><span class="qr-dot"></span></div>
+        </div>
+        <div class="qr-action">📱 扫我 → 最后一步</div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 步骤 9：扫码加微信 → 发密钥 -->
+    <!-- ================================================================ -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge green">9</div>
+        <div>
+          <div class="step-title">📤 扫二维码加微信 · 发密钥</div>
+          <div class="step-sub">把 AppID 和 AppSecret 发过来</div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="screen-top">📱 微信扫一扫</div>
+        <div class="screen-body" style="text-align:center;">
+          <div style="font-size:13px;color:#555;margin-bottom:10px;">长按识别或扫下方二维码<br>添加微信后，把两串密钥粘贴发送</div>
+          <!-- 微信二维码区域 -->
+          <div
+            style="width:140px;height:140px;background:#f0f4ff;border:2px solid #d0d8f0;border-radius:12px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+            <div
+              style="width:44px;height:44px;background:#1677ff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
+              微</div>
+            <div style="font-size:12px;font-weight:700;color:#333;">老板（本人回复）</div>
+            <div style="font-size:9px;color:#999;">扫二维码，添加我为朋友。</div>
+          </div>
+          <div style="font-size:11px;color:#999;margin-top:6px;">👆 此处替换为你的真实微信二维码</div>
+          <div
+            style="background:#e8f5e9;border-radius:8px;padding:10px;margin-top:10px;font-size:12px;color:#2e7d32;text-align:left;line-height:1.6;">
+            发过来大概长这样：<br>
+            <code style="font-size:10px;">AppID：wxabc123def4567890</code><br>
+            <code style="font-size:10px;">AppSecret：a1b2c3d4e5f6g7h8i9j0...</code>
+          </div>
+        </div>
+      </div>
+      <div class="done-check">🎉</div>
+      <div style="text-align:center;padding:0 18px 16px;font-size:14px;font-weight:700;color:#2e7d32;">
+        发完密钥就完成了！<br>我们5分钟配置好，明天文章就出现在你的草稿箱！
+      </div>
+    </div>
+
+    <!-- ========== 底部 ========== -->
+    <div style="text-align:center;padding:20px;font-size:11px;color:#bbb;">
+      以上每个步骤的二维码，请替换为真实的跳转链接二维码<br>
+      用户微信扫码即可看到每一步的操作截图
+    </div>
+
+  </div><!-- /.container -->
+
+  <!-- 返回顶部 -->
+  <div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+  <!-- QR Code 生成库 -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js">
+  </script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // ========== 步骤总数 ==========
+      var TOTAL_STEPS = 9; // 步骤 1-9（步骤0是入口）
+
+      // ========== 获取当前页面基础URL ==========
+      function getBaseUrl() {
+        var url = window.location.href;
+        // 去掉已有的 hash
+        var hashIdx = url.indexOf('#');
+        if (hashIdx > -1) url = url.substring(0, hashIdx);
+        return url;
+      }
+
+      // ========== 为每个步骤生成真实二维码 ==========
+      function generateQRCodes() {
+        var baseUrl = getBaseUrl();
+        // 查找所有 .qr-box-sm 元素
+        var qrBoxes = document.querySelectorAll('.qr-box-sm');
+        qrBoxes.forEach(function (box, index) {
+          // 清除旧的CSS模拟内容
+          box.innerHTML = '';
+          // 每个QR的链接目标：当前页#stepN
+          var stepNum = index; // 0=入口→step1, 1=step1→step2, ...
+          var targetHash = '#step' + (stepNum + 1);
+          var targetUrl = baseUrl + targetHash;
+
+          try {
+            new QRCode(box, {
+              text: targetUrl,
+              width: 88,
+              height: 88,
+              colorDark: '#1a1a2e',
+              colorLight: '#ffffff',
+              correctLevel: QRCode.CorrectLevel.L
+            });
+          } catch (e) {
+            // 如果CDN加载失败，显示备用文字
+            box.innerHTML = '<div style="font-size:10px;color:#999;text-align:center;padding:10px;">QR<br>加载中</div>';
+            console.warn('QR生成失败，请检查网络:', e);
+          }
+        });
+      }
+
+      // ========== Hash 导航处理 ==========
+      function handleHashNavigation() {
+        var hash = window.location.hash;
+        if (!hash) return; // 无hash，显示全部步骤
+
+        var match = hash.match(/^#step(\d+)$/);
+        if (!match) return;
+
+        var targetStep = parseInt(match[1], 10);
+        if (targetStep < 0 || targetStep > TOTAL_STEPS) return;
+
+        // 隐藏所有步骤卡片
+        var allCards = document.querySelectorAll('.step-card');
+        allCards.forEach(function (card) {
+          card.classList.add('hidden-step');
+          card.classList.remove('solo-mode');
+        });
+
+        // 显示目标步骤
+        var targetCard = document.querySelector('.step-card[data-step="' + targetStep + '"]');
+        if (targetCard) {
+          targetCard.classList.remove('hidden-step');
+          targetCard.classList.add('solo-mode');
+          // 滚动到该卡片
+          setTimeout(function () {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 200);
+        }
+
+        // 显示"查看全部"切换按钮
+        var modeToggle = document.getElementById('modeToggle');
+        if (modeToggle) {
+          modeToggle.style.display = 'block';
+          modeToggle.textContent = '📋 查看全部步骤';
+        }
+
+        // 添加导航按钮
+        addSoloNavButtons(targetStep);
+      }
+
+      // ========== 单步模式下的导航按钮 ==========
+      function addSoloNavButtons(currentStep) {
+        var targetCard = document.querySelector('.step-card[data-step="' + currentStep + '"]');
+        if (!targetCard) return;
+
+        // 移除旧的导航按钮
+        var oldNav = targetCard.querySelector('.nav-buttons');
+        if (oldNav) oldNav.remove();
+
+        var navDiv = document.createElement('div');
+        navDiv.className = 'nav-buttons';
+
+        var prevBtn = document.createElement('button');
+        prevBtn.className = 'nav-btn prev';
+        prevBtn.textContent = '◀ 上一步';
+        if (currentStep <= 1) prevBtn.disabled = true;
+        prevBtn.onclick = function () {
+          window.location.hash = '#step' + (currentStep - 1);
+        };
+
+        var nextBtn = document.createElement('button');
+        nextBtn.className = 'nav-btn next';
+        nextBtn.textContent = '下一步 ▶';
+        if (currentStep >= TOTAL_STEPS) {
+          nextBtn.textContent = '🎉 已完成';
+          nextBtn.style.background = '#ff9800';
+        }
+        nextBtn.onclick = function () {
+          if (currentStep >= TOTAL_STEPS) {
+            // 最后一步，回到全部视图
+            window.location.hash = '';
+          } else {
+            window.location.hash = '#step' + (currentStep + 1);
+          }
+        };
+
+        navDiv.appendChild(prevBtn);
+        navDiv.appendChild(nextBtn);
+        targetCard.appendChild(navDiv);
+      }
+
+      // ========== 进度条 ==========
+      function updateProgressBar(currentStep) {
+        var pct = Math.round((currentStep / TOTAL_STEPS) * 100);
+        var inner = document.getElementById('progressInner');
+        var text = document.getElementById('progressText');
+        var pctEl = document.getElementById('progressPct');
+        if (inner) inner.style.width = pct + '%';
+        if (text) text.textContent = '步骤 ' + currentStep + ' / ' + TOTAL_STEPS;
+        if (pctEl) pctEl.textContent = pct + '%';
+      }
+
+      // ========== 模式切换 ==========
+      function setupModeToggle() {
+        var toggle = document.getElementById('modeToggle');
+        if (!toggle) return;
+
+        toggle.addEventListener('click', function () {
+          var hash = window.location.hash;
+          if (hash) {
+            // 当前是单步模式 → 切换到全部模式
+            window.location.hash = '';
+          }
+        });
+      }
+
+      // ========== 初始化 ==========
+      function init() {
+        // 给每个 step-card 添加 data-step 属性
+        var cards = document.querySelectorAll('.step-card');
+        cards.forEach(function (card, index) {
+          card.setAttribute('data-step', index);
+          // 添加 id
+          card.id = 'step' + index;
+        });
+
+        // 生成真实二维码
+        generateQRCodes();
+
+        // 处理hash导航
+        handleHashNavigation();
+
+        // 更新进度条
+        var hash = window.location.hash;
+        if (hash) {
+          var match = hash.match(/^#step(\d+)$/);
+          if (match) {
+            updateProgressBar(parseInt(match[1], 10));
+          }
+        } else {
+          updateProgressBar(0);
+        }
+
+        // 设置模式切换
+        setupModeToggle();
+
+        // 返回顶部按钮
+        var backTop = document.getElementById('backTop');
+        window.addEventListener('scroll', function () {
+          if (window.scrollY > 500) {
+            backTop.style.display = 'flex';
+          } else {
+            backTop.style.display = 'none';
+          }
+        });
+
+        // 监听hash变化
+        window.addEventListener('hashchange', function () {
+          // 刷新页面以重新应用hash逻辑
+          location.reload();
+        });
+
+        console.log('✅ 扫码工作流已就绪 | 共 ' + TOTAL_STEPS + ' 个步骤 | QR码已生成');
+      }
+
+      // 页面加载完成后初始化
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+
+</html>
