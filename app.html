@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI创作助手" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="manifest" href="data:application/json,{}" />
+    <title>多账号AI创作助手</title>
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --card: #fff;
+            --text: #1a1a2e;
+            --muted: #999;
+            --blue: #2563eb;
+            --green: #16a34a;
+            --orange: #ea580c;
+            --purple: #7c3aed;
+            --red: #dc2626;
+            --border: #e5e7eb;
+            --radius: 16px;
+            --safe: env(safe-area-inset-bottom, 0px)
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: calc(80px + var(--safe));
+            -webkit-font-smoothing: antialiased
+        }
+
+        .hdr {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #fff;
+            padding: 16px 16px 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            text-align: center
+        }
+
+        .hdr h1 {
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: .5px
+        }
+
+        .hdr .st {
+            font-size: 11px;
+            opacity: .7;
+            margin-top: 2px
+        }
+
+        .ctn {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 12px 12px 40px
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
+            border: 1px solid var(--border)
+        }
+
+        .ct {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all .15s;
+            text-decoration: none;
+            touch-action: manipulation
+        }
+
+        .btn:active {
+            transform: scale(.96);
+            opacity: .85
+        }
+
+        .btn-p {
+            background: var(--blue);
+            color: #fff
+        }
+
+        .btn-s {
+            background: var(--green);
+            color: #fff
+        }
+
+        .btn-o {
+            background: #fff;
+            border: 1.5px solid var(--blue);
+            color: var(--blue)
+        }
+
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 12px;
+            border-radius: 8px
+        }
+
+        .btn-blk {
+            width: 100%;
+            justify-content: center
+        }
+
+        .btn:disabled {
+            opacity: .5;
+            pointer-events: none
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            background: #f9fafb;
+            -webkit-appearance: none
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .08)
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 4px;
+            margin-top: 10px
+        }
+
+        label:first-child {
+            margin-top: 0
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600
+        }
+
+        .badge-g {
+            background: #dcfce7;
+            color: #166534
+        }
+
+        .badge-b {
+            background: #dbeafe;
+            color: #1e40af
+        }
+
+        .row {
+            display: flex;
+            gap: 10px
+        }
+
+        .col {
+            flex: 1;
+            min-width: 0
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .04)
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 13px 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2.5px solid transparent;
+            transition: .2s;
+            color: var(--muted);
+            white-space: nowrap
+        }
+
+        .tab.on {
+            color: var(--blue);
+            border-bottom-color: var(--blue)
+        }
+
+        .pg {
+            display: none
+        }
+
+        .pg.on {
+            display: block
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 22px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            z-index: 999;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .toast.show {
+            opacity: 1
+        }
+
+        .toast-ok {
+            background: var(--green)
+        }
+
+        .toast-err {
+            background: var(--red)
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            z-index: 200;
+            align-items: flex-end;
+            justify-content: center
+        }
+
+        .modal-overlay.show {
+            display: flex
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+            padding: 20px 16px calc(20px + var(--safe));
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideUp .25s
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%)
+            }
+
+            to {
+                transform: translateY(0)
+            }
+        }
+
+        .empty {
+            text-align: center;
+            padding: 36px 16px;
+            color: var(--muted)
+        }
+
+        .empty .ic {
+            font-size: 44px;
+            margin-bottom: 8px
+        }
+
+        .prog {
+            height: 5px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 8px 0
+        }
+
+        .prog-fill {
+            height: 100%;
+            background: var(--blue);
+            border-radius: 3px;
+            transition: width .4s;
+            width: 0%
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            padding: 6px 0 var(--safe);
+            z-index: 100
+        }
+
+        .nav-btn {
+            flex: 1;
+            text-align: center;
+            padding: 6px;
+            font-size: 10px;
+            color: var(--muted);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit
+        }
+
+        .nav-btn .nv {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 2px
+        }
+
+        .nav-btn.on {
+            color: var(--blue)
+        }
+
+        .art-preview {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            margin: 8px 0;
+            max-height: 260px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.8
+        }
+
+        .art-preview h2 {
+            font-size: 15px;
+            margin: 14px 0 6px
+        }
+
+        .art-preview strong {
+            color: #1a1a2e
+        }
+
+        .art-preview blockquote {
+            background: #f0f4ff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 3px solid #818cf8;
+            font-size: 13px;
+            color: #555
+        }
+
+        .art-preview hr {
+            border: .5px solid #eee;
+            margin: 12px 0
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hdr">
+        <h1>🤖 多账号AI创作助手</h1>
+        <div class="st" id="st">轻触底部导航开始</div>
+    </div>
+
+    <div class="ctn">
+        <!-- 仪表盘 -->
+        <div class="pg on" id="pg-dash">
+            <div class="card">
+                <div class="ct">📊 账号概览</div>
+                <div id="dash-acc"></div>
+            </div>
+            <div class="card">
+                <div class="ct">⚡ 快捷操作</div>
+                <button class="btn btn-p btn-blk" onclick="swTab('create')">✍️ 开始创作</button>
+                <button class="btn btn-o btn-blk" style="margin-top:8px" onclick="swTab('accts')">👤 管理账号</button>
+            </div>
+        </div>
+
+        <!-- 创作 -->
+        <div class="pg" id="pg-create">
+            <div class="card">
+                <div class="ct">🎯 创作中心</div>
+                <label>选择账号</label><select id="sel-acc"></select>
+                <label>垂直主题</label><select id="sel-topic"></select>
+                <label>AI模型</label><select id="sel-model"></select>
+                <label>生成篇数</label><select id="sel-n">
+                    <option value="1">1篇</option>
+                    <option value="3">3篇</option>
+                    <option value="6" selected>6篇</option>
+                </select>
+                <button class="btn btn-p btn-blk" style="margin-top:14px" id="btn-gen">🚀 生成文章</button>
+                <div id="gen-prog" style="display:none;margin-top:10px">
+                    <div class="prog">
+                        <div class="prog-fill" id="prog-fill"></div>
+                    </div>
+                    <p style="font-size:11px;color:var(--muted);text-align:center" id="prog-txt"></p>
+                </div>
+            </div>
+            <div id="art-out"></div>
+        </div>
+
+        <!-- 账号 -->
+        <div class="pg" id="pg-accts">
+            <div id="acct-list"></div>
+            <button class="btn btn-p btn-blk" onclick="showAddAcct()">➕ 添加账号</button>
+        </div>
+
+        <!-- 设置 -->
+        <div class="pg" id="pg-set">
+            <div class="card">
+                <div class="ct">🔑 API密钥</div>
+                <label>DeepSeek API Key</label><input type="password" id="key-ds" placeholder="sk-..." />
+                <label>OpenAI API Key(可选)</label><input type="password" id="key-oai" placeholder="sk-..." />
+                <label>作者名称</label><input id="set-author" value="铃木村" />
+                <button class="btn btn-p btn-blk" style="margin-top:12px" onclick="saveSets()">💾 保存</button>
+            </div>
+            <div class="card">
+                <div class="ct">📋 关于</div>
+                <p style="font-size:13px;color:var(--muted)">文章生成后可在电脑端运行服务器推送到微信草稿箱。本应用所有数据存储在手机本地。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="nav">
+        <div class="nav-btn on" data-pg="dash"><span class="nv">📊</span>仪表盘</div>
+        <div class="nav-btn" data-pg="create"><span class="nv">✍️</span>创作</div>
+        <div class="nav-btn" data-pg="accts"><span class="nv">👤</span>账号</div>
+        <div class="nav-btn" data-pg="set"><span class="nv">⚙️</span>设置</div>
+    </div>
+
+    <!-- 添加账号弹窗 -->
+    <div class="modal-overlay" id="md-acct">
+        <div class="modal">
+            <h2 style="margin-bottom:14px">➕ 添加公众号账号</h2>
+            <label>账号名称</label><input id="md-name" placeholder="如：电商运营号" />
+            <label>AppID</label><input id="md-appid" placeholder="wx..." />
+            <label>AppSecret</label><input id="md-secret" placeholder="请输入AppSecret" />
+            <label>白名单IP</label><input id="md-ip" placeholder="115.206.224.39" />
+            <label>垂直主题</label><select id="md-topic"></select>
+            <div class="row" style="margin-top:14px"><button class="btn btn-o col"
+                    onclick="clsMd('md-acct')">取消</button><button class="btn btn-p col" id="btn-sv-acct">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 数据存储 ====================
+        const LS = {
+            get(k, d) { try { const v = localStorage.getItem('gzh_' + k); return v ? JSON.parse(v) : d } catch (e) { return d } },
+            set(k, v) { localStorage.setItem('gzh_' + k, JSON.stringify(v)) }
+        };
+
+        // ==================== 垂直主题 ====================
+        const TOPICS = {
+            "通用职场效率": { ind: "职场办公", ds: "销售数据CSV", dd: "8900行销售数据", t1: "【Notion】", t2: "【飞书妙记】", t3: "【Gamma.app】", c1: "一份50页的行业报告", c2: "一个1500字的工作方案", c3: "一封来自合作方的邮件", m1: "日销售额", m2: "客户留存率", m3: "项目完成率", rt: "季度汇报PPT", ex: "知识工作者" },
+            "电商运营": { ind: "电商运营", ds: "抖音直播数据CSV", dd: "20000行订单与流量数据", t1: "【抖店】", t2: "【生意参谋】", t3: "【有米云】", c1: "一份50页的竞品分析报告", c2: "一个直播带货脚本", c3: "一封给供应商的谈判邮件", m1: "GMV", m2: "转化率", m3: "ROI", rt: "双十一复盘PPT", ex: "电商运营人" },
+            "教育培训": { ind: "教育培训", ds: "学员学习数据CSV", dd: "5000条学员课程完成记录", t1: "【ClassIn】", t2: "【小鹅通】", t3: "【Canva 教育版】", c1: "一份30页的课程标准文档", c2: "一节在线课程的教案", c3: "一封给家长的沟通邮件", m1: "完课率", m2: "续费率", m3: "学员满意度", rt: "学期教学总结PPT", ex: "教育工作者" },
+            "金融分析": { ind: "金融分析", ds: "上市公司财报数据CSV", dd: "50家公司的季度财报数据", t1: "【Wind】", t2: "【同花顺】", t3: "【Tableau】", c1: "一份200页的行业研究报告", c2: "一份投资分析备忘录", c3: "一封给客户的市场分析邮件", m1: "ROE", m2: "净利润率", m3: "PE估值", rt: "投研分析PPT", ex: "金融分析师" },
+            "医疗健康": { ind: "医疗健康", ds: "患者诊疗数据CSV", dd: "3000份病历的关键指标", t1: "【杏仁医生】", t2: "【丁香园】", t3: "【MedPeer】", c1: "一篇40页的临床研究论文", c2: "一份病例分析报告", c3: "一封跨科室会诊沟通邮件", m1: "治愈率", m2: "平均住院日", m3: "患者满意度", rt: "科室季度汇报PPT", ex: "医疗从业者" },
+            "法律咨询": { ind: "法律咨询", ds: "案件卷宗OCR数据CSV", dd: "200个案件的判决要素数据", t1: "【北大法宝】", t2: "【威科先行】", t3: "【法信】", c1: "一份80页的法规解读文件", c2: "一份法律意见书", c3: "一封给客户的风险提示邮件", m1: "胜诉率", m2: "案件周期", m3: "客户满意度", rt: "案件分析汇报PPT", ex: "法律从业者" },
+            "设计创意": { ind: "设计创意", ds: "用户反馈数据CSV", dd: "1000条用户对设计稿的反馈", t1: "【Figma】", t2: "【即时设计】", t3: "【Midjourney】", c1: "一份50页的设计趋势报告", c2: "一套品牌设计方案的说明文档", c3: "一封给甲方的设计提案邮件", m1: "设计通过率", m2: "用户满意度", m3: "改稿次数", rt: "设计提案PPT", ex: "设计师" },
+            "软件开发": { ind: "软件开发", ds: "系统性能日志CSV", dd: "50000条服务器性能监控数据", t1: "【GitHub Copilot】", t2: "【Cursor】", t3: "【Linear】", c1: "一份100页的技术架构文档", c2: "一份技术方案设计", c3: "一封给产品经理的需求评审邮件", m1: "系统可用率", m2: "Bug修复周期", m3: "迭代速度", rt: "技术复盘PPT", ex: "开发者" },
+            "市场营销": { ind: "市场营销", ds: "广告投放数据CSV", dd: "15000条各渠道投放效果数据", t1: "【巨量引擎】", t2: "【腾讯广告】", t3: "【新榜】", c1: "一份60页的消费者洞察报告", c2: "一份营销活动策划方案", c3: "一封给客户的投放复盘邮件", m1: "ROI", m2: "获客成本", m3: "品牌声量", rt: "月度营销复盘PPT", ex: "市场营销人" },
+            "房产经纪": { ind: "房产经纪", ds: "房源带看数据CSV", dd: "3000条带看记录的转化数据", t1: "【贝壳】", t2: "【房天下】", t3: "【安居客】", c1: "一份40页的区域市场分析报告", c2: "一份房源推荐方案", c3: "一封给意向客户的跟进邮件", m1: "带看转化率", m2: "成交周期", m3: "客户满意度", rt: "区域市场分析PPT", ex: "房产经纪人" },
+            "自媒体运营": { ind: "自媒体运营", ds: "公众号后台数据CSV", dd: "200篇推送的阅读和转化数据", t1: "【新榜】", t2: "【135编辑器】", t3: "【西瓜数据】", c1: "一份30页的平台趋势报告", c2: "一篇深度内容的创作方案", c3: "一封与品牌方的合作沟通邮件", m1: "打开率", m2: "分享率", m3: "粉丝增长率", rt: "月度运营复盘PPT", ex: "自媒体运营者" },
+        };
+
+        // ==================== 文章模板 ====================
+        const T = {
+            hdr: a => `<p style="color:#999;font-size:13px;text-align:center;letter-spacing:2px">${a} · 原创</p><hr style="border:.5px dashed #e0e0e0"/>`,
+            p: t => `<p style="margin:14px 0;color:#555;font-size:15px;line-height:2">${t}</p>`,
+            b: t => `<strong style="color:#1a1a2e">${t}</strong>`,
+            h2: t => `<h2 style="font-size:17px;color:#1a1a2e;margin:24px 0 12px;padding-left:10px;border-left:3px solid #2563eb">${t}</h2>`,
+            tip: t => `<blockquote style="background:linear-gradient(135deg,#f8f9ff,#f0f4ff);padding:12px 16px;border-radius:10px;margin:14px 0;border-left:4px solid #818cf8;font-size:13px;color:#555">💡 ${t}</blockquote>`,
+            q: t => `<p style="text-align:center;font-size:15px;color:#2563eb;margin:20px 0;font-weight:bold;letter-spacing:.5px">💬 ${t}</p>`,
+            hr: '<hr style="border:.5px solid #eee;margin:20px 0"/>',
+            cta: '<hr style="border:2px solid #2563eb;margin:24px 0 14px"/><p style="text-align:center;color:#2563eb;font-size:14px;font-weight:bold">🔑 公众号对话框发送<strong>【工具】</strong>，免费领取完整AI提效工具包</p>',
+        };
+
+        function genHTML(n, t, auth) {
+            const tp = t; const ind = tp.ind; let h = '<section>' + T.hdr(auth);
+            const A = [
+                // 1
+                () => {
+                    let s = ''; s += T.p(`你有没有算过，一天8小时里${T.b('真正创造价值的时间有几小时？')}一半在读报告，剩下在写方案、做表格、回邮件。`); s += T.q('「原来我每天有3.5小时在做AI可以代劳的事」') + T.hr;
+                    s += T.h2('📖 一、信息摄入：3分钟掌握全局'); s += T.p(`${tp.c1}，传统精读2小时+。拖进${T.b('【Claude】或【Kimi Chat】')}：「500字提炼核心论点」。AI 3分钟+5分钟核对=${T.b('8分钟，效率提升93%')}。`); s += T.tip('进阶：追问「结论基于哪些假设？如果假设不成立呢？」');
+                    s += T.h2('✍️ 二、内容产出：下笔如有神'); s += T.p(`搭骨架→填血肉→注入灵魂。${tp.c2}，${T.b('47分钟完成，以前3小时+')}。`) + T.hr;
+                    s += T.h2('📊 三、数据处理：秒级锁定维度'); s += T.p(`${tp.dd}，40秒AI分析。${T.b('效率提升86%')}。务必抽样验证数值。`) + T.hr;
+                    s += T.h2('💬 四、沟通协作：一键得体回复'); s += T.p(`${tp.c3}。AI生成温和/正式/简洁三版→微调。${T.b('8分钟搞定，精神内耗归零')}。`) + T.hr;
+                    s += T.h2('🚀 五、今天就迈出第一步'); s += T.p(`把一封邮件先发给AI优化措辞。花3分钟体验。`) + T.tip('中文场景优先【Kimi Chat】【通义千问】（免费），敏感数据用【Ollama】本地部署。') + T.hr;
+                    s += T.p(`四个场景叠加，每天${T.b('9小时→5.5小时')}。`) + T.q('前提是：你得先迈出第一步 🏃') + T.cta; return s;
+                },
+                // 2
+                () => {
+                    let s = ''; s += T.p(`周一早上邮箱12封未读，桌面3份方案，微信5条消息。${T.b('不是事情太多，是你在用「手工模式」处理「工业化量级」的信息。')}`) + T.hr;
+                    s += T.h2('🔍 一、AI信息守门人'); s += T.p(`聚合→AI初筛→300字洞察卡片→归档${tp.t1}。${T.b('120分钟→25分钟')}。`) + T.hr;
+                    s += T.h2('✍️ 二、四阶段AI加速管道'); s += T.p(`构思(20个角度)→结构化(3种大纲)→扩写(逐段协同)→打磨(AI检查逻辑)。${T.b('3000字90分钟')}。`) + T.hr;
+                    s += T.h2('📊 三、数据分析变对话'); s += T.p(`上传${tp.ds}→自然语言提问→AI分析${tp.m1}异常波动。${T.b('这才是核心价值')}。`) + T.hr;
+                    s += T.h2('⚠️ 四、避开三大坑'); s += T.p('坑一：过度依赖。坑二：试图一步到位。坑三：忽视数据安全。') + T.hr;
+                    s += T.q('AI是杠杆，你是支点。') + T.cta; return s;
+                },
+                // 3
+                () => {
+                    let s = ''; s += T.p(`每天接收的信息量=15世纪一个人一生总和。${T.b('「怎么学」比「学什么」重要100倍')}。`) + T.hr;
+                    s += T.h2('🧠 一、搭建AI第二大脑'); s += T.p(`内容→${tp.t1}→AI打标签+摘要→问答检索→知识反刍。${T.b('核心是可检索+可关联')}。`) + T.hr;
+                    s += T.h2('📖 二、深度略读法'); s += T.p(`AI预读→定向精读→输出式消化。${T.b('60页白皮书45分钟')}。`) + T.hr;
+                    s += T.h2('🔗 三、看不见的连接'); s += T.p(`两个不相关领域→AI找类比。${T.b('每次至少有一两条你没想到')}。`) + T.hr;
+                    s += T.q('真正的学习加速器：更快找到「什么值得读」。') + T.cta; return s;
+                },
+                // 4
+                () => {
+                    let s = ''; s += T.p(`残酷事实：${T.b('至少70%时间花在不创造价值的事上')}——会议纪要、邮件措辞、PPT对齐文本框。`) + T.hr;
+                    s += T.h2('🎙️ 一、会议纪要：1小时→3分钟'); s += T.p(`${tp.t2}转写→AI整理→10分钟审核。${T.b('效率提升92%')}。`) + T.hr;
+                    s += T.h2('📧 二、邮件沟通：15分钟→3分钟'); s += T.p(`AI生成初稿→微调发送。${T.b('精神内耗归零')}。`) + T.hr;
+                    s += T.h2('📊 三、汇报展示'); s += T.p(`${tp.rt}，目标澄清→故事线→逐页生成→${tp.t3}排版。${T.b('1.5小时完成')}。`) + T.hr;
+                    s += T.q('AI接手dirty work，让你聚焦只有你能做的事。') + T.cta; return s;
+                },
+                // 5
+                () => {
+                    let s = ''; s += T.p(`灵感来了写300字卡住。删掉重写又卡住。${T.b('缺乏「不依赖灵感」的内容生产系统')}。`) + T.hr;
+                    s += T.h2('🎯 一、选题：跳出「自嗨」'); s += T.p(`热点雷达→选题发散→受众匹配→信息增量检查。${T.b('好选题=痛点×独特视角')}。`) + T.hr;
+                    s += T.h2('🧩 二、结构化：一条金线'); s += T.p(`零散想法→3种叙事结构→追问弱点→选最抗打的。${T.b('AI最大价值是发现逻辑漏洞')}。`) + T.hr;
+                    s += T.h2('🔥 三、初稿：扩音器非替代品'); s += T.p(`你先写关键句→AI展开→你加入经历。${T.b('有温度的部分，必须是你写的')}。`) + T.hr;
+                    s += T.q('AI的效率×人类的温度=不可替代的作品。') + T.cta; return s;
+                },
+                // 6
+                () => {
+                    let s = ''; s += T.p(`复盘=罗列做过的事+写「下次注意」+存进永不打开的文件。${T.b('这是在给大脑制造虚假安全感')}。`) + T.hr;
+                    s += T.h2('🔍 一、为什么没用？'); s += T.p(`❌没数据 ❌无法执行 ❌做完归档。${T.b('有效标准：三个月后不犯同样错误')}。`) + T.hr;
+                    s += T.h2('🏗️ 二、AI四层提炼法'); s += T.p(`事实还原→模式识别(AI找${tp.m1}异常)→${T.b('根因分析(追问3次为什么)')}→行动转化。`) + T.hr;
+                    s += T.h2('👥 三、团队知识资产'); s += T.p(`每月复盘→AI生成团队级洞察→转SOP。${T.b('新人能读到一年踩坑总结')}。`) + T.hr;
+                    s += T.q('最好的复盘，是写给未来的自己用的。') + T.cta; return s;
+                },
+            ];
+            h += (A[n - 1] || A[0])(); h += '</section>'; return h;
+        }
+
+        // ==================== UI工具 ====================
+        function toast(m, t = 'ok') { const e = document.createElement('div'); e.className = `toast toast-${t} show`; e.textContent = m; document.body.appendChild(e); setTimeout(() => { e.classList.remove('show'); setTimeout(() => e.remove(), 300) }, 2200) }
+        function clsMd(id) { document.getElementById(id).classList.remove('show') }
+        function showMd(id) { document.getElementById(id).classList.add('show') }
+        function swTab(pg) { document.querySelectorAll('.pg').forEach(p => p.classList.remove('on')); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on')); document.getElementById('pg-' + pg).classList.add('on'); document.querySelector(`.nav-btn[data-pg="${pg}"]`).classList.add('on'); if (pg === 'dash') ldDash(); if (pg === 'accts') ldAccts(); if (pg === 'create') ldCreate(); if (pg === 'set') ldSets(); }
+
+        // ==================== 导航栏 ====================
+        document.querySelectorAll('.nav-btn').forEach(b => { b.addEventListener('click', () => swTab(b.dataset.pg)) });
+
+        // ==================== 仪表盘 ====================
+        function ldDash() { const accts = LS.get('accounts', []); const da = document.getElementById('dash-acc'); document.getElementById('st').textContent = accts.length ? `${accts.length}个账号 · 就绪` : '轻触底部导航开始'; if (!accts.length) { da.innerHTML = '<div class="empty"><div class="ic">📭</div>去「账号」页添加公众号</div>'; return } da.innerHTML = accts.map(a => `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0"><div><strong>${a.name || '未命名'}</strong><span class="badge badge-b" style="margin-left:8px">${a.topic || '未设置'}</span></div><span class="badge badge-g">🟢 正常</span></div>`).join('') }
+
+        // ==================== 账号管理 ====================
+        function ldAccts() { const accts = LS.get('accounts', []); const el = document.getElementById('acct-list'); if (!accts.length) { el.innerHTML = '<div class="empty"><div class="ic">📭</div>还没有账号</div>'; return } el.innerHTML = accts.map((a, i) => `<div class="card"><div style="display:flex;justify-content:space-between"><strong>${a.name || '未命名'}</strong><span class="badge badge-b">${a.topic || '未设置'}</span></div><div style="font-size:12px;color:var(--muted);margin:6px 0">AppID: ${(a.appid || '').substring(0, 14)}...</div><button class="btn btn-sm" style="color:var(--red);border:1px solid var(--red);background:#fff" onclick="delAcct(${i})">🗑 删除</button></div>`).join('') }
+        function showAddAcct() { const sel = document.getElementById('md-topic'); sel.innerHTML = Object.keys(TOPICS).map(k => `<option value="${k}">${k}</option>`).join(''); document.getElementById('md-name').value = ''; document.getElementById('md-appid').value = ''; document.getElementById('md-secret').value = ''; document.getElementById('md-ip').value = ''; showMd('md-acct') }
+        document.getElementById('btn-sv-acct').addEventListener('click', () => { const a = { name: document.getElementById('md-name').value, appid: document.getElementById('md-appid').value, secret: document.getElementById('md-secret').value, ip: document.getElementById('md-ip').value, topic: document.getElementById('md-topic').value }; if (!a.appid || !a.secret) { toast('AppID和AppSecret不能为空', 'err'); return } const accts = LS.get('accounts', []); accts.push(a); LS.set('accounts', accts); clsMd('md-acct'); ldAccts(); ldDash(); ldCreate(); toast('账号添加成功') });
+        function delAcct(i) { if (!confirm('确定删除？')) return; const accts = LS.get('accounts', []); accts.splice(i, 1); LS.set('accounts', accts); ldAccts(); ldDash(); ldCreate(); toast('已删除') }
+
+        // ==================== 创作中心 ====================
+        function ldCreate() { const accts = LS.get('accounts', []); const sa = document.getElementById('sel-acc'); const st = document.getElementById('sel-topic'); const sm = document.getElementById('sel-model'); sa.innerHTML = accts.length ? accts.map((a, i) => `<option value="${i}">${a.name || '未命名'}(${a.topic || ''})</option>`).join('') : '<option>请先添加账号</option>'; st.innerHTML = Object.keys(TOPICS).map(k => `<option value="${k}">${k}</option>`).join(''); sm.innerHTML = '<option value="deepseek">DeepSeek V4 Pro</option><option value="openai">OpenAI GPT-4o</option>'; }
+
+        // ==================== AI 文章生成 ====================
+        document.getElementById('btn-gen').addEventListener('click', async () => {
+            const accts = LS.get('accounts', []); const ai = parseInt(document.getElementById('sel-acc').value);
+            if (isNaN(ai) || !accts[ai]) { toast('请先选择账号', 'err'); return }
+            const topicKey = document.getElementById('sel-topic').value;
+            const topic = TOPICS[topicKey] || TOPICS["通用职场效率"];
+            const model = document.getElementById('sel-model').value;
+            const count = parseInt(document.getElementById('sel-n').value);
+            const sets = LS.get('settings', {});
+            const apiKey = model === 'deepseek' ? sets.dsKey : sets.oaiKey;
+            const author = sets.author || '铃木村';
+
+            const pg = document.getElementById('gen-prog'); const pf = document.getElementById('prog-fill'); const pt = document.getElementById('prog-txt');
+            pg.style.display = 'block'; pf.style.width = '5%'; pt.textContent = 'AI思考中...';
+
+            const articles = [];
+            let useAI = !!apiKey;
+
+            if (useAI) {
+                try {
+                    for (let i = 1; i <= count; i++) {
+                        pf.style.width = Math.round(i / count * 90) + '%'; pt.textContent = `生成第${i}/${count}篇...`;
+                        const prompt = buildPrompt(i, topic);
+                        let content = '';
+                        if (model === 'deepseek') {
+                            const r = await fetch('https://api.deepseek.com/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'system', content: '你是资深新媒体编辑。输出纯HTML格式公众号文章。' }, { role: 'user', content: prompt }], max_tokens: 4096, temperature: .8 }) });
+                            const d = await r.json(); content = d.choices?.[0]?.message?.content || '';
+                        } else {
+                            const r = await fetch('https://api.openai.com/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model: 'gpt-4o', messages: [{ role: 'system', content: '你是资深新媒体编辑。输出纯HTML格式公众号文章。' }, { role: 'user', content: prompt }], max_tokens: 4096, temperature: .8 }) });
+                            const d = await r.json(); content = d.choices?.[0]?.message?.content || '';
+                        }
+                        articles.push({ n: i, title: `AI提效·${topic.ind} 第${i}篇`, html: `<section>${T.hdr(author)}${content}${T.cta}</section>` });
+                    }
+                } catch (e) { useAI = false; articles.length = 0 }
+            }
+
+            if (!useAI) {
+                for (let i = 1; i <= count; i++) { pf.style.width = Math.round(i / count * 90) + '%'; pt.textContent = apiKey ? `AI出错，使用模板生成第${i}篇...` : `未配置API Key，模板生成第${i}篇...`; articles.push({ n: i, title: `AI提效·${topic.ind} 第${i}篇`, html: genHTML(i, topic, author) }); await new Promise(r => setTimeout(r, 100)) }
+            }
+
+            pf.style.width = '100%'; pt.textContent = '✅ 完成！';
+            renderArts(articles);
+            setTimeout(() => { pg.style.display = 'none' }, 1500);
+        });
+
+        function buildPrompt(i, t) {
+            const titles = ['实测！用AI后每天提前3小时下班', 'AI工作流：半小时搞定全天的事', '信息洪流中优雅生存：AI第二大脑', 'AI承包70%脏活我只做决策', '创作者收藏：AI全流程实战笔记', '复盘新思路：用AI把经验变知识资产'];
+            return `为"${t.ind}"领域写爆款公众号文章。标题：${titles[i - 1] || titles[0]}。要求：1)故事化开头 2)4-5小节emoji标题 3)重点加粗 4)案例：${t.c1}、${t.c2} 5)工具：${t.t1}、${t.t2} 6)指标：${t.m1}、${t.m2} 7)1200字 8)文末：公众号发送【工具】领取 9)禁词：副业网赚暴利月入。输出纯HTML(只用p,h2,strong,blockquote标签)`;
+        }
+
+        function renderArts(articles) {
+            const el = document.getElementById('art-out');
+            el.innerHTML = '<div class="card"><div class="ct">📄 生成结果(' + articles.length + '篇)</div>' + articles.map((a, i) => `<div style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;overflow:hidden"><div style="padding:10px 14px;background:#f8f9ff;font-weight:600;font-size:13px;display:flex;justify-content:space-between;cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'"><span>📝 第${i + 1}篇</span><span>👁 预览</span></div><div class="art-preview" style="display:none">${a.html}</div></div>`).join('') + '<p style="font-size:12px;color:var(--muted);margin-top:8px">⚠️ 推送草稿箱请在电脑上运行<strong>启动服务器.bat</strong></p></div>';
+            window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+        }
+
+        // ==================== 设置 ====================
+        function ldSets() { const s = LS.get('settings', {}); document.getElementById('key-ds').value = s.dsKey || ''; document.getElementById('key-oai').value = s.oaiKey || ''; document.getElementById('set-author').value = s.author || '铃木村' }
+        function saveSets() { const s = { dsKey: document.getElementById('key-ds').value, oaiKey: document.getElementById('key-oai').value, author: document.getElementById('set-author').value }; LS.set('settings', s); toast('设置已保存') }
+
+        // ==================== 启动 ====================
+        ldDash(); ldCreate(); ldAccts(); ldSets();
+    </script>
+</body>
+
+</html>
