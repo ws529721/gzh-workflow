@@ -1,634 +1,95 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport"
-        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="AI创作助手" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#0f172a" />
-    <link rel="manifest" href="manifest.json" />
-    <title>多账号AI创作助手</title>
-    <style>
-        :root {
-            --bg: #f0f2f5;
-            --c: #fff;
-            --t: #1a1a2e;
-            --mu: #999;
-            --bl: #2563eb;
-            --gn: #16a34a;
-            --or: #ea580c;
-            --rd: #dc2626;
-            --bd: #e5e7eb;
-            --r: 16px;
-            --sf: env(safe-area-inset-bottom, 0px)
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent
-        }
-
-        body {
-            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-            background: var(--bg);
-            color: var(--t);
-            line-height: 1.6;
-            padding-bottom: calc(80px + var(--sf));
-            -webkit-font-smoothing: antialiased;
-            overscroll-behavior: none
-        }
-
-        .hdr {
-            background: linear-gradient(135deg, #0f172a, #1e3a8a);
-            color: #fff;
-            padding: 14px 16px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: space-between
-        }
-
-        .hdr h1 {
-            font-size: 18px;
-            font-weight: 800
-        }
-
-        .hdr .st {
-            font-size: 10px;
-            opacity: .7
-        }
-
-        .ctn {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 10px 10px 40px
-        }
-
-        .card {
-            background: var(--c);
-            border-radius: var(--r);
-            padding: 14px;
-            margin-bottom: 10px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, .03);
-            border: 1px solid var(--bd)
-        }
-
-        .ct {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all .12s;
-            touch-action: manipulation;
-            white-space: nowrap
-        }
-
-        .btn:active {
-            transform: scale(.95);
-            opacity: .8
-        }
-
-        .btn-p {
-            background: var(--bl);
-            color: #fff
-        }
-
-        .btn-s {
-            background: var(--gn);
-            color: #fff
-        }
-
-        .btn-o {
-            background: #fff;
-            border: 1.5px solid var(--bl);
-            color: var(--bl)
-        }
-
-        .btn-r {
-            background: #fff;
-            border: 1.5px solid var(--rd);
-            color: var(--rd)
-        }
-
-        .btn-w {
-            background: var(--or);
-            color: #fff
-        }
-
-        .btn-sm {
-            padding: 7px 12px;
-            font-size: 11px;
-            border-radius: 8px
-        }
-
-        .btn-blk {
-            width: 100%
-        }
-
-        .btn:disabled {
-            opacity: .4;
-            pointer-events: none
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid var(--bd);
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: inherit;
-            background: #f9fafb;
-            -webkit-appearance: none
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--bl);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, .06)
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--mu);
-            margin-bottom: 3px;
-            margin-top: 8px
-        }
-
-        label:first-child {
-            margin-top: 0
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 600;
-            vertical-align: middle
-        }
-
-        .badge-g {
-            background: #dcfce7;
-            color: #166534
-        }
-
-        .badge-b {
-            background: #dbeafe;
-            color: #1e40af
-        }
-
-        .badge-y {
-            background: #fef9c3;
-            color: #854d0e
-        }
-
-        .badge-r {
-            background: #fee2e2;
-            color: #991b1b
-        }
-
-        .row {
-            display: flex;
-            gap: 8px
-        }
-
-        .col {
-            flex: 1;
-            min-width: 0
-        }
-
-        .nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, .94);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--bd);
-            display: flex;
-            padding: 4px 0 var(--sf);
-            z-index: 100
-        }
-
-        .nav-btn {
-            flex: 1;
-            text-align: center;
-            padding: 4px;
-            font-size: 10px;
-            color: var(--mu);
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: inherit
-        }
-
-        .nav-btn .nv {
-            font-size: 20px;
-            display: block;
-            margin-bottom: 1px
-        }
-
-        .nav-btn.on {
-            color: var(--bl)
-        }
-
-        .pg {
-            display: none
-        }
-
-        .pg.on {
-            display: block
-        }
-
-        .toast {
-            position: fixed;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            border-radius: 10px;
-            color: #fff;
-            font-weight: 600;
-            z-index: 999;
-            font-size: 13px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity .3s
-        }
-
-        .toast.show {
-            opacity: 1
-        }
-
-        .toast-ok {
-            background: var(--gn)
-        }
-
-        .toast-err {
-            background: var(--rd)
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .45);
-            z-index: 200;
-            align-items: flex-end;
-            justify-content: center
-        }
-
-        .modal-overlay.show {
-            display: flex
-        }
-
-        .modal {
-            background: #fff;
-            border-radius: 20px 20px 0 0;
-            padding: 18px 14px calc(18px + var(--sf));
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: su .25s
-        }
-
-        @keyframes su {
-            from {
-                transform: translateY(100%)
-            }
-
-            to {
-                transform: translateY(0)
-            }
-        }
-
-        .empty {
-            text-align: center;
-            padding: 30px 14px;
-            color: var(--mu)
-        }
-
-        .empty .ic {
-            font-size: 40px;
-            margin-bottom: 6px
-        }
-
-        .prog {
-            height: 4px;
-            background: #e5e7eb;
-            border-radius: 2px;
-            overflow: hidden;
-            margin: 8px 0
-        }
-
-        .prog-fill {
-            height: 100%;
-            background: var(--bl);
-            border-radius: 2px;
-            transition: width .4s;
-            width: 0%
-        }
-
-        .art-preview {
-            background: #fff;
-            border: 1px solid var(--bd);
-            border-radius: 8px;
-            padding: 14px;
-            margin: 6px 0;
-            max-height: 220px;
-            overflow-y: auto;
-            font-size: 13px;
-            line-height: 1.7
-        }
-
-        .art-preview h2 {
-            font-size: 14px;
-            margin: 10px 0 5px
-        }
-
-        .art-preview strong {
-            color: #1a1a2e
-        }
-
-        .art-preview blockquote {
-            background: #f0f4ff;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin: 8px 0;
-            border-left: 3px solid #818cf8;
-            font-size: 12px;
-            color: #555
-        }
-
-        .install-banner {
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            color: #fff;
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600
-        }
-
-        .editor-toolbar {
-            display: flex;
-            gap: 4px;
-            padding: 8px;
-            background: #f8f9fa;
-            border-radius: 8px 8px 0 0;
-            border: 1px solid var(--bd);
-            border-bottom: none;
-            flex-wrap: wrap
-        }
-
-        .editor-toolbar button {
-            width: 32px;
-            height: 30px;
-            border: 1px solid #ddd;
-            background: #fff;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center
-        }
-
-        .editor-toolbar button:active {
-            background: #e5e7eb
-        }
-
-        .editor-area {
-            min-height: 200px;
-            max-height: 50vh;
-            overflow-y: auto;
-            padding: 12px;
-            border: 1px solid var(--bd);
-            border-radius: 0 0 8px 8px;
-            font-size: 14px;
-            line-height: 1.8;
-            outline: none;
-            background: #fff
-        }
-
-        .arts-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-            flex-wrap: wrap
-        }
-    </style>
-</head>
-
-<body>
-    <div class="hdr">
-        <h1>🤖 AI创作助手</h1><span class="st" id="st"></span>
-    </div>
-    <div class="install-banner" id="install-banner" onclick="installApp()">📲 点击安装到手机桌面，像App一样使用 →</div>
-    <div class="ctn">
-        <div class="pg on" id="pg-dash">
-            <div class="card">
-                <div class="ct">📊 账号概览</div>
-                <div id="dash-acc"></div>
-            </div>
-            <div class="card">
-                <div class="ct">📝 最近记录</div>
-                <div id="dash-rec"></div>
-            </div>
-            <div class="card">
-                <div class="ct">⚡ 快捷操作</div><button class="btn btn-p btn-blk" onclick="swTab('create')">✍️
-                    AI生成文章</button><button class="btn btn-s btn-blk" style="margin-top:6px" onclick="batchAll()">📤
-                    一键推送全部</button>
-            </div>
-        </div>
-        <div class="pg" id="pg-create">
-            <div class="card">
-                <div class="ct">🎯 创作中心</div>
-                <label>选择账号</label><select id="sel-acc"></select>
-                <label>垂直主题</label><select id="sel-topic"></select>
-                <label>AI模型</label><select id="sel-model"></select>
-                <label>生成篇数</label><select id="sel-n">
-                    <option value="1">1篇</option>
-                    <option value="3">3篇</option>
-                    <option value="6" selected>6篇</option>
-                </select>
-                <button class="btn btn-p btn-blk" style="margin-top:12px" id="btn-gen">🚀 生成文章</button>
-                <div id="gen-prog" style="display:none;margin-top:8px">
-                    <div class="prog">
-                        <div class="prog-fill" id="prog-fill"></div>
-                    </div>
-                    <p style="font-size:10px;color:var(--mu);text-align:center" id="prog-txt"></p>
-                </div>
-            </div>
-            <div id="art-out"></div>
-        </div>
-        <div class="pg" id="pg-accts">
-            <div id="acct-list"></div>
-            <button class="btn btn-p btn-blk" onclick="showAddAcct()">➕ 添加账号</button>
-            <button class="btn btn-o btn-blk" style="margin-top:6px" onclick="exportAccts()">📋 导出</button>
-            <button class="btn btn-o btn-blk" style="margin-top:6px" onclick="document.getElementById('fi').click()">📥
-                导入</button>
-            <input type="file" id="fi" style="display:none" accept=".json" onchange="importAccts(event)" />
-        </div>
-        <div class="pg" id="pg-set">
-            <div class="card">
-                <div class="ct">🔑 AI密钥</div><label>DeepSeek Key</label><input type="password" id="key-ds"
-                    placeholder="sk-..." /><label>OpenAI Key</label><input type="password" id="key-oai"
-                    placeholder="sk-..." />
-            </div>
-            <div class="card">
-                <div class="ct">🖥️ 推送服务器</div><label>地址（电脑IP:3456）</label><input id="set-sv"
-                    placeholder="http://192.168.x.x:3456" /><button class="btn btn-sm btn-o" style="margin-top:6px"
-                    onclick="testSv()">🔍 测试</button>
-            </div>
-            <div class="card">
-                <div class="ct">✏️ 作者</div><label>名称</label><input id="set-au" value="铃木村" /><button
-                    class="btn btn-p btn-blk" style="margin-top:10px" onclick="saveSets()">💾 保存设置</button>
-            </div>
-        </div>
-    </div>
-    <div class="nav">
-        <div class="nav-btn on" data-pg="dash"><span class="nv">📊</span>仪表盘</div>
-        <div class="nav-btn" data-pg="create"><span class="nv">✍️</span>创作</div>
-        <div class="nav-btn" data-pg="accts"><span class="nv">👤</span>账号</div>
-        <div class="nav-btn" data-pg="set"><span class="nv">⚙️</span>设置</div>
-    </div>
-    <div class="modal-overlay" id="md-acct">
-        <div class="modal">
-            <h2 style="margin-bottom:12px">➕ 公众号账号</h2><label>名称</label><input id="md-nm" /><label>AppID</label><input
-                id="md-ap" /><label>AppSecret</label><input id="md-sc" /><label>IP</label><input id="md-ip"
-                value="115.206.224.39" /><label>主题</label><select id="md-tp"></select>
-            <div class="row" style="margin-top:12px"><button class="btn btn-o col"
-                    onclick="clsMd('md-acct')">取消</button><button class="btn btn-p col" id="btn-sv-acct">保存</button>
-            </div>
-        </div>
-    </div>
-    <div class="modal-overlay" id="md-edit">
-        <div class="modal">
-            <h2 style="margin-bottom:8px">✏️ 编辑文章</h2>
-            <div class="editor-toolbar"><button onclick="docCmd('bold')" title="加粗"><b>B</b></button><button
-                    onclick="docCmd('italic')" title="斜体"><i>I</i></button><button onclick="docCmd('underline')"
-                    title="下划线"><u>U</u></button><button onclick="docCmd('formatBlock','h2')"
-                    title="标题">H</button><button onclick="docCmd('insertUnorderedList')" title="列表">•</button><button
-                    onclick="docCmd('formatBlock','blockquote')" title="引用">❝</button></div>
-            <div class="editor-area" id="editor-area" contenteditable="true"></div>
-            <div class="row" style="margin-top:10px"><button class="btn btn-o col"
-                    onclick="clsMd('md-edit')">取消</button><button class="btn btn-p col" id="btn-sv-edit">💾
-                    保存修改</button></div>
-        </div>
-    </div>
-    <div class="modal-overlay" id="md-push">
-        <div class="modal">
-            <h2 style="margin-bottom:10px">📤 推送确认</h2>
-            <div id="push-sum"></div>
-            <div class="row" style="margin-top:10px"><button class="btn btn-o col"
-                    onclick="clsMd('md-push')">取消</button><button class="btn btn-s col" id="btn-do-push">✅ 确认</button>
-            </div>
-        </div>
-    </div>
-    <script>
-// == == =  数据 层  =====
- c onst LS = { get(k, d) { try { const v = l ocalStor a ge.getItem('g z _ ' + k); r etu r n v?JSON .par            ): d }ca tc h(e){ return d }}, set(k, v){loc a lS torage.setItem('gz _' + k, J        SON.stringify(v)) }};
-        const TP = { "通用职场效率": { ind: "职场办公        ", ds: "销售CSV", dd: "            行", t1: "【N o tion 】", t2: " 【飞书 妙记】", t3: "【 Gam ma】", c1: "50页 行业报 告", c2: "1500 字方案 ", c3: "合作方 邮件", m1: "日销售额", m2: "留存 率", m3: "完成率", r t: " 季度汇报", ex: "知识工作者 " }, "电商运营": { ind: " 电商运 营", ds: " 直播C SV", dd: " 200 00行", t1: "【抖 店】", t2: "【生 意参谋 】", t3: " 【有米            c1:"50页 竞 品报告" ,c2:"直播 脚本" ,c3:"供应商邮件", m1: "GMV",m2:"转化率",m 3:" ROI",rt :"双 十一复盘",ex: "电商 运营人"},"教 育培训 ":{ind:"教育培训",d s:" 学员CSV",dd:" 500 0条",t1:"【Class In】 ",t2:" 【小鹅 通】",t3 :"【 Canva】 ",c 1:"30页课程标准" ,c2 :"教案",c 3:"            ",m1:"完 课 率",m 2:"续费率" ,m3 :"满意度",rt:"教 学总结 ",ex:"教育工作者"},"金 融分析 ":{ind:"金融分析 ",d s:"财报CSV ",d d:"50家公司",t1:" 【Wi nd】",t2:"【同花顺】" ,t3 :"【Tableau】" ,c1 :"200页研报",c2: "投资 备忘录",c 3:" 客户邮件", m1: "ROE",m2 :"净 利率",m3:"PE", rt: "投研分析", ex:            析师"}, "医 疗 健康": { ind: "医 疗健康 ", ds: "诊疗CSV", d d: " 3000份", t1: "【杏仁医 生】", t2: "【丁香园 】", t3: "【Med Pee r】", c1: "40页论 文", c2: "病例报告", c3: "会诊 邮件", m1: "治愈率", m2: "住 院日", m3: "满意度", rt: "科 室汇报", e x: " 医疗从业者" }, "法 律咨询": { i nd: "法律咨询", ds: "卷宗 CSV", dd: "2            ,t1:"【北 大 法宝】" ,t2:"【威 科先行 】",t3:"【法信】" ,c1 :"80页法规",c2:"法律 意见书 ",c3:"客户邮 件", m1:"胜诉率" ,m2 :"周期",m3:"满意 度", rt:"案件分析",ex:"法 律从业 者"},"设计创意": {in d:"设计创意",ds:"反 馈CS V",dd: "10 00条",t1: "【F igma】",t 2:" 【即时设计】",t3:" 【Mi djourne y】"            "50页趋势" , c2:" 品牌方案",c 3:" 甲方邮件",m1:"通过率", m2: "满意度",m3:"改稿次数", rt: "设计提案",ex :"设 计师"},"软件开 发": {ind:"软 件开发 ",ds:"日志CSV",dd :"5 0000条",t1: "【G itHub Copilot】" ,t2 :"【Cur sor 】",t3:" 【Li near】",c 1:" 100页架构",c2:" 技术方 案",c3:" PM邮            1: "可用率", m2: " Bug周期", m3: "迭代速度", rt: "技 术复盘 ", ex: "开发者" }, "市场营销 ": { ind: "市场营销", ds: "投放CSV", dd: "15000条", t1: "【巨 量引擎 】", t2: "【腾讯广告】", t3: "【新榜】", c1: "60页洞察 ", c 2: "营销方案", c3: "客户 邮件", m1: "ROI ", m 2: "获客成本", m3: "品牌声量", rt: "月度复盘", ex: "市 场营销人" }, "            ": { ind: " 房产经纪 ", ds: "带 看CS V", dd: "3000条 ", t 1: "【贝壳】", t2: "【房天下】 ", t 3: "【安居客】", c1: "40页市场 报告", c2: "房源方案", c3: "客户邮件", m1: " 转化率 ", m2: "成交周期", m3: " 满意度 ", rt: "区域分析", ex: "房产经纪人" }, "自媒体运营": { i nd: "自媒体运 营", ds: "后台CSV", dd: "200篇", t1: "【新榜】", t2: "【 135编辑 器】"            "【西瓜数据】 " , c1: "30页趋势", c2: "深度方案", c3: " 品牌邮 件", m1: "打开率", m2: "分享 率", m3: "粉丝增长", rt: "月度复盘", e x: " 自媒体运营者" } };
-        const H = { hdr: a = > `< p style="colo r:# 999;font-size:1 2px ;text- ali gn:cent er" >${a} ·  原创 </p><hr styl e=" border: .5p            shed #e 0 e0e0 "/>`, p: t => `<p style="m arg in:12px 0;color:# 555 ;font-s ize :14px;li ne- height:2 ">$ {t}</p>`, b: t => `<s tro ng style="c olo r:#1a1a2e">${t} </s trong>`, h2: t => `<h2  st yle="fon t-s ize:16px;col or: #1a1a2e ;ma            :20px 0  1 0px; padding- lef t:8px;border- lef t:3px solid #2563 eb" >${t}</ h2> `, tip: t => `< blo ckquote s tyl e="background:# f0f 4ff;padding:10 px  14px;border-radi us: 8px;ma rgi n:12px  0; border-l eft :4px solid # 818 cf8;font -si        ze:1        2px;color:#555">💡 ${t}</blockquote>`, q: t => `<p sty        le="text-ali            ente r ;f ont-size:14px;color:#2563eb;margin:16px 0;font-weight:bold">💬 ${t}</p>`, hr: '<hr style="border:.5px solid #eee;margin:16px 0"/>', ct            hr   st yle="border:2px solid #2563eb;margin:20px 0 12px" /> <p style="text-align:cente            lo r :# 2563eb;font-size:13px;font-weight:bold">🔑 公众号发            ron g >【 工具】</strong>免费领取AI提效工具包</p> '};
-        function genHTML(n, t, au) {
-            let s = '<section>' + H.hdr(au); const A = [() => { let x = ''; x += H.p(`一天8小时$            ('真正 创 造价 值的时间有几小时？')}`); x += H.q('「原来每天有3.5小时AI可以代劳」') + H.hr; x += H.h2('📖 信息摄入：3分钟掌握全局'); x += H.p(`${t.c1}→${H.b('【Claude】或【Kimi Chat】')}：500字提炼。${H.b('8分钟，效率+93%')}。`) + H.hr; x += H.h2('✍️ 内容产出：下笔如有神'); x += H.p(`搭骨架→填血肉→注入            {t . c2 }，${H.b('47分钟，以前3h+')}。`) + H.hr; x += H.h2('📊 数据处理：秒级锁定'); x += H.p(`${t.dd}，40秒AI分析。${H.b('效率+86%')}。`) + H.hr; x += H.h2('💬 沟通协作');x            p(` ${t.c3}→AI三版→微调。${H.b('8分钟搞定')}。`) + H.hr; x += H.p(`四个场景叠加            b('9 h→5.5h')}。`) + H.q('前提：迈出第一步🏃') + H.cta; return x }, () => {
-                let x = ''; x += H.p(`周一早上邮箱12封未读。${H.b('不是事情多，是手工模式处理工业化信息。')}`) + H.hr; x += H.h2('🔍 AI信息守门人'); x += H.p(`聚合→AI初筛→300字洞察→归档${t.t1}。${H.b('120→25        分钟')}。`) + H.hr; x += H.h2(' ✍️  四阶段A I加            x+=H.p(` 构 思→ 结构化→扩写→打磨 。 ${H.b(' 3000字 9 0分钟')}。`)+H . hr;x+=H.q('AI            你是支点。') + H.                retur                ,( )= >
-                    { let  x ='' ; x+ =H.p(`每天信息量=15世纪一生总和。${H.b('「怎么学」比「学什么」重要100倍')}。`) + H.hr; x += H.h2('� �  搭 建AI第二大脑'); x += H.p(`内容→${t.t1}→A I 标签+摘要→                    { H. b('核心：可检索+可关联')}。`) + H.hr; x + =H.q('更快找到「什么值得读」。') + H.cta; return x
-            }, () => { let x = ''; x += H.p(`残酷事实：${H.b('70%时间不创造价值')}。`) + H.hr; x += H.h2('🎙️ 会议纪 要 ：1 h→3min'); x += H.p(`${t.t2}转写→AI整理。${H.率 + 9 2 % ')}。`)+H.hr;x+=H.q('聚焦 只 有你 能做的事。')+H.cta;return x},()=>{let x='';x+=H.p(`写300字卡住 。 ${H.b(                    依 赖灵 感」的内容系统') }。`)+H.hr;x+=H.h 2 (' 🎯 选题：跳出「自嗨」');x+=H.p(`热点雷达→选题发散→受众匹配。${ H.b('好选题=痛点 × 视角') }。                    .hr ; x += H.q('AI效率×人类温度=不可替代。') + H.cta; return x
-        }, () => { let x = ''; x += H.p(`复盘=罗列+「下次注意」+永不打开。${H.b('给大                    假 安全 感')}。`) + H.hr; x += H.h2(' � �️  AI四层提炼法'); x += H.p(`事实还原→模式识别→ $ {H.b('根因分析(追问3次为什么)')}→行动转化。`) + H.hr; x += H.q('最好的复盘，写给未来的 自 己。') + H; re turn x }]; s += (A[n - 1] || A[0])(); s += '</s e ction>'; return s}
-func t ion to ast(m, t = '
-                ok'                nst e                um en t
-            .crea t eEl e me nt('div'); e.className = `toast toast-${t} show`; e.textContent = m; document.bo d y.appe                    i ld(e); setTimeout(() => { e.cl assList.remove('show'); setTimeout(() => e.remove(), 300) }, 2 0 00)}
-f                    i on  clsMd(id){ document.get E le mentById(id).classList.remove('show') }
-        function showMd(id) { document.getEle                    B yI d(id).classList.add(' s ho w') }
-        function swTab(pg) {
-            document.querySelectorAll('.pg').for E ach(p = l as sList.remove('on')); do cument.querySelectorAll('.nav-btn').forEac > b.classList.remove(' o n'));d ocument.g
-                etE                ntByI                g - '+ p
-                    g).cl a ssL i st.add('on'); document.querySelector(`.nav-btn[data-pg="${p g } "]`).                    s Li st.add('on');if(pg===' d as h')ldDash();if(pg==='accts')ldAccts();if(pg==='create')ldCr e ate();                    g == ='set')ldSets()}
-        do c um ent.querySelectorAll('.nav-btn').forEach(b => b.addEv                    i st ener('click', () => swT a b(b.dataset.pg)));
-        function ldDash() {
-            const a = L S .get('                    s ', []), r = LS.get('rec', []);docum e nt.get ElementBy
-            Id().tex                te nt =
-                a.len g th ? ` ${a.length}账号·就绪` : '轻触导航'; document.getElementById('dash-acc').i n nerHTM                    l en gth ? a.map(x => `<div style="d i sp lay:flex;justify-content:space-between;align-ite m s:cent                    a dd ing:8px 0;border-bottom:1px   so lid #f0f0f0"><div><strong>${x.nm || '未 命 名'}</s                    g >< span class="badge  b ad ge-b" style="margin-left:6px">${x.tp || ''}</span></div><span   class=                    g e  badge-g">🟢</span></div>`).join('') : '<div  class="e
-                mpt                div c = " ic "
-                >📭</ d iv > 去 「账 号」页添加</div > ';document.getElementById('dash - rec').inner H TML=r.                    t h? r.slice(-5).reverse().m a p( x=>`<div style="padding:5px 0;font-size:12px;border - bottom                      so lid #f0f0f0">📄 ${x.t} < sp an class="badge badge-y">${x.s}</span><span style="col o r:var(                    ) ;f ont-size:10px;margin-lef t :6 px">${x.tm||''}</span></div>`).join(''):' < div cla s s = "emp                    < di v class="ic">📝</div>暂无记录</ d iv>'}
-            function
-                ldA() {co                a = LS.
-                    get(' a cct s ', []); document.getElementById('acct-list').innerHTML = a.length ? a.map() => `<div class="card">< d iv  style="display:flex;justify-content:space-between " ><stro                    { x. nm||'未命名'}</strong><sp a n  class="badge badge-b">${x.tp || ''}</span></div><div style="fon t -size:                    ; co lor:var(--mu);margin : 4p x 0">AppID:${(x.ap || '').substring(0, 12)}...</div> < div cl                    " ro w"><button class="btn bt n -sm bt n-o col" 
-                onc            ="e            c ct (${i} )" >✏ ️</butto n >< button class= "btn btn-s        m b        tn-r col" onclick="delAcct(${i})">🗑</button></div        ></div>`).join('') : '<div   class=" e mpty"><div class="ic">📭</div> 无账号</div>'
-            }
-            function showAddAcct(ei) { document.get E le mentById('md-tp').innerHTML = O bject.keys(TP).m ap(k => `<option value="${k}" >${k}</option >`).join(''); cons t  a = LS.ge        t('accts', []); if (e i != null && a[ei]) { const x = a[ei]; document.getElementById('        md-nm').value = x.nm | | ''; document.getElementById('md-ap').value = x.ap || ' '; document.getElemen t ById('md-sc').value = x.sc || ''; document.getE le mentById('md-ip').value = x.ip || ''; document.getElementById('md-tp').value = x.t p || '通用职场效率'; document.getEl ementById('btn-sv-acct').data s et.ei = ei }else { document.g etElementById('md-nm').value = ''; document.getElementById('md-ap').value = ' '; doc ume nt.getE lementByI d('md -sc ').value = '';docume nt.ge tEl ementById('md-ip').v al ue = ''; delete document.ge        tElementById('btn-sv-acct').dataset.ei } showMd('md        -acct') }
-            function editAcct(i) { showAddAcct(i) }
-d oc u ment.getElementById('btn-sv -a cc t').addEventListener('cli        ck', function () { const x = { nm: document.getElementByI        d('md-nm').value, a p: document.g etElementById('md- ap') .value, s c: document.getElementById('md-sc').va lue, ip: document.getElementById('md-ip').v a lue, tp: docum e nt.getElementById('md-tp').value }; if (!x.ap || !x.sc) {toa s t('AppID/Sec r et必填', 'err'); return } const a = LS.get('accts', []); const ei = this.da taset.e i; if (ei != nul l ){ a[parseIn t(ei)]=x }else { a.push(x) } LS.set('accts', a); clsMd('md-acct'); ldAccts(); ldDash(); ldCreate(); toast(ei != null ? '已更新' : '已添加')
-        });
-        function delAcct(i) { if (!co nf irm('删除？')) return; const a = LS.get('accts', []); a.splice(i, 1); LS.set('accts', a);l dAccts(); ldDash(); ldCreate(); toast('已删除') }
-        function exportAccts() { const a = LS.ge        t('accts', []); if (!a.length) { toast('无账号', 'err');ret        urn } const b = new Bl o b([JSON.str i ngify(a, null, 2)], { type: 'applic a tion/json' }); const u = URL.createObject UR L(b); const d =do c ument.create E lement('a'); d.href = u; d.download = 'accounts_backup.json'; d.click(); toast('已导出') }
-        function im po rt Accts(e){ const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = function (ev) { try { const d = JSON.parse(ev.target.result); if (!Array.i sArray(d)) { toast('格式错', 'err'); return } const a = LS.get('accts', []); for (const x of d) { if (x.ap && x.sc) a.push({ nm: x.nm || x.name, ap: x.ap || x.appid, sc: x.sc || x.secret, ip: x.ip || '', tp: x.tp || x.topic || '通用职场效率' }) } LS.set('accts', a); ldAccts(); ldDash(); ldCreate(); toast(`导入${d.length}个`) } catch (ex) { to        ast('格式错', 'err') } }; r.r e adAsText(f); e.target.value = '' }
-        function ldCrea te(){ const a = L S.get('accts', []);documen t.getElementById('sel-acc').innerHTML = a.length ? a.map((x, i) => `<option value="${i}">${x.nm | | '未命 名'}(${x.tp || ''})</option>`).join('') : '<op t ion >请先加账号</option>'; document.getElementById(' s el- topic').innerHTML = Object.keys(TP).map(k => ` <option value="${k}        ">${k}</option>`).join(''); document.getElementById('sel-model').in ne r HTML = '< o p tion  value="deepseek">DeepSeek V4 Pro</option> <optio n value="openai">OpenAI GPT-4o</option>' }
- async f unction doGen(){
-            const a = LS.get('accts', []); con st ai = parseInt(document.getElementById('sel-a cc').value); if (isNaN(ai) || !a[ai]) { toast(' 选账 号', 'err');r et urn } const t = TP[document.getElementById('sel-to pic').v alue]|| TP[" 通 用职场效率"]; const m =do cume nt.getElementB yId('sel-model').v alue;co nst n = parseInt(do cument.get ElementBy Id('sel-n').value); const s = LS.get('stt', {}); const ke y = m === 'deepseek' ? s.ds : s.oa; const au = s.au || '铃木村'; const pg = doc ument.getElemen tBy Id('gen-prog');con st pf = d ocument.ge tElementB yId('prog-f ill'); const pt = document.getElementById('prog-txt'); pg.style.displ        ay = 'block'; pf.style.width = '5%'; p t.textContent = '生成中 ...'; const a r ts = []; let useAI = !!key; if (useAI) {
-                try { for (let i = 1; i <= n; i++) { pf.style.width = Math.rou nd(i / n * 8 0) + '%'; pt.textContent = `AI第${i}/${n}篇.. .`; const pr = ` 为"${t.ind}"领 域 写爆款公众号文章。要求：1 )故 事化 开头2)4-5小节emoji标题3)重点加粗4)案例:${t.c 1 }${ t.c2 } 5) 工具:${ t.t1 }${ t.t2 } 6) 1200字7) 文末: 发送 【 工具】领取8) 禁词: 副业网赚暴利月入。纯HTML(只 用p, h2, strong, blockquote)`;const bu=m== =' deepseek'?'https://api.deepseek.com/v1':'https: //api.openai . com/v1';const r=await fetch(`${ bu } /chat/completions`,{method:'POST',headers:{'Content-Type':'appl ica        tion/json',Authorization:`Bearer ${ key } `},body:JSON.s        tringify({model:m==='deepseek'?'deepseek-chat':'gpt-4o',mess ages: [{ ro le            stem',conte n t:'你是资深新媒体编辑。输出纯HT ML公众 号文章。'},{ r ole:'user',content:pr}],max_tokens:4096,temperature:            }) ;const d=a wa it r.json() ; const c=d.choic es?.[0] ?.mess ag            ontent||'';art s .push({n:i,title:`${ t.ind }·AI提效第${ i } 篇`,html:            ction>${H.h d r(au) }${ c }${ H.ct a } </section > `,ai})}}            h(e){useAI= f alse;arts.length=0;toast('AI失败用模板','err')}}
-            useAI){for( l et i=1;i<=n;i++){pf.style.width=Math.round(i/n*80)            ;pt.textCo n tent=`模板${ i }/${n}. ..`;a            push({n:i,ti t le:`$ {t. ind}·AI提效第 $ {i}篇`,html : genHTML(i,t,a            i
-            }); await ne w  Promise(r = > s etTimeo,            }}
-        pf.st y le.width = '100%'; pt.textContent = '✅';w indow._a r ts = arts; renderArts(arts); const rc = LS.get('rec ', []); rc.push({ t: `${t.ind} ${n}篇`, s: '已            tm:new Date().to L ocaleTim eString()});if ( rc.le ngth>30)rc.shi f t();LS.set(', setTimeout(() = > { pg.e.display = 'none' }, 12l            h()}
-            docu me                eme nt                    n') .addEv e nt L is tener( 'cli ck                        on renderArts(a rts){ const e l =docu m ent .getE lementById('ar t -out');el.innerHTML = '<di                        div class="c t ">📄 结果(' + arts.length + map((x, i) => ` <div                        ot tom:8p x;b order:1px s ol                            radius: 8 px;overflow:hidden"><div style="padding:8px 12px;background : #f8f9ff ;font-w eight:60 0 ;font-size:12px ;display:flex;justi fy-content:spa ce-between;cursor: po inter " onclick="this. nextEl ementSibling.sty le.displa y= this. nextEleme ntSiblin g.style.display==='none'?'b lo c k':'n one'">< span>📝第 ${i + 1} 篇</ span><span> 👁</s pan></div><d iv  c lass                            ="displ a y:none">${x.htm l}</div > <div class="arts-actions" style="p addi                        e r-to p:                            ><butto n  class=" btn btn-sm btn-s col" onclick="pushOne(${ i })">📤推 送 </butto n><butt on class = "btn btn - sm btn - o col" onclick="ed itArt(${ i })">✏ ️修改</button></div> </ div>` ).join('')+'<but ton cl ass="btn  btn - w btn - b lk" s tyle="mar gin - top: 8px" onclick="batchAll()">⚡ 一键 推 送全部(' +arts.l ength+'篇 )</but ton ></div>';wi ndow. scrollTo({to p: el .off                            smooth' } )}
-function bat chAll() { const arts = window._arts; if(!arts || !art                        '先                        urn}doPush(arts ,' al l')}
-f unction pushOne(i){ const ar ts=wi ndow._arts; if(!arts|| !arts[i])return; doPush([arts[i]], ' one'                    ed                { const  ar t s=win d ow._ar ts; if(!arts|| !a r t s[etw            w._editIdx = i                t.g etElem e nt B yI d('edi tor- a rea').innerHTM L = arts[i].htm l ;show M d(' m d-ed it')}
-        document.getEle m entById('btn-sv-edit').addEventListener('click', () => { const i = wind ow ._ editId x; if (i == null || !window._arts || !wi ndow._arts[i])re turn;wi ndo w._arts[i].html = doc um ent.getElemen tById('            ora            nnerHTML;rende r Arts(wi ndow._arts);cl s Md('md - ed            ; toast('已保存修改')});
-fun            n docCmd(cmd, va l){ document.execC o mmand(cm d, false, val); document.getElementByI d('e            r-area').foc u s() }
-        function doPush(arts, type) { if (!ar ts || !arts.length) {t oast('无文章', 'err'); return } const a = LS.get('accts', []); const arts[0].ai; if (ai == null || !a[ai]) { toast('账号丢失 ', ' er r'); return } const acc = a[ai]; document.getElementById('push-sum').innerHTML = `<p><strong>账号：</strong>${acc.nm || '未命名'}</p><p><strong>文章：</strong>${arts.length}篇</p>`; window._pAcc = acc; window._p        Arts = arts; showMd('md-push') }
-        do nt.getEl e mentById('btn-do-push').addEventList('click', asy n c function () {
-            this.disabled = true; this.textCon t ent = '推送中...';co n st acc = win d ow._pAcc; const a rt s = window._pArts; const s = LS.get('stt', {}); const sv = s.sv || ''; const au = s.au || '铃木村'; let results = []; if (sv) { try { const r = await fetch(`${sv}/api/publish`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ account: { app_id: acc.ap, app_secret: acc.sc }, articles: arts.map((x, i) => ({ index: i + 1, title: x.title, content_html: x.html })), author: au }) }); const d = await r.json(); results = d.data || d.results || [] } catch (e) { toast('服务器不可用，尝试直连', 'err'); sv = '' } }
-            if (!sv) { for (let i = 0; i < a r ts.length; i++){
-                try { const tr = await fetch(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid            cc.ap}&secret=${a cc.s c}`);const t d =aw ait tr.js on();if( !td.        acc        ess_token){results.push({index:i+1,status:'faile        d',error:'Token'} ) ;contin u e}const tk=td.acce ss_t oken;const pl={articles:[{title:arts[i] . title|| 'A I文章 ',author:au,digest:(arts[i].title||'').s u bstring( 0, 50) ,content:arts[i].html,content_source_url:'' , thumb_me di a_id: ''        ,need_open_comment: 0 ,only_f a n s_can_ comment:0}]};const dr=await fetch(`https://api. weixin.qq.com/cgi-bin/draft/add?access_to ken=${t k}`,{method:'POST',headers:{'Content-Type': 'a pplication/json'}, bod y:JSON.stringi fy(        pl)});const dd=await dr.json();if(dd.media_id){r        esults.pu sh({index:i +1,status: 'success',draa_id:dd.media_id})}else{results.push({index:i+1,status:'failed',error:dd.errmsg||'unknown'})}}catch(e){results.push({index:i+1,status:'failed',error:e.message})}}}
-                    const suc = results.filter(r => r.status === 'success').length; const fail = results.filter(r => r.status === 'failed').length; toast(`推送：成功${suc}${fail > 0 ? '/失败' + fail : ''}`, fail > 0 ? 'err' : 'ok'); const rc = LS.get('rec', []); rc.push({ t: `推送${suc}/${arts.length}篇`, s: suc === arts.length ? '成功' : '部分失败', tm: new Date().toLocaleTimeString() }); LS.set('rec', rc); this.disabled = false; this.textContent = '✅ 确认'; clsMd('md-push'); ldDash()
-        });
-        function ldSets() { const s = LS.get('stt', {}); document.getElementById('key-ds').value = s.ds || ''; document.getElementById('key-oai').value = s.oa || ''; document.getElementById('set-au').value = s.au || '铃木村'; document.getElementById('set-sv').value = s.sv || '' }
-        function saveSets() { LS.set('stt', { ds: document.getElementById('key-ds').value, oa: document.getElementById('key-oai').value, au: document.getElementById('set-au').value, sv: document.getElementById('set-sv').value }); toast('已保存') }
-        async function testSv() { const u = document.getElementById('set-sv').value; if (!u) { toast('填地址', 'err'); return } toast('测试...'); try { const r = await fetch(`${u}/api/accounts`); const d = await r.json(); toast(d.success ? '✅已连接' : '❌异常', 'err' ? null : 'ok') } catch (e) { toast('❌不可达', 'err') } }
-        function installApp() { if (window.deferredPrompt) { window.deferredPrompt.prompt(); window.deferredPrompt.userChoice.then(r => { document.getElementById('install-banner').style.display = 'none' }) } else { toast('iOS: Safari分享→添加到主屏幕') } }
-        window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); window.deferredPrompt = e; document.getElementById('install-banner').style.display = 'flex' });
-        if (navigator.standalone || window.matchMedia('(display-mode:standalone)').matches) { document.getElementById('install-banner').style.display = 'none' }
-        if (!window.deferredPrompt && !/iPhone|iPad|iPod/.test(navigator.userAgent)) { setTimeout(() => { if (!window.deferredPrompt) document.getElementById('install-banner').style.display = 'flex' }, 2000) }
-        ldDash(); ldCreate(); ldAccts(); ldSets();
-        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/gzh-workflow/sw.js') }
-    </script>
-</body>
-
-</html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AI创作助手">
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="/gzh-workflow/manifest.json">
+<title>多账号AI创作助手</title>
+<style>
+:root{--bg:#f0f2f5;--c:#fff;--t:#1a1a2e;--mu:#999;--bl:#2563eb;--gn:#16a34a;--or:#ea580c;--rd:#dc2626;--bd:#e5e7eb;--r:16px;--sf:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--t);line-height:1.6;padding-bottom:calc(80px + var(--sf));-webkit-font-smoothing:antialiased}
+.hdr{background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:100;text-align:center;display:flex;align-items:center;justify-content:space-between}
+.hdr h1{font-size:18px;font-weight:800}.hdr .st{font-size:10px;opacity:.7}
+.ctn{max-width:500px;margin:0 auto;padding:10px 10px 40px}
+.card{background:var(--c);border-radius:var(--r);padding:14px;margin-bottom:10px;box-shadow:0 1px 2px rgba(0,0,0,.03);border:1px solid var(--bd)}
+.ct{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .12s;touch-action:manipulation;white-space:nowrap}
+.btn:active{transform:scale(.95);opacity:.8}
+.btn-p{background:var(--bl);color:#fff}.btn-s{background:var(--gn);color:#fff}.btn-o{background:#fff;border:1.5px solid var(--bl);color:var(--bl)}.btn-r{background:#fff;border:1.5px solid var(--rd);color:var(--rd)}.btn-w{background:var(--or);color:#fff}
+.btn-sm{padding:7px 12px;font-size:11px;border-radius:8px}.btn-blk{width:100%}.btn:disabled{opacity:.4;pointer-events:none}
+input,select,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--bd);border-radius:10px;font-size:14px;font-family:inherit;background:#f9fafb;-webkit-appearance:none}
+input:focus,select:focus{outline:none;border-color:var(--bl);box-shadow:0 0 0 3px rgba(37,99,235,.06)}
+label{display:block;font-size:12px;font-weight:600;color:var(--mu);margin-bottom:3px;margin-top:8px}label:first-child{margin-top:0}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}.badge-g{background:#dcfce7;color:#166534}.badge-b{background:#dbeafe;color:#1e40af}.badge-y{background:#fef9c3;color:#854d0e}
+.row{display:flex;gap:8px}.col{flex:1;min-width:0}
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--bd);display:flex;padding:4px 0 var(--sf);z-index:100}
+.nav-btn{flex:1;text-align:center;padding:4px;font-size:10px;color:var(--mu);cursor:pointer;border:none;background:none;font-family:inherit}.nav-btn .nv{font-size:20px;display:block;margin-bottom:1px}.nav-btn.on{color:var(--bl)}
+.pg{display:none}.pg.on{display:block}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;color:#fff;font-weight:600;z-index:999;font-size:13px;pointer-events:none;opacity:0;transition:opacity .3s}.toast.show{opacity:1}.toast-ok{background:var(--gn)}.toast-err{background:var(--rd)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-end;justify-content:center}.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:20px 20px 0 0;padding:18px 14px calc(18px + var(--sf));width:100%;max-width:500px;max-height:85vh;overflow-y:auto;animation:su .25s}@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.empty{text-align:center;padding:30px 14px;color:var(--mu)}.empty .ic{font-size:40px;margin-bottom:6px}
+.prog{height:4px;background:#e5e7eb;border-radius:2px;overflow:hidden;margin:8px 0}.prog-fill{height:100%;background:var(--bl);border-radius:2px;width:0%}
+.art-preview{background:#fff;border:1px solid var(--bd);border-radius:8px;padding:14px;margin:6px 0;max-height:220px;overflow-y:auto;font-size:13px;line-height:1.7}.art-preview h2{font-size:14px;margin:10px 0 5px}.art-preview strong{color:#1a1a2e}.art-preview blockquote{background:#f0f4ff;padding:8px 12px;border-radius:6px;margin:8px 0;border-left:3px solid #818cf8;font-size:12px;color:#555}
+.editor-toolbar{display:flex;gap:4px;padding:8px;background:#f8f9fa;border-radius:8px 8px 0 0;border:1px solid var(--bd);border-bottom:none;flex-wrap:wrap}.editor-toolbar button{width:32px;height:30px;border:1px solid #ddd;background:#fff;border-radius:6px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}.editor-toolbar button:active{background:#e5e7eb}
+.editor-area{min-height:200px;max-height:50vh;overflow-y:auto;padding:12px;border:1px solid var(--bd);border-radius:0 0 8px 8px;font-size:14px;line-height:1.8;outline:none;background:#fff}
+.arts-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+</style></head><body>
+<div class="hdr"><h1>🤖 AI创作助手</h1><span class="st" id="st"></span></div>
+<div class="ctn">
+<div class="pg on" id="pg-dash"><div class="card"><div class="ct">📊 账号概览</div><div id="dash-acc"></div></div><div class="card"><div class="ct">📝 最近记录</div><div id="dash-rec"></div></div><div class="card"><div class="ct">⚡ 快捷操作</div><button class="btn btn-p btn-blk" onclick="swTab('create')">✍️ AI生成文章</button><button class="btn btn-s btn-blk" style="margin-top:6px" onclick="batchAll()">⚡ 一键推送全部</button></div></div>
+<div class="pg" id="pg-create"><div class="card"><div class="ct">🎯 创作中心</div><label>选择账号</label><select id="sel-acc"></select><label>垂直主题</label><select id="sel-topic"></select><label>AI模型</label><select id="sel-model"></select><label>生成篇数</label><select id="sel-n"><option value="1">1篇</option><option value="3">3篇</option><option value="6" selected>6篇</option></select><button class="btn btn-p btn-blk" style="margin-top:12px" id="btn-gen">🚀 生成文章</button><div id="gen-prog" style="display:none;margin-top:8px"><div class="prog"><div class="prog-fill" id="prog-fill"></div></div><p style="font-size:10px;color:var(--mu);text-align:center" id="prog-txt"></p></div></div><div id="art-out"></div></div>
+<div class="pg" id="pg-accts"><div id="acct-list"></div><button class="btn btn-p btn-blk" onclick="showAddAcct()">➕ 添加账号</button><button class="btn btn-o btn-blk" style="margin-top:6px" onclick="exportAccts()">📋 导出</button><button class="btn btn-o btn-blk" style="margin-top:6px" onclick="document.getElementById('fi').click()">📥 导入</button><input type="file" id="fi" style="display:none" accept=".json" onchange="importAccts(event)"></div>
+<div class="pg" id="pg-set"><div class="card"><div class="ct">🔑 AI密钥</div><label>DeepSeek Key</label><input type="password" id="key-ds" placeholder="sk-..."><label>OpenAI Key</label><input type="password" id="key-oai" placeholder="sk-..."></div><div class="card"><div class="ct">🖥️ 推送服务器</div><label>地址（电脑IP:3456）</label><input id="set-sv" placeholder="http://192.168.x.x:3456"><button class="btn btn-sm btn-o" style="margin-top:6px" onclick="testSv()">🔍 测试</button></div><div class="card"><div class="ct">✏️ 作者</div><label>名称</label><input id="set-au" value="铃木村"><button class="btn btn-p btn-blk" style="margin-top:10px" onclick="saveSets()">💾 保存设置</button></div></div>
+</div>
+<div class="nav"><div class="nav-btn on" data-pg="dash"><span class="nv">📊</span>仪表盘</div><div class="nav-btn" data-pg="create"><span class="nv">✍️</span>创作</div><div class="nav-btn" data-pg="accts"><span class="nv">👤</span>账号</div><div class="nav-btn" data-pg="set"><span class="nv">⚙️</span>设置</div></div>
+<div class="modal-overlay" id="md-acct"><div class="modal"><h2 style="margin-bottom:12px">➕ 公众号账号</h2><label>名称</label><input id="md-nm"><label>AppID</label><input id="md-ap"><label>AppSecret</label><input id="md-sc"><label>IP</label><input id="md-ip" value="115.206.224.39"><label>主题</label><select id="md-tp"></select><div class="row" style="margin-top:12px"><button class="btn btn-o col" onclick="clsMd('md-acct')">取消</button><button class="btn btn-p col" id="btn-sv-acct">保存</button></div></div></div>
+<div class="modal-overlay" id="md-edit"><div class="modal"><h2 style="margin-bottom:8px">✏️ 编辑文章</h2><div class="editor-toolbar"><button onclick="docCmd('bold')"><b>B</b></button><button onclick="docCmd('italic')"><i>I</i></button><button onclick="docCmd('underline')"><u>U</u></button><button onclick="docCmd('formatBlock','h2')">H</button><button onclick="docCmd('insertUnorderedList')">•</button><button onclick="docCmd('formatBlock','blockquote')">❝</button></div><div class="editor-area" id="editor-area" contenteditable="true"></div><div class="row" style="margin-top:10px"><button class="btn btn-o col" onclick="clsMd('md-edit')">取消</button><button class="btn btn-p col" id="btn-sv-edit">💾 保存修改</button></div></div></div>
+<div class="modal-overlay" id="md-push"><div class="modal"><h2 style="margin-bottom:10px">📤 推送确认</h2><div id="push-sum"></div><div class="row" style="margin-top:10px"><button class="btn btn-o col" onclick="clsMd('md-push')">取消</button><button class="btn btn-s col" id="btn-do-push">✅ 确认</button></div></div></div>
+<script>
+var LS={get:function(k,d){try{var v=localStorage.getItem('gz_'+k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){localStorage.setItem('gz_'+k,JSON.stringify(v))}};
+var TP={"通用职场效率":{ind:"职场办公",ds:"销售CSV",dd:"8900行",t1:"Notion",t2:"飞书妙记",t3:"Gamma",c1:"50页行业报告",c2:"1500字方案",c3:"合作方邮件",m1:"日销售额",m2:"留存率",m3:"完成率",rt:"季度汇报",ex:"知识工作者"},"电商运营":{ind:"电商运营",ds:"直播CSV",dd:"20000行",t1:"抖店",t2:"生意参谋",t3:"有米云",c1:"50页竞品报告",c2:"直播脚本",c3:"供应商邮件",m1:"GMV",m2:"转化率",m3:"ROI",rt:"双十一复盘",ex:"电商运营人"},"教育培训":{ind:"教育培训",ds:"学员CSV",dd:"5000条",t1:"ClassIn",t2:"小鹅通",t3:"Canva",c1:"30页课程标准",c2:"教案",c3:"家长邮件",m1:"完课率",m2:"续费率",m3:"满意度",rt:"教学总结",ex:"教育工作者"},"金融分析":{ind:"金融分析",ds:"财报CSV",dd:"50家",t1:"Wind",t2:"同花顺",t3:"Tableau",c1:"200页研报",c2:"投资备忘录",c3:"客户邮件",m1:"ROE",m2:"净利率",m3:"PE",rt:"投研分析",ex:"金融分析师"},"医疗健康":{ind:"医疗健康",ds:"诊疗CSV",dd:"3000份",t1:"杏仁医生",t2:"丁香园",t3:"MedPeer",c1:"40页论文",c2:"病例报告",c3:"会诊邮件",m1:"治愈率",m2:"住院日",m3:"满意度",rt:"科室汇报",ex:"医疗从业者"},"法律咨询":{ind:"法律咨询",ds:"卷宗CSV",dd:"200个",t1:"北大法宝",t2:"威科先行",t3:"法信",c1:"80页法规",c2:"法律意见书",c3:"客户邮件",m1:"胜诉率",m2:"周期",m3:"满意度",rt:"案件分析",ex:"法律从业者"},"设计创意":{ind:"设计创意",ds:"反馈CSV",dd:"1000条",t1:"Figma",t2:"即时设计",t3:"Midjourney",c1:"50页趋势",c2:"品牌方案",c3:"甲方邮件",m1:"通过率",m2:"满意度",m3:"改稿次数",rt:"设计提案",ex:"设计师"},"软件开发":{ind:"软件开发",ds:"日志CSV",dd:"50000条",t1:"GitHub Copilot",t2:"Cursor",t3:"Linear",c1:"100页架构",c2:"技术方案",c3:"PM邮件",m1:"可用率",m2:"Bug周期",m3:"迭代速度",rt:"技术复盘",ex:"开发者"},"市场营销":{ind:"市场营销",ds:"投放CSV",dd:"15000条",t1:"巨量引擎",t2:"腾讯广告",t3:"新榜",c1:"60页洞察",c2:"营销方案",c3:"客户邮件",m1:"ROI",m2:"获客成本",m3:"品牌声量",rt:"月度复盘",ex:"市场营销人"},"房产经纪":{ind:"房产经纪",ds:"带看CSV",dd:"3000条",t1:"贝壳",t2:"房天下",t3:"安居客",c1:"40页市场报告",c2:"房源方案",c3:"客户邮件",m1:"转化率",m2:"成交周期",m3:"满意度",rt:"区域分析",ex:"房产经纪人"},"自媒体运营":{ind:"自媒体运营",ds:"后台CSV",dd:"200篇",t1:"新榜",t2:"135编辑器",t3:"西瓜数据",c1:"30页趋势",c2:"深度方案",c3:"品牌邮件",m1:"打开率",m2:"分享率",m3:"粉丝增长",rt:"月度复盘",ex:"自媒体运营者"}};
+function Hhdr(a){return'<p style="color:#999;font-size:12px;text-align:center">'+a+' · 原创</p><hr style="border:.5px dashed #e0e0e0">'}
+function Hp(t){return'<p style="margin:12px 0;color:#555;font-size:14px;line-height:2">'+t+'</p>'}
+function Hb(t){return'<strong style="color:#1a1a2e">'+t+'</strong>'}
+function Hh2(t){return'<h2 style="font-size:16px;color:#1a1a2e;margin:20px 0 10px;padding-left:8px;border-left:3px solid #2563eb">'+t+'</h2>'}
+function Htip(t){return'<blockquote style="background:#f0f4ff;padding:10px 14px;border-radius:8px;margin:12px 0;border-left:4px solid #818cf8;font-size:12px;color:#555">💡 '+t+'</blockquote>'}
+function Hq(t){return'<p style="text-align:center;font-size:14px;color:#2563eb;margin:16px 0;font-weight:bold">💬 '+t+'</p>'}
+var Hhr='<hr style="border:.5px solid #eee;margin:16px 0">';
+var Hcta='<hr style="border:2px solid #2563eb;margin:20px 0 12px"><p style="text-align:center;color:#2563eb;font-size:13px;font-weight:bold">🔑 公众号发送<strong>【工具】</strong>免费领取AI提效工具包</p>';
+function genHTML(n,t,au){var s='<section>'+Hhdr(au);var A=[function(){var x='';x+=Hp('一天8小时'+Hb('真正创造价值的时间有几小时？'));x+=Hq('「原来每天有3.5小时AI可以代劳」')+Hhr;x+=Hh2('📖 信息摄入：3分钟掌握全局');x+=Hp(t.c1+'→'+Hb('Claude或Kimi Chat')+'：500字提炼。'+Hb('8分钟，效率+93%')+'.')+Hhr;x+=Hh2('✍️ 内容产出：下笔如有神');x+=Hp('搭骨架→填血肉→注入灵魂。'+t.c2+'，'+Hb('47分钟，以前3h+')+'.')+Hhr;x+=Hh2('📊 数据处理：秒级锁定');x+=Hp(t.dd+'，40秒AI分析。'+Hb('效率+86%')+'.')+Hhr;x+=Hh2('💬 沟通协作');x+=Hp(t.c3+'→AI三版→微调。'+Hb('8分钟搞定')+'.')+Hhr;x+=Hp('四个场景叠加'+Hb('9h→5.5h')+'.')+Hq('前提：迈出第一步🏃')+Hcta;return x},function(){var x='';x+=Hp('周一早上邮箱12封未读。'+Hb('不是事情多，是手工模式处理工业化信息。'))+Hhr;x+=Hh2('🔍 AI信息守门人');x+=Hp('聚合→AI初筛→300字洞察→归档'+t.t1+'。'+Hb('120→25分钟')+'.')+Hhr;x+=Hh2('✍️ 四阶段AI加速');x+=Hp('构思→结构化→扩写→打磨。'+Hb('3000字90分钟')+'.')+Hhr;x+=Hq('AI是杠杆，你是支点。')+Hcta;return x},function(){var x='';x+=Hp('每天信息量=15世纪一生总和。'+Hb('「怎么学」比「学什么」重要100倍')+'.')+Hhr;x+=Hh2('🧠 搭建AI第二大脑');x+=Hp('内容→'+t.t1+'→AI标签+摘要→检索。'+Hb('核心：可检索+可关联')+'.')+Hhr;x+=Hq('更快找到「什么值得读」。')+Hcta;return x},function(){var x='';x+=Hp('残酷事实：'+Hb('70%时间不创造价值')+'.')+Hhr;x+=Hh2('🎙️ 会议纪要：1h→3min');x+=Hp(t.t2+'转写→AI整理。'+Hb('效率+92%')+'.')+Hhr;x+=Hq('聚焦只有你能做的事。')+Hcta;return x},function(){var x='';x+=Hp('写300字卡住。'+Hb('缺「不依赖灵感」的内容系统')+'.')+Hhr;x+=Hh2('🎯 选题：跳出「自嗨」');x+=Hp('热点雷达→选题发散→受众匹配。'+Hb('好选题=痛点×视角')+'.')+Hhr;x+=Hq('AI效率×人类温度=不可替代。')+Hcta;return x},function(){var x='';x+=Hp('复盘=罗列+「下次注意」+永不打开。'+Hb('给大脑制造虚假安全感')+'.')+Hhr;x+=Hh2('🏗️ AI四层提炼法');x+=Hp('事实还原→模式识别→'+Hb('根因分析(追问3次为什么)')+'→行动转化。')+Hhr;x+=Hq('最好的复盘，写给未来的自己。')+Hcta;return x}];s+=(A[n-1]||A[0])();s+='</section>';return s}
+function toast(m,t){t=t||'ok';var e=document.createElement('div');e.className='toast toast-'+t+' show';e.textContent=m;document.body.appendChild(e);setTimeout(function(){e.classList.remove('show');setTimeout(function(){e.remove()},300)},2000)}
+function clsMd(id){document.getElementById(id).classList.remove('show')}
+function showMd(id){document.getElementById(id).classList.add('show')}
+function swTab(pg){var ps=document.querySelectorAll('.pg');for(var i=0;i<ps.length;i++)ps[i].classList.remove('on');var bs=document.querySelectorAll('.nav-btn');for(var i=0;i<bs.length;i++)bs[i].classList.remove('on');document.getElementById('pg-'+pg).classList.add('on');var btn=document.querySelector('.nav-btn[data-pg="'+pg+'"]');if(btn)btn.classList.add('on');if(pg==='dash')ldDash();if(pg==='accts')ldAccts();if(pg==='create')ldCreate();if(pg==='set')ldSets()}
+var navs=document.querySelectorAll('.nav-btn');for(var i=0;i<navs.length;i++){navs[i].addEventListener('click',function(){swTab(this.dataset.pg)})}
+function ldDash(){var a=LS.get('accts',[]),r=LS.get('rec',[]);document.getElementById('st').textContent=a.length?a.length+'账号·就绪':'轻触导航';var da=document.getElementById('dash-acc');if(a.length){var h='';for(var i=0;i<a.length;i++){h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0"><div><strong>'+((a[i].nm)||'未命名')+'</strong><span class="badge badge-b" style="margin-left:6px">'+((a[i].tp)||'')+'</span></div><span class="badge badge-g">🟢</span></div>'}da.innerHTML=h}else{da.innerHTML='<div class="empty"><div class="ic">📭</div>去「账号」页添加</div>'}var dr=document.getElementById('dash-rec');if(r.length){var h='';for(var i=Math.max(0,r.length-5);i<r.length;i++){h+='<div style="padding:5px 0;font-size:12px;border-bottom:1px solid #f0f0f0">📄 '+r[i].t+' <span class="badge badge-y">'+r[i].s+'</span><span style="color:var(--mu);font-size:10px;margin-left:6px">'+(r[i].tm||'')+'</span></div>'}dr.innerHTML=h}else{dr.innerHTML='<div class="empty"><div class="ic">📝</div>暂无记录</div>'}}
+function ldAccts(){var a=LS.get('accts',[]),el=document.getElementById('acct-list');if(!a.length){el.innerHTML='<div class="empty"><div class="ic">📭</div>无账号</div>';return}var h='';for(var i=0;i<a.length;i++){h+='<div class="card"><div style="display:flex;justify-content:space-between"><strong>'+(a[i].nm||'未命名')+'</strong><span class="badge badge-b">'+(a[i].tp||'')+'</span></div><div style="font-size:11px;color:var(--mu);margin:4px 0">AppID:'+((a[i].ap||'').substring(0,12))+'...</div><div class="row"><button class="btn btn-sm btn-o col" onclick="editAcct('+i+')">✏️</button><button class="btn btn-sm btn-r col" onclick="delAcct('+i+')">🗑</button></div></div>'}el.innerHTML=h}
+function showAddAcct(ei){document.getElementById('md-tp').innerHTML=Object.keys(TP).map(function(k){return'<option value="'+k+'">'+k+'</option>'}).join('');var a=LS.get('accts',[]);if(ei!=null&&a[ei]){var x=a[ei];document.getElementById('md-nm').value=x.nm||'';document.getElementById('md-ap').value=x.ap||'';document.getElementById('md-sc').value=x.sc||'';document.getElementById('md-ip').value=x.ip||'';document.getElementById('md-tp').value=x.tp||'通用职场效率';document.getElementById('btn-sv-acct').dataset.ei=ei}else{document.getElementById('md-nm').value='';document.getElementById('md-ap').value='';document.getElementById('md-sc').value='';document.getElementById('md-ip').value='';delete document.getElementById('btn-sv-acct').dataset.ei}showMd('md-acct')}
+function editAcct(i){showAddAcct(i)}
+document.getElementById('btn-sv-acct').addEventListener('click',function(){var x={nm:document.getElementById('md-nm').value,ap:document.getElementById('md-ap').value,sc:document.getElementById('md-sc').value,ip:document.getElementById('md-ip').value,tp:document.getElementById('md-tp').value};if(!x.ap||!x.sc){toast('AppID/Secret必填','err');return}var a=LS.get('accts',[]),ei=this.dataset.ei;if(ei!=null){a[parseInt(ei)]=x}else{a.push(x)}LS.set('accts',a);clsMd('md-acct');ldAccts();ldDash();ldCreate();toast(ei!=null?'已更新':'已添加')});
+function delAcct(i){if(!confirm('删除？'))return;var a=LS.get('accts',[]);a.splice(i,1);LS.set('accts',a);ldAccts();ldDash();ldCreate();toast('已删除')}
+function exportAccts(){var a=LS.get('accts',[]);if(!a.length){toast('无账号','err');return}var b=new Blob([JSON.stringify(a,null,2)],{type:'application/json'});var u=URL.createObjectURL(b);var d=document.createElement('a');d.href=u;d.download='accounts_backup.json';d.click();toast('已导出')}
+function importAccts(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){try{var d=JSON.parse(ev.target.result);if(!Array.isArray(d)){toast('格式错','err');return}var a=LS.get('accts',[]);for(var i=0;i<d.length;i++){if(d[i].ap&&d[i].sc)a.push({nm:d[i].nm||d[i].name,ap:d[i].ap||d[i].appid,sc:d[i].sc||d[i].secret,ip:d[i].ip||'',tp:d[i].tp||d[i].topic||'通用职场效率'})}LS.set('accts',a);ldAccts();ldDash();ldCreate();toast('导入'+d.length+'个')}catch(ex){toast('格式错','err')}};r.readAsText(f);e.target.value=''}
+function ldCreate(){var a=LS.get('accts',[]),sa=document.getElementById('sel-acc');if(a.length){var h='';for(var i=0;i<a.length;i++){h+='<option value="'+i+'">'+(a[i].nm||'未命名')+'('+(a[i].tp||'')+')</option>'}sa.innerHTML=h}else{sa.innerHTML='<option>请先加账号</option>'}document.getElementById('sel-topic').innerHTML=Object.keys(TP).map(function(k){return'<option value="'+k+'">'+k+'</option>'}).join('');document.getElementById('sel-model').innerHTML='<option value="deepseek">DeepSeek V4 Pro</option><option value="openai">OpenAI GPT-4o</option>'}
+async function doGen(){var a=LS.get('accts',[]),ai=parseInt(document.getElementById('sel-acc').value);if(isNaN(ai)||!a[ai]){toast('选账号','err');return}var t=TP[document.getElementById('sel-topic').value]||TP["通用职场效率"],m=document.getElementById('sel-model').value,n=parseInt(document.getElementById('sel-n').value),s=LS.get('stt',{}),key=m==='deepseek'?s.ds:s.oa,au=s.au||'铃木村',pg=document.getElementById('gen-prog'),pf=document.getElementById('prog-fill'),pt=document.getElementById('prog-txt');pg.style.display='block';pf.style.width='5%';pt.textContent='生成中...';var arts=[],useAI=!!key;if(useAI){try{for(var i=1;i<=n;i++){pf.style.width=Math.round(i/n*80)+'%';pt.textContent='AI第'+i+'/'+n+'篇...';var pr='为"'+t.ind+'"领域写爆款公众号文章。要求:1)故事化开头2)4-5小节emoji标题3)重点加粗4)案例:'+t.c1+t.c2+'5)工具:'+t.t1+t.t2+'6)1200字7)文末:发送【工具】领取8)禁词:副业网赚暴利月入。纯HTML(只用p,h2,strong,blockquote)',bu=m==='deepseek'?'https://api.deepseek.com/v1':'https://api.openai.com/v1',r=await fetch(bu+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({model:m==='deepseek'?'deepseek-chat':'gpt-4o',messages:[{role:'system',content:'你是资深新媒体编辑。输出纯HTML公众号文章。'},{role:'user',content:pr}],max_tokens:4096,temperature:0.8})}),d=await r.json(),c=d.choices?d.choices[0].message.content:'';arts.push({n:i,title:t.ind+'·AI提效第'+i+'篇',html:'<section>'+Hhdr(au)+c+Hcta+'</section>',ai:ai})}}catch(e){useAI=false;arts.length=0;toast('AI失败用模板','err')}}if(!useAI){for(var i=1;i<=n;i++){pf.style.width=Math.round(i/n*80)+'%';pt.textContent='模板'+i+'/'+n+'...';arts.push({n:i,title:t.ind+'·AI提效第'+i+'篇',html:genHTML(i,t,au),ai:ai})}}pf.style.width='100%';pt.textContent='✅';window._arts=arts;renderArts(arts);var rc=LS.get('rec',[]);rc.push({t:t.ind+' '+n+'篇',s:'已生成',tm:new Date().toLocaleTimeString()});if(rc.length>30)rc.shift();LS.set('rec',rc);setTimeout(function(){pg.style.display='none'},1200);ldDash()}
+document.getElementById('btn-gen').addEventListener('click',doGen);
+function renderArts(arts){var el=document.getElementById('art-out'),h='<div class="card"><div class="ct">📄 结果('+arts.length+'篇)</div>';for(var i=0;i<arts.length;i++){h+='<div style="margin-bottom:8px;border:1px solid var(--bd);border-radius:8px;overflow:hidden"><div style="padding:8px 12px;background:#f8f9ff;font-weight:600;font-size:12px;display:flex;justify-content:space-between;cursor:pointer" onclick="var n=this.nextElementSibling;n.style.display=n.style.display===\'none\'?\'block\':\'none\'"><span>📝第'+(i+1)+'篇</span><span>👁</span></div><div class="art-preview" style="display:none">'+arts[i].html+'</div><div class="arts-actions" style="padding:8px 12px;border-top:1px solid var(--bd)"><button class="btn btn-sm btn-s col" onclick="pushOne('+i+')">📤推送</button><button class="btn btn-sm btn-o col" onclick="editArt('+i+')">✏️修改</button></div></div>'}h+='<button class="btn btn-w btn-blk" style="margin-top:8px" onclick="batchAll()">⚡一键推送全部('+arts.length+'篇)</button></div>';el.innerHTML=h;window.scrollTo({top:el.offsetTop-60,behavior:'smooth'})}
+function batchAll(){var arts=window._arts;if(!arts||!arts.length){toast('先生成文章','err');return}doPush(arts,'all')}
+function pushOne(i){var arts=window._arts;if(!arts||!arts[i])return;doPush([arts[i]],'one')}
+function editArt(i){var arts=window._arts;if(!arts||!arts[i])return;window._editIdx=i;document.getElementById('editor-area').innerHTML=arts[i].html;showMd('md-edit')}
+document.getElementById('btn-sv-edit').addEventListener('click',function(){var i=window._editIdx;if(i==null||!window._arts||!window._arts[i])return;window._arts[i].html=document.getElementById('editor-area').innerHTML;renderArts(window._arts);clsMd('md-edit');toast('已保存修改')});
+function docCmd(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('editor-area').focus()}
+function doPush(arts,type){if(!arts||!arts.length){toast('无文章','err');return}var a=LS.get('accts',[]),ai=arts[0].ai;if(ai==null||!a[ai]){toast('账号丢失','err');return}var acc=a[ai];document.getElementById('push-sum').innerHTML='<p><strong>账号：</strong>'+(acc.nm||'未命名')+'</p><p><strong>文章：</strong>'+arts.length+'篇</p>';window._pAcc=acc;window._pArts=arts;showMd('md-push')}
+document.getElementById('btn-do-push').addEventListener('click',async function(){this.disabled=true;this.textContent='推送中...';var acc=window._pAcc,arts=window._pArts,s=LS.get('stt',{}),sv=s.sv||'',au=s.au||'铃木村',results=[];if(sv){try{var r=await fetch(sv+'/api/publish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({account:{app_id:acc.ap,app_secret:acc.sc},articles:arts.map(function(x,i){return{index:i+1,title:x.title,content_html:x.html}}),author:au})}),d=await r.json();results=d.data||d.results||[]}catch(e){toast('服务器不可用，尝试直连','err');sv=''}}if(!sv){for(var i=0;i<arts.length;i++){try{var tr=await fetch('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+acc.ap+'&secret='+acc.sc),td=await tr.json();if(!td.access_token){results.push({index:i+1,status:'failed',error:'Token'});continue}var tk=td.access_token,pl={articles:[{title:arts[i].title||'AI文章',author:au,digest:(arts[i].title||'').substring(0,50),content:arts[i].html,content_source_url:'',thumb_media_id:'',need_open_comment:0,only_fans_can_comment:0}]},dr=await fetch('https://api.weixin.qq.com/cgi-bin/draft/add?access_token='+tk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pl)}),dd=await dr.json();if(dd.media_id){results.push({index:i+1,status:'success',draft_media_id:dd.media_id})}else{results.push({index:i+1,status:'failed',error:dd.errmsg||'unknown'})}}catch(e){results.push({index:i+1,status:'failed',error:e.message})}}}var suc=results.filter(function(r){return r.status==='success'}).length,fail=results.filter(function(r){return r.status==='failed'}).length;toast('推送：成功'+suc+(fail>0?'/失败'+fail:''),fail>0?'err':'ok');var rc=LS.get('rec',[]);rc.push({t:'推送'+suc+'/'+arts.length+'篇',s:suc===arts.length?'成功':'部分失败',tm:new Date().toLocaleTimeString()});LS.set('rec',rc);this.disabled=false;this.textContent='✅ 确认';clsMd('md-push');ldDash()});
+function ldSets(){var s=LS.get('stt',{});document.getElementById('key-ds').value=s.ds||'';document.getElementById('key-oai').value=s.oa||'';document.getElementById('set-au').value=s.au||'铃木村';document.getElementById('set-sv').value=s.sv||''}
+function saveSets(){LS.set('stt',{ds:document.getElementById('key-ds').value,oa:document.getElementById('key-oai').value,au:document.getElementById('set-au').value,sv:document.getElementById('set-sv').value});toast('已保存')}
+async function testSv(){var u=document.getElementById('set-sv').value;if(!u){toast('填地址','err');return}toast('测试...');try{var r=await fetch(u+'/api/accounts'),d=await r.json();toast(d.success?'✅已连接':'❌异常')}catch(e){toast('❌不可达','err')}}
+ldDash();ldCreate();ldAccts();ldSets();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/gzh-workflow/sw.js')}
+</script></body></html>
