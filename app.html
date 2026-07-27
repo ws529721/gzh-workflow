@@ -8,9 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="AI创作助手" />
-    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#0f172a" />
-    <link rel="manifest" href="data:application/json,{}" />
     <title>多账号AI创作助手</title>
     <style>
         :root {
@@ -21,7 +19,6 @@
             --blue: #2563eb;
             --green: #16a34a;
             --orange: #ea580c;
-            --purple: #7c3aed;
             --red: #dc2626;
             --border: #e5e7eb;
             --radius: 16px;
@@ -45,9 +42,9 @@
         }
 
         .hdr {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
             color: #fff;
-            padding: 16px 16px 14px;
+            padding: 16px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -56,8 +53,7 @@
 
         .hdr h1 {
             font-size: 19px;
-            font-weight: 800;
-            letter-spacing: .5px
+            font-weight: 800
         }
 
         .hdr .st {
@@ -102,7 +98,6 @@
             border: none;
             cursor: pointer;
             transition: all .15s;
-            text-decoration: none;
             touch-action: manipulation
         }
 
@@ -125,6 +120,12 @@
             background: #fff;
             border: 1.5px solid var(--blue);
             color: var(--blue)
+        }
+
+        .btn-r {
+            background: #fff;
+            border: 1.5px solid var(--red);
+            color: var(--red)
         }
 
         .btn-sm {
@@ -157,8 +158,7 @@
         }
 
         input:focus,
-        select:focus,
-        textarea:focus {
+        select:focus {
             outline: none;
             border-color: var(--blue);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, .08)
@@ -195,6 +195,11 @@
             color: #1e40af
         }
 
+        .badge-y {
+            background: #fef9c3;
+            color: #854d0e
+        }
+
         .row {
             display: flex;
             gap: 10px
@@ -205,31 +210,40 @@
             min-width: 0
         }
 
-        .tabs {
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
             display: flex;
-            background: var(--card);
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 14px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .04)
+            padding: 6px 0 var(--safe);
+            z-index: 100
         }
 
-        .tab {
+        .nav-btn {
             flex: 1;
             text-align: center;
-            padding: 13px 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            border-bottom: 2.5px solid transparent;
-            transition: .2s;
+            padding: 6px;
+            font-size: 10px;
             color: var(--muted);
-            white-space: nowrap
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit
         }
 
-        .tab.on {
-            color: var(--blue);
-            border-bottom-color: var(--blue)
+        .nav-btn .nv {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 2px
+        }
+
+        .nav-btn.on {
+            color: var(--blue)
         }
 
         .pg {
@@ -330,42 +344,6 @@
             width: 0%
         }
 
-        .nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, .92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
-            display: flex;
-            padding: 6px 0 var(--safe);
-            z-index: 100
-        }
-
-        .nav-btn {
-            flex: 1;
-            text-align: center;
-            padding: 6px;
-            font-size: 10px;
-            color: var(--muted);
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: inherit
-        }
-
-        .nav-btn .nv {
-            font-size: 22px;
-            display: block;
-            margin-bottom: 2px
-        }
-
-        .nav-btn.on {
-            color: var(--blue)
-        }
-
         .art-preview {
             background: #fff;
             border: 1px solid var(--border);
@@ -396,36 +374,30 @@
             font-size: 13px;
             color: #555
         }
-
-        .art-preview hr {
-            border: .5px solid #eee;
-            margin: 12px 0
-        }
     </style>
 </head>
 
 <body>
-
     <div class="hdr">
         <h1>🤖 多账号AI创作助手</h1>
-        <div class="st" id="st">轻触底部导航开始</div>
+        <div class="st" id="st">就绪</div>
     </div>
-
     <div class="ctn">
-        <!-- 仪表盘 -->
         <div class="pg on" id="pg-dash">
             <div class="card">
                 <div class="ct">📊 账号概览</div>
                 <div id="dash-acc"></div>
             </div>
             <div class="card">
+                <div class="ct">📝 最近记录</div>
+                <div id="dash-recent"></div>
+            </div>
+            <div class="card">
                 <div class="ct">⚡ 快捷操作</div>
-                <button class="btn btn-p btn-blk" onclick="swTab('create')">✍️ 开始创作</button>
-                <button class="btn btn-o btn-blk" style="margin-top:8px" onclick="swTab('accts')">👤 管理账号</button>
+                <button class="btn btn-p btn-blk" onclick="swTab('create')">✍️ AI生成文章</button>
+                <button class="btn btn-s btn-blk" style="margin-top:8px" onclick="quickPush()">📤 推送最近文章</button>
             </div>
         </div>
-
-        <!-- 创作 -->
         <div class="pg" id="pg-create">
             <div class="card">
                 <div class="ct">🎯 创作中心</div>
@@ -438,6 +410,7 @@
                     <option value="6" selected>6篇</option>
                 </select>
                 <button class="btn btn-p btn-blk" style="margin-top:14px" id="btn-gen">🚀 生成文章</button>
+                <button class="btn btn-s btn-blk" style="margin-top:8px" id="btn-gen-push">🚀 生成并推送草稿箱</button>
                 <div id="gen-prog" style="display:none;margin-top:10px">
                     <div class="prog">
                         <div class="prog-fill" id="prog-fill"></div>
@@ -447,44 +420,45 @@
             </div>
             <div id="art-out"></div>
         </div>
-
-        <!-- 账号 -->
         <div class="pg" id="pg-accts">
             <div id="acct-list"></div>
             <button class="btn btn-p btn-blk" onclick="showAddAcct()">➕ 添加账号</button>
+            <button class="btn btn-o btn-blk" style="margin-top:8px" onclick="exportAccts()">📋 导出账号</button>
+            <button class="btn btn-o btn-blk" style="margin-top:8px" onclick="document.getElementById('fi').click()">📥
+                导入账号</button>
+            <input type="file" id="fi" style="display:none" accept=".json" onchange="importAccts(event)" />
         </div>
-
-        <!-- 设置 -->
         <div class="pg" id="pg-set">
             <div class="card">
-                <div class="ct">🔑 API密钥</div>
+                <div class="ct">🔑 AI模型密钥</div>
                 <label>DeepSeek API Key</label><input type="password" id="key-ds" placeholder="sk-..." />
-                <label>OpenAI API Key(可选)</label><input type="password" id="key-oai" placeholder="sk-..." />
-                <label>作者名称</label><input id="set-author" value="铃木村" />
-                <button class="btn btn-p btn-blk" style="margin-top:12px" onclick="saveSets()">💾 保存</button>
+                <button class="btn btn-sm btn-o" style="margin-top:6px" onclick="testAI('deepseek')">🔍 测试</button>
+                <label>OpenAI Key (可选)</label><input type="password" id="key-oai" placeholder="sk-..." />
             </div>
             <div class="card">
-                <div class="ct">📋 关于</div>
-                <p style="font-size:13px;color:var(--muted)">文章生成后可在电脑端运行服务器推送到微信草稿箱。本应用所有数据存储在手机本地。</p>
+                <div class="ct">🖥️ 推送服务器</div>
+                <label>服务器地址（电脑运行启动服务器.bat后填IP）</label><input id="set-server" placeholder="http://192.168.x.x:3456" />
+                <button class="btn btn-sm btn-o" style="margin-top:6px" onclick="testServer()">🔍 测试连接</button>
+            </div>
+            <div class="card">
+                <div class="ct">✏️ 作者</div>
+                <label>作者名称</label><input id="set-author" value="铃木村" />
+                <button class="btn btn-p btn-blk" style="margin-top:12px" onclick="saveSets()">💾 保存设置</button>
             </div>
         </div>
     </div>
-
-    <!-- 底部导航 -->
     <div class="nav">
         <div class="nav-btn on" data-pg="dash"><span class="nv">📊</span>仪表盘</div>
         <div class="nav-btn" data-pg="create"><span class="nv">✍️</span>创作</div>
         <div class="nav-btn" data-pg="accts"><span class="nv">👤</span>账号</div>
         <div class="nav-btn" data-pg="set"><span class="nv">⚙️</span>设置</div>
     </div>
-
-    <!-- 添加账号弹窗 -->
     <div class="modal-overlay" id="md-acct">
         <div class="modal">
-            <h2 style="margin-bottom:14px">➕ 添加公众号账号</h2>
+            <h2 style="margin-bottom:14px">➕ 添加公众号</h2>
             <label>账号名称</label><input id="md-name" placeholder="如：电商运营号" />
             <label>AppID</label><input id="md-appid" placeholder="wx..." />
-            <label>AppSecret</label><input id="md-secret" placeholder="请输入AppSecret" />
+            <label>AppSecret</label><input id="md-secret" placeholder="请输入" />
             <label>白名单IP</label><input id="md-ip" placeholder="115.206.224.39" />
             <label>垂直主题</label><select id="md-topic"></select>
             <div class="row" style="margin-top:14px"><button class="btn btn-o col"
@@ -492,182 +466,60 @@
             </div>
         </div>
     </div>
-
+    <div class="modal-overlay" id="md-push">
+        <div class="modal">
+            <h2 style="margin-bottom:14px">📤 推送到草稿箱</h2>
+            <div id="push-summary"></div>
+            <div class="row" style="margin-top:14px"><button class="btn btn-o col"
+                    onclick="clsMd('md-push')">取消</button><button class="btn btn-s col" id="btn-do-push">✅ 确认推送</button>
+            </div>
+        </div>
+    </div>
     <script>
-        // ==================== 数据存储 ====================
-        const LS = {
-            get(k, d) { try { const v = localStorage.getItem('gzh_' + k); return v ? JSON.parse(v) : d } catch (e) { return d } },
-            set(k, v) { localStorage.setItem('gzh_' + k, JSON.stringify(v)) }
-        };
-
-        // ==================== 垂直主题 ====================
-        const TOPICS = {
-            "通用职场效率": { ind: "职场办公", ds: "销售数据CSV", dd: "8900行销售数据", t1: "【Notion】", t2: "【飞书妙记】", t3: "【Gamma.app】", c1: "一份50页的行业报告", c2: "一个1500字的工作方案", c3: "一封来自合作方的邮件", m1: "日销售额", m2: "客户留存率", m3: "项目完成率", rt: "季度汇报PPT", ex: "知识工作者" },
-            "电商运营": { ind: "电商运营", ds: "抖音直播数据CSV", dd: "20000行订单与流量数据", t1: "【抖店】", t2: "【生意参谋】", t3: "【有米云】", c1: "一份50页的竞品分析报告", c2: "一个直播带货脚本", c3: "一封给供应商的谈判邮件", m1: "GMV", m2: "转化率", m3: "ROI", rt: "双十一复盘PPT", ex: "电商运营人" },
-            "教育培训": { ind: "教育培训", ds: "学员学习数据CSV", dd: "5000条学员课程完成记录", t1: "【ClassIn】", t2: "【小鹅通】", t3: "【Canva 教育版】", c1: "一份30页的课程标准文档", c2: "一节在线课程的教案", c3: "一封给家长的沟通邮件", m1: "完课率", m2: "续费率", m3: "学员满意度", rt: "学期教学总结PPT", ex: "教育工作者" },
-            "金融分析": { ind: "金融分析", ds: "上市公司财报数据CSV", dd: "50家公司的季度财报数据", t1: "【Wind】", t2: "【同花顺】", t3: "【Tableau】", c1: "一份200页的行业研究报告", c2: "一份投资分析备忘录", c3: "一封给客户的市场分析邮件", m1: "ROE", m2: "净利润率", m3: "PE估值", rt: "投研分析PPT", ex: "金融分析师" },
-            "医疗健康": { ind: "医疗健康", ds: "患者诊疗数据CSV", dd: "3000份病历的关键指标", t1: "【杏仁医生】", t2: "【丁香园】", t3: "【MedPeer】", c1: "一篇40页的临床研究论文", c2: "一份病例分析报告", c3: "一封跨科室会诊沟通邮件", m1: "治愈率", m2: "平均住院日", m3: "患者满意度", rt: "科室季度汇报PPT", ex: "医疗从业者" },
-            "法律咨询": { ind: "法律咨询", ds: "案件卷宗OCR数据CSV", dd: "200个案件的判决要素数据", t1: "【北大法宝】", t2: "【威科先行】", t3: "【法信】", c1: "一份80页的法规解读文件", c2: "一份法律意见书", c3: "一封给客户的风险提示邮件", m1: "胜诉率", m2: "案件周期", m3: "客户满意度", rt: "案件分析汇报PPT", ex: "法律从业者" },
-            "设计创意": { ind: "设计创意", ds: "用户反馈数据CSV", dd: "1000条用户对设计稿的反馈", t1: "【Figma】", t2: "【即时设计】", t3: "【Midjourney】", c1: "一份50页的设计趋势报告", c2: "一套品牌设计方案的说明文档", c3: "一封给甲方的设计提案邮件", m1: "设计通过率", m2: "用户满意度", m3: "改稿次数", rt: "设计提案PPT", ex: "设计师" },
-            "软件开发": { ind: "软件开发", ds: "系统性能日志CSV", dd: "50000条服务器性能监控数据", t1: "【GitHub Copilot】", t2: "【Cursor】", t3: "【Linear】", c1: "一份100页的技术架构文档", c2: "一份技术方案设计", c3: "一封给产品经理的需求评审邮件", m1: "系统可用率", m2: "Bug修复周期", m3: "迭代速度", rt: "技术复盘PPT", ex: "开发者" },
-            "市场营销": { ind: "市场营销", ds: "广告投放数据CSV", dd: "15000条各渠道投放效果数据", t1: "【巨量引擎】", t2: "【腾讯广告】", t3: "【新榜】", c1: "一份60页的消费者洞察报告", c2: "一份营销活动策划方案", c3: "一封给客户的投放复盘邮件", m1: "ROI", m2: "获客成本", m3: "品牌声量", rt: "月度营销复盘PPT", ex: "市场营销人" },
-            "房产经纪": { ind: "房产经纪", ds: "房源带看数据CSV", dd: "3000条带看记录的转化数据", t1: "【贝壳】", t2: "【房天下】", t3: "【安居客】", c1: "一份40页的区域市场分析报告", c2: "一份房源推荐方案", c3: "一封给意向客户的跟进邮件", m1: "带看转化率", m2: "成交周期", m3: "客户满意度", rt: "区域市场分析PPT", ex: "房产经纪人" },
-            "自媒体运营": { ind: "自媒体运营", ds: "公众号后台数据CSV", dd: "200篇推送的阅读和转化数据", t1: "【新榜】", t2: "【135编辑器】", t3: "【西瓜数据】", c1: "一份30页的平台趋势报告", c2: "一篇深度内容的创作方案", c3: "一封与品牌方的合作沟通邮件", m1: "打开率", m2: "分享率", m3: "粉丝增长率", rt: "月度运营复盘PPT", ex: "自媒体运营者" },
-        };
-
-        // ==================== 文章模板 ====================
-        const T = {
-            hdr: a => `<p style="color:#999;font-size:13px;text-align:center;letter-spacing:2px">${a} · 原创</p><hr style="border:.5px dashed #e0e0e0"/>`,
-            p: t => `<p style="margin:14px 0;color:#555;font-size:15px;line-height:2">${t}</p>`,
-            b: t => `<strong style="color:#1a1a2e">${t}</strong>`,
-            h2: t => `<h2 style="font-size:17px;color:#1a1a2e;margin:24px 0 12px;padding-left:10px;border-left:3px solid #2563eb">${t}</h2>`,
-            tip: t => `<blockquote style="background:linear-gradient(135deg,#f8f9ff,#f0f4ff);padding:12px 16px;border-radius:10px;margin:14px 0;border-left:4px solid #818cf8;font-size:13px;color:#555">💡 ${t}</blockquote>`,
-            q: t => `<p style="text-align:center;font-size:15px;color:#2563eb;margin:20px 0;font-weight:bold;letter-spacing:.5px">💬 ${t}</p>`,
-            hr: '<hr style="border:.5px solid #eee;margin:20px 0"/>',
-            cta: '<hr style="border:2px solid #2563eb;margin:24px 0 14px"/><p style="text-align:center;color:#2563eb;font-size:14px;font-weight:bold">🔑 公众号对话框发送<strong>【工具】</strong>，免费领取完整AI提效工具包</p>',
-        };
-
-        function genHTML(n, t, auth) {
-            const tp = t; const ind = tp.ind; let h = '<section>' + T.hdr(auth);
-            const A = [
-                // 1
-                () => {
-                    let s = ''; s += T.p(`你有没有算过，一天8小时里${T.b('真正创造价值的时间有几小时？')}一半在读报告，剩下在写方案、做表格、回邮件。`); s += T.q('「原来我每天有3.5小时在做AI可以代劳的事」') + T.hr;
-                    s += T.h2('📖 一、信息摄入：3分钟掌握全局'); s += T.p(`${tp.c1}，传统精读2小时+。拖进${T.b('【Claude】或【Kimi Chat】')}：「500字提炼核心论点」。AI 3分钟+5分钟核对=${T.b('8分钟，效率提升93%')}。`); s += T.tip('进阶：追问「结论基于哪些假设？如果假设不成立呢？」');
-                    s += T.h2('✍️ 二、内容产出：下笔如有神'); s += T.p(`搭骨架→填血肉→注入灵魂。${tp.c2}，${T.b('47分钟完成，以前3小时+')}。`) + T.hr;
-                    s += T.h2('📊 三、数据处理：秒级锁定维度'); s += T.p(`${tp.dd}，40秒AI分析。${T.b('效率提升86%')}。务必抽样验证数值。`) + T.hr;
-                    s += T.h2('💬 四、沟通协作：一键得体回复'); s += T.p(`${tp.c3}。AI生成温和/正式/简洁三版→微调。${T.b('8分钟搞定，精神内耗归零')}。`) + T.hr;
-                    s += T.h2('🚀 五、今天就迈出第一步'); s += T.p(`把一封邮件先发给AI优化措辞。花3分钟体验。`) + T.tip('中文场景优先【Kimi Chat】【通义千问】（免费），敏感数据用【Ollama】本地部署。') + T.hr;
-                    s += T.p(`四个场景叠加，每天${T.b('9小时→5.5小时')}。`) + T.q('前提是：你得先迈出第一步 🏃') + T.cta; return s;
-                },
-                // 2
-                () => {
-                    let s = ''; s += T.p(`周一早上邮箱12封未读，桌面3份方案，微信5条消息。${T.b('不是事情太多，是你在用「手工模式」处理「工业化量级」的信息。')}`) + T.hr;
-                    s += T.h2('🔍 一、AI信息守门人'); s += T.p(`聚合→AI初筛→300字洞察卡片→归档${tp.t1}。${T.b('120分钟→25分钟')}。`) + T.hr;
-                    s += T.h2('✍️ 二、四阶段AI加速管道'); s += T.p(`构思(20个角度)→结构化(3种大纲)→扩写(逐段协同)→打磨(AI检查逻辑)。${T.b('3000字90分钟')}。`) + T.hr;
-                    s += T.h2('📊 三、数据分析变对话'); s += T.p(`上传${tp.ds}→自然语言提问→AI分析${tp.m1}异常波动。${T.b('这才是核心价值')}。`) + T.hr;
-                    s += T.h2('⚠️ 四、避开三大坑'); s += T.p('坑一：过度依赖。坑二：试图一步到位。坑三：忽视数据安全。') + T.hr;
-                    s += T.q('AI是杠杆，你是支点。') + T.cta; return s;
-                },
-                // 3
-                () => {
-                    let s = ''; s += T.p(`每天接收的信息量=15世纪一个人一生总和。${T.b('「怎么学」比「学什么」重要100倍')}。`) + T.hr;
-                    s += T.h2('🧠 一、搭建AI第二大脑'); s += T.p(`内容→${tp.t1}→AI打标签+摘要→问答检索→知识反刍。${T.b('核心是可检索+可关联')}。`) + T.hr;
-                    s += T.h2('📖 二、深度略读法'); s += T.p(`AI预读→定向精读→输出式消化。${T.b('60页白皮书45分钟')}。`) + T.hr;
-                    s += T.h2('🔗 三、看不见的连接'); s += T.p(`两个不相关领域→AI找类比。${T.b('每次至少有一两条你没想到')}。`) + T.hr;
-                    s += T.q('真正的学习加速器：更快找到「什么值得读」。') + T.cta; return s;
-                },
-                // 4
-                () => {
-                    let s = ''; s += T.p(`残酷事实：${T.b('至少70%时间花在不创造价值的事上')}——会议纪要、邮件措辞、PPT对齐文本框。`) + T.hr;
-                    s += T.h2('🎙️ 一、会议纪要：1小时→3分钟'); s += T.p(`${tp.t2}转写→AI整理→10分钟审核。${T.b('效率提升92%')}。`) + T.hr;
-                    s += T.h2('📧 二、邮件沟通：15分钟→3分钟'); s += T.p(`AI生成初稿→微调发送。${T.b('精神内耗归零')}。`) + T.hr;
-                    s += T.h2('📊 三、汇报展示'); s += T.p(`${tp.rt}，目标澄清→故事线→逐页生成→${tp.t3}排版。${T.b('1.5小时完成')}。`) + T.hr;
-                    s += T.q('AI接手dirty work，让你聚焦只有你能做的事。') + T.cta; return s;
-                },
-                // 5
-                () => {
-                    let s = ''; s += T.p(`灵感来了写300字卡住。删掉重写又卡住。${T.b('缺乏「不依赖灵感」的内容生产系统')}。`) + T.hr;
-                    s += T.h2('🎯 一、选题：跳出「自嗨」'); s += T.p(`热点雷达→选题发散→受众匹配→信息增量检查。${T.b('好选题=痛点×独特视角')}。`) + T.hr;
-                    s += T.h2('🧩 二、结构化：一条金线'); s += T.p(`零散想法→3种叙事结构→追问弱点→选最抗打的。${T.b('AI最大价值是发现逻辑漏洞')}。`) + T.hr;
-                    s += T.h2('🔥 三、初稿：扩音器非替代品'); s += T.p(`你先写关键句→AI展开→你加入经历。${T.b('有温度的部分，必须是你写的')}。`) + T.hr;
-                    s += T.q('AI的效率×人类的温度=不可替代的作品。') + T.cta; return s;
-                },
-                // 6
-                () => {
-                    let s = ''; s += T.p(`复盘=罗列做过的事+写「下次注意」+存进永不打开的文件。${T.b('这是在给大脑制造虚假安全感')}。`) + T.hr;
-                    s += T.h2('🔍 一、为什么没用？'); s += T.p(`❌没数据 ❌无法执行 ❌做完归档。${T.b('有效标准：三个月后不犯同样错误')}。`) + T.hr;
-                    s += T.h2('🏗️ 二、AI四层提炼法'); s += T.p(`事实还原→模式识别(AI找${tp.m1}异常)→${T.b('根因分析(追问3次为什么)')}→行动转化。`) + T.hr;
-                    s += T.h2('👥 三、团队知识资产'); s += T.p(`每月复盘→AI生成团队级洞察→转SOP。${T.b('新人能读到一年踩坑总结')}。`) + T.hr;
-                    s += T.q('最好的复盘，是写给未来的自己用的。') + T.cta; return s;
-                },
-            ];
-            h += (A[n - 1] || A[0])(); h += '</section>'; return h;
-        }
-
-        // ==================== UI工具 ====================
-        function toast(m, t = 'ok') { const e = document.createElement('div'); e.className = `toast toast-${t} show`; e.textContent = m; document.body.appendChild(e); setTimeout(() => { e.classList.remove('show'); setTimeout(() => e.remove(), 300) }, 2200) }
-        function clsMd(id) { document.getElementById(id).classList.remove('show') }
-        function showMd(id) { document.getElementById(id).classList.add('show') }
-        function swTab(pg) { document.querySelectorAll('.pg').forEach(p => p.classList.remove('on')); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on')); document.getElementById('pg-' + pg).classList.add('on'); document.querySelector(`.nav-btn[data-pg="${pg}"]`).classList.add('on'); if (pg === 'dash') ldDash(); if (pg === 'accts') ldAccts(); if (pg === 'create') ldCreate(); if (pg === 'set') ldSets(); }
-
-        // ==================== 导航栏 ====================
-        document.querySelectorAll('.nav-btn').forEach(b => { b.addEventListener('click', () => swTab(b.dataset.pg)) });
-
-        // ==================== 仪表盘 ====================
-        function ldDash() { const accts = LS.get('accounts', []); const da = document.getElementById('dash-acc'); document.getElementById('st').textContent = accts.length ? `${accts.length}个账号 · 就绪` : '轻触底部导航开始'; if (!accts.length) { da.innerHTML = '<div class="empty"><div class="ic">📭</div>去「账号」页添加公众号</div>'; return } da.innerHTML = accts.map(a => `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0"><div><strong>${a.name || '未命名'}</strong><span class="badge badge-b" style="margin-left:8px">${a.topic || '未设置'}</span></div><span class="badge badge-g">🟢 正常</span></div>`).join('') }
-
-        // ==================== 账号管理 ====================
-        function ldAccts() { const accts = LS.get('accounts', []); const el = document.getElementById('acct-list'); if (!accts.length) { el.innerHTML = '<div class="empty"><div class="ic">📭</div>还没有账号</div>'; return } el.innerHTML = accts.map((a, i) => `<div class="card"><div style="display:flex;justify-content:space-between"><strong>${a.name || '未命名'}</strong><span class="badge badge-b">${a.topic || '未设置'}</span></div><div style="font-size:12px;color:var(--muted);margin:6px 0">AppID: ${(a.appid || '').substring(0, 14)}...</div><button class="btn btn-sm" style="color:var(--red);border:1px solid var(--red);background:#fff" onclick="delAcct(${i})">🗑 删除</button></div>`).join('') }
-        function showAddAcct() { const sel = document.getElementById('md-topic'); sel.innerHTML = Object.keys(TOPICS).map(k => `<option value="${k}">${k}</option>`).join(''); document.getElementById('md-name').value = ''; document.getElementById('md-appid').value = ''; document.getElementById('md-secret').value = ''; document.getElementById('md-ip').value = ''; showMd('md-acct') }
-        document.getElementById('btn-sv-acct').addEventListener('click', () => { const a = { name: document.getElementById('md-name').value, appid: document.getElementById('md-appid').value, secret: document.getElementById('md-secret').value, ip: document.getElementById('md-ip').value, topic: document.getElementById('md-topic').value }; if (!a.appid || !a.secret) { toast('AppID和AppSecret不能为空', 'err'); return } const accts = LS.get('accounts', []); accts.push(a); LS.set('accounts', accts); clsMd('md-acct'); ldAccts(); ldDash(); ldCreate(); toast('账号添加成功') });
-        function delAcct(i) { if (!confirm('确定删除？')) return; const accts = LS.get('accounts', []); accts.splice(i, 1); LS.set('accounts', accts); ldAccts(); ldDash(); ldCreate(); toast('已删除') }
-
-        // ==================== 创作中心 ====================
-        function ldCreate() { const accts = LS.get('accounts', []); const sa = document.getElementById('sel-acc'); const st = document.getElementById('sel-topic'); const sm = document.getElementById('sel-model'); sa.innerHTML = accts.length ? accts.map((a, i) => `<option value="${i}">${a.name || '未命名'}(${a.topic || ''})</option>`).join('') : '<option>请先添加账号</option>'; st.innerHTML = Object.keys(TOPICS).map(k => `<option value="${k}">${k}</option>`).join(''); sm.innerHTML = '<option value="deepseek">DeepSeek V4 Pro</option><option value="openai">OpenAI GPT-4o</option>'; }
-
-        // ==================== AI 文章生成 ====================
-        document.getElementById('btn-gen').addEventListener('click', async () => {
-            const accts = LS.get('accounts', []); const ai = parseInt(document.getElementById('sel-acc').value);
-            if (isNaN(ai) || !accts[ai]) { toast('请先选择账号', 'err'); return }
-            const topicKey = document.getElementById('sel-topic').value;
-            const topic = TOPICS[topicKey] || TOPICS["通用职场效率"];
-            const model = document.getElementById('sel-model').value;
-            const count = parseInt(document.getElementById('sel-n').value);
-            const sets = LS.get('settings', {});
-            const apiKey = model === 'deepseek' ? sets.dsKey : sets.oaiKey;
-            const author = sets.author || '铃木村';
-
-            const pg = document.getElementById('gen-prog'); const pf = document.getElementById('prog-fill'); const pt = document.getElementById('prog-txt');
-            pg.style.display = 'block'; pf.style.width = '5%'; pt.textContent = 'AI思考中...';
-
-            const articles = [];
-            let useAI = !!apiKey;
-
-            if (useAI) {
-                try {
-                    for (let i = 1; i <= count; i++) {
-                        pf.style.width = Math.round(i / count * 90) + '%'; pt.textContent = `生成第${i}/${count}篇...`;
-                        const prompt = buildPrompt(i, topic);
-                        let content = '';
-                        if (model === 'deepseek') {
-                            const r = await fetch('https://api.deepseek.com/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'system', content: '你是资深新媒体编辑。输出纯HTML格式公众号文章。' }, { role: 'user', content: prompt }], max_tokens: 4096, temperature: .8 }) });
-                            const d = await r.json(); content = d.choices?.[0]?.message?.content || '';
-                        } else {
-                            const r = await fetch('https://api.openai.com/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model: 'gpt-4o', messages: [{ role: 'system', content: '你是资深新媒体编辑。输出纯HTML格式公众号文章。' }, { role: 'user', content: prompt }], max_tokens: 4096, temperature: .8 }) });
-                            const d = await r.json(); content = d.choices?.[0]?.message?.content || '';
-                        }
-                        articles.push({ n: i, title: `AI提效·${topic.ind} 第${i}篇`, html: `<section>${T.hdr(author)}${content}${T.cta}</section>` });
-                    }
-                } catch (e) { useAI = false; articles.length = 0 }
-            }
-
-            if (!useAI) {
-                for (let i = 1; i <= count; i++) { pf.style.width = Math.round(i / count * 90) + '%'; pt.textContent = apiKey ? `AI出错，使用模板生成第${i}篇...` : `未配置API Key，模板生成第${i}篇...`; articles.push({ n: i, title: `AI提效·${topic.ind} 第${i}篇`, html: genHTML(i, topic, author) }); await new Promise(r => setTimeout(r, 100)) }
-            }
-
-            pf.style.width = '100%'; pt.textContent = '✅ 完成！';
-            renderArts(articles);
-            setTimeout(() => { pg.style.display = 'none' }, 1500);
-        });
-
-        function buildPrompt(i, t) {
-            const titles = ['实测！用AI后每天提前3小时下班', 'AI工作流：半小时搞定全天的事', '信息洪流中优雅生存：AI第二大脑', 'AI承包70%脏活我只做决策', '创作者收藏：AI全流程实战笔记', '复盘新思路：用AI把经验变知识资产'];
-            return `为"${t.ind}"领域写爆款公众号文章。标题：${titles[i - 1] || titles[0]}。要求：1)故事化开头 2)4-5小节emoji标题 3)重点加粗 4)案例：${t.c1}、${t.c2} 5)工具：${t.t1}、${t.t2} 6)指标：${t.m1}、${t.m2} 7)1200字 8)文末：公众号发送【工具】领取 9)禁词：副业网赚暴利月入。输出纯HTML(只用p,h2,strong,blockquote标签)`;
-        }
-
-        function renderArts(articles) {
-            const el = document.getElementById('art-out');
-            el.innerHTML = '<div class="card"><div class="ct">📄 生成结果(' + articles.length + '篇)</div>' + articles.map((a, i) => `<div style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;overflow:hidden"><div style="padding:10px 14px;background:#f8f9ff;font-weight:600;font-size:13px;display:flex;justify-content:space-between;cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'"><span>📝 第${i + 1}篇</span><span>👁 预览</span></div><div class="art-preview" style="display:none">${a.html}</div></div>`).join('') + '<p style="font-size:12px;color:var(--muted);margin-top:8px">⚠️ 推送草稿箱请在电脑上运行<strong>启动服务器.bat</strong></p></div>';
-            window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-        }
-
-        // ==================== 设置 ====================
-        function ldSets() { const s = LS.get('settings', {}); document.getElementById('key-ds').value = s.dsKey || ''; document.getElementById('key-oai').value = s.oaiKey || ''; document.getElementById('set-author').value = s.author || '铃木村' }
-        function saveSets() { const s = { dsKey: document.getElementById('key-ds').value, oaiKey: document.getElementById('key-oai').value, author: document.getElementById('set-author').value }; LS.set('settings', s); toast('设置已保存') }
-
-        // ==================== 启动 ====================
-        ldDash(); ldCreate(); ldAccts(); ldSets();
+const)        {try{const v=localStorage.getItem('gzh_'+k);return         v?JSON.parse            d}catc h( e ){r e turn d} } ,set(k,v){localStorage.setI t em( 'gzh_'+k , JSON.stringif y ( v ))}}; 
+co n st TP={" 通 用职场            {ind:" 职场 办 公",ds:"销售CSV",dd:"8900行数据", t 1: "【Notion】",t2:"【飞书 妙记        】",t        3:"【Gamma.app】",c1:"一份50页报告",c2:"1500字方案",c3:"合作方邮        件",m1:"日销售额",m2:"            ,m3:"完成率" , rt:" 季度汇报PPT ",e x:"知识工作者"} ,"电 商运营":{ind:"电 商运营 ",ds:"直播数据C SV" ,dd:"2000 0行订 单",t1:"【抖店】",t 2:" 【生意参谋】",t3:"【 有米云 】",c1:"50页竞品报告" ,c2 :"直播脚本",c3:"供 应商邮 件",m1:" GMV ",m2:"转化 率", m3:"ROI" ,rt :"双十一复盘PPT ",e x:"电商运营 人"}            培训":{in d :"教育 培训",ds: "学员 数据CSV",dd:"5 000 条记录",t1:"【ClassI n】" ,t2:"【小 鹅通】 ",t3:"【Ca nva 】",c1:"3 0页课 程标准",c2:"教案",c3 :"家 长邮件",m1:"完课 率", m2:"续费率",m3:"满 意度" ,rt:"教 学总结 PPT",e x:" 教育工作者" }," 金融分析":{ind: "金融 分析",ds: "财报            ,dd:"50 家 公司", t1:"【Wi nd】 ",t2:"【同花顺】" ,t3 :"【Tableau】",c1: "20 0页研报",c2:"投资 备忘录 ",c3:"客户 邮件" ,m1:"ROE",m2:" 净利率 ",m3:"PE",rt:"投 研PP T",ex:"金融分析师 "}, "医疗健康":{ind:" 医疗健 康",ds: "诊疗 CSV",d d:" 3000份病历" ,t1 :"【杏仁医生】",t2 :"【 丁香园】",t 3:"            Peer】", c 1:"4 0页论文",c 2:" 病例报告",c3:"会诊邮件 ",m 1:"治愈率",m2:"住院日 ",m 3:"满意度",r t:" 科室汇报PPT" ,ex :"医疗从业者"},"法 律咨询 ":{ind:"法律咨询",ds :"卷 宗CSV",dd:"20 0个案 件",t1:"【北大法宝】", t2: "【威科先行 】", t3:"【法信 】", c1:"80页 法规" ,c2:"法律意见书 ",c 3:"客户邮件 ",m            诉率",m2: " 案件周期 ",m3:"满 意度" ,rt:"案件分析PPT ",e x:"法律从业者"},"设计创 意": {ind:"设计创 意", ds:"反馈CS V", dd:"1000条反馈" ,t1 :"【Figma】",t2:" 【即时 设计】",t3:"【M idj ourney】",c1:"5 0页趋 势报告",c 2:" 品牌方案",c3 :"甲 方邮件",m1: "通过 率",m2:"满意度", m3: "改稿次数", rt:            案PPT",e x :"设计 师"},"软件 开发" :{ind:"软件开发",ds :"日 志CSV",dd:"50000条 日志" ,t1:"【Git Hub  Copilot】 ",t 2:"【Cur sor 】",t3:"【Linear】 ",c 1:"100页架构文 档", c2:"技术方案",c3:"P M邮件 ",m1:" 可用率 ",m2:"B ug周 期",m3:"迭 代速度 ",rt:"技术复盘PP T", ex:"开发者 "},            销":{ind : "市场营 销",ds:" 投放C SV",dd:"1500 0条数 据",t1:"【巨量引擎】",t2 :"【 腾讯广告】",t3: "【新 榜】",c1:"6 0页洞 察报告",c2:"营销方案", c3: "客户邮件",m1:"ROI" ,m2 :"获客成本",m3:"品牌声量 ",r t:"月度复盘PPT",ex: "市场 营销人"},"房 产经纪 ":{ind:" 房产经 纪",ds:" 带看C SV",dd:"30 00条 记录",t 1:"            ",t2:"【 房 天下】" ,t3:"【安 居客】 ",c1:"40页市场报 告", c2:"房源方案",c3:"客户邮件 ",m 1:"转化率",m2:"成交周期",m 3:" 满意度",rt:"区域 分析P PT",ex:"房产经 纪人" },"自媒体运营":{ind:" 自媒体 运营",ds:"后台C SV" ,dd:"200篇数据",t1:" 【新榜 】",t2:"【 135 编辑器】",t3:" 【西瓜 数据】",c1 :"3 0页趋势报告",c2 :"深 度内容方案 ",c            牌邮件",m1 : "打开率 ",m2:"分 享率" ,m3:"粉丝增长",r t:" 月度复盘PPT",ex:"自媒体运营 者"} };
+const  H={ hdr:a=>`< p s tyle="c olo r:#999;font-size :13 px;text-align :ce nter">${a} · 原创 </p ><hr s tyl e="bord er: .5px da she d #e0e0e0"/> `,p :t=>`<p  st            "margin : 14px  0;colo r:# 555;font-siz e:1 5px;line-height:2 ">$ {t}</p> `,b :t=>`<st ron g style= "co lor:#1a1a2e">${t} </s trong>`,h2: t=> `<h2 style="fon t-s ize:17px ;co lor:#1a 1a2 e;margin :24 px 0 12px;pa ddi ng-left :10            order-le f t:3p x solid  #25 63eb">${t}</h 2>` ,tip:t=>`<blockqu ote  style= "ba ckground:#f 0f4 ff;paddin g:1 2px 16px;border -ra dius:10px;marg in: 14px 0;border-le ft: 4px so lid  #818c f8; font-siz e:1 3px;color:#5 55" >💡 ${t} </b        lock        quote>`,q:t=>`<p style="text-align:center;font-siz        e:15px;color            63eb ; ma rgin:20px 0;font-weight:bold">💬 ${t}</p>`,hr:'<hr style="border:.5px solid #eee;margin:20px 0"/>',cta:'<hr style="border:2px solid            63 e b; margin:24px 0 14px"/><p style="text-align:center;color:#2563eb;font-size:14px            t- w ei ght:bold">🔑 公众号发送<strong>【工具】</strong>免费领取AI提效            /p> ' }; 
+function genHTML(n,t,auth){let s='<section>'+H.hdr(auth);const A=[()=>{let x='';x+=H.p(`一天8小时里${H.b('真正创造价值的时间有几小时？')}`)            H.q( ' 「原 来我每天有3.5小时在做AI可以代劳的事」')+H.hr;x+=H.h2('📖 信息摄入：3分钟掌握全局');x+=H.p(`${t.c1}，拖进${H.b('【Claude】或【Kimi Chat】')}：500字提炼核心。${H.b('8分钟，效率提升93%')}。`);x+=H.tip('追问「结论基于哪些假设？如果假设不成立呢？」');x+=H.h2('✍️ 内容产出：下笔如有神');x+=            `搭 骨 架→ 填血肉→注入灵魂。${t.c2}，${H.b('47分钟完成，以前3小时+')}。`)+H.hr;x+=H.h2('📊 数据处理：秒级锁定');x+=H.p(`${t.dd}，40秒AI分析。${H.b('效率提升86%')}。`)+H.hr;x            h2( '💬 沟通协作：一键得体回复');x+=H.p(`${t.c3}。AI生成三版→微调。${H.b('8分钟            }。`) +H.hr;x+=H.p(`四个场景叠加，${H.b('9小时→5.5小时')}。`)+H.q('前提是：迈出第一步 🏃')+H.cta;return x},()=>{let x='';x+=H.p(`周一早上邮箱12封未读。${H.b('不是事情太多，是你在用「手工模式」处理信息。')}`)+H.hr;x+=H.h2('🔍 AI信息守门人');x+=H.p(`聚合        →AI初        筛→300字洞察→归档${t.t1}。 ${ H.b(' 12            分钟')}。`) + H. hr;x+=H.h 2 ('✍️ 四阶 段AI加速 ' );x+=H.p(`构 思 →结构化→扩写→打磨。${            '3000字9 0 分钟                `)+H.                += H. q
+                    ('AI是 杠 杆，你 是 支点 。')+H.cta;return x},()=>{let x='';x+=H.p(`每天信息量=15世纪一生总和。${H.b('「怎么 学 」比 「学什么」重要100倍')}。`)+H.hr;x+=H.h2 ( '🧠 搭建                    大 脑' );x+=H.p(`内容→${t.t1}→AI标签+ 摘 要→ 检索。${H.b('核心是可检索+可关联')}。`)+H.hr;x+=H.q('更快找到「什么值得读」。')+H.cta;return x},()=>{let x='';x+=H.p(`残酷事实：${H.b('70 % 时间 花在不创造价值的事上')}。`)+H.hr;x+=H.h2('🎙️ 会                    1 小时 →3分钟');x+=H.p(`${t.t2}转写 → AI 整理。${H.b('效率提升92%')}。`)+H.hr;x+=H.q('聚焦只有你能做的事。')+H.c t a;retu                    } ,( )=>{let x='';x+=H.p(`写了30 0 字卡 住了。${H.b('缺乏「不依赖灵感」的内容生产系统')}。`)+H.hr;x+=H.h2('🎯 选 题 ：跳出「自嗨                    x += H.p(`热点雷达→选题发散→受众匹配。${H.b ( '好 选题=痛点×独特视角')}。`)+H.hr;x+=H.q('AI效率×人类温度=不可替代的作品。')+H.cta; r eturn                     ) => {let x='';x+=H.p(`复盘=罗 列 +「 下次注意」+永不打开的文件。${H.b('给大脑制造虚假安 全 感')}。`)+H.hr;x+=H.h2('🏗️ AI四层提炼法');x+=H.p(`事实还原→模式识别→$ { H.b('根                    追 问3 次为什么)')}→行动转化。`)+H.hr;x+=H.q('最好的复盘， 是 写给未来的自己用的。')+H.cta;ret u rn x}] ;s+=(A[n-
+                1]|                ])();                </ se c
+                    tion> ' ;re t ur n s}
+function toast(m,t='ok'){const e=document.createElement('div');e.cla s sName=                    s t  toast-${t} show`;e.te x tC ontent=m;document.body.appendChild(e);setTimeout(()=>{e. c lassLi                    e mo ve('show');setTimeout(( ) => e.remove(),300)},2200)}
+function clsMd(id){document.getElementById( i d).cla                    s t. remove('show')}
+funct i on  showMd(id){document.getElementById(id).classList.add('show' ) }
+func                      sw Tab(pg){document.qu e ry SelectorAll('.pg').forEach(p=>p.cla s sList.                    v e( 'on'));document.qu e rySele ctorAll('
+                .na                n').f                ch (b =
+                    >b.cl a ssL i st .remove('on'));document.getElementById('pg-'+pg).classLi s t.add(                    ) ;d ocument.querySelector( ` .n av-btn[data-pg="${pg}"]`).classList.add('on');if(pg==='dash ' )ldDas                    i f( pg==='accts')ldAcct s () ;if(pg==='create')ldCreate();if(pg==='set')l d Sets()                    c um ent.querySelectorAll ( '. nav-btn').forEach(b=>b.addEventListener('cli c k',()=                    a b( b.dataset.pg)));
+function ld D ash(){ const a=L
+                S.g                accou                ,[ ]) ;
+                    const   r=L S .g et('recent',[]);document.getElementById('st').textContent=a. l ength?                    . le ngth}个账号 · 就绪`:'轻触底部导航开始';c o ns t da=document.getElementById('dash-acc');da.inne r HTML=a                    g th ?a.map(x=>`<div style="disp l ay :flex;justify-content:space-between; a lign-i                    : ce nter;padding:10px  0 ;b order-bottom:1px solid #f0f0f0"><div><strong>${x.name||'未命名 ' }</str                    < sp an class="badge badge-b" style="ma r gin-le ft:8px">$
+                {x.                c||''                pa n> <
+                    /div> < spa n  c lass="badge badge-g">🟢</span></div>`).join(''):'<div  c lass="                    y "> <div class="ic">📭</div > 去「 账号」页添加</div>';const dr=document.getElementById('das h -recen                    d r. innerHTML=r.length?r.s l ic e(-5).reverse().map(x=>`<div style="padding:6px 0;font - size:1                    b or der-bottom:1px solid #f0 f 0f 0">📄 ${x.title} <span class="badge badge-y">${x. s tatus}                    a n> <span style="color:var(--mu t ed);fo nt-size:1
+                1px                gin-l                8p x" >
+                    ${x.t i me| | '' }</span></div>`).join(''):'<div class="empty"><div class="i c ">📝</                    暂 无记 录</div>'}
+function l d Ac cts(){const a=LS.get('accounts',[]);const el=docum e nt.get                    e nt ById('acct-list');el.i n ne rHTML=a.length?a.map((x,i)=>`<div class="card"><div style="di s play:f                    j us tify-content:space-b e tw een"><strong>${x.name||'未命名'}</strong><span class = "badge                    g e- b">${x.topic||''}</span> < /div>< div style
+                ="f            siz            p x; colo r :v ar (--muted ) ;m argin:6px 0"> AppID: ${(        x.a        ppid||'').substring(0,14)}...</div><div class="row        "><button class=" b t n btn - sm btn- o  col" onclick="editAcct(${i})" >✏️</button > <button class="btn btn-s m btn-r col"  o nc lick="delAcct(${i})">🗑</butt on></div></di v> ` ).join(''):'<div class="emp ty"><div clas s= "ic">📭</di v>还没 有账 号</di v>        '}
+function showAd d Acct(ei){const sel=document.getElementById('md-topic ')        ;sel.innerHTML=Obje c t.keys(TP).map(k=>`<option value="${k}">${k}</opt io        n>`).join('');cons t  a=LS.get('accounts',[]);if(ei!=null&&a[ei ]) {const x=a[ei];document.ge tElementById('md-name').value=x.name||'';docume nt .getElementById('md-appid' ).value=x.appid||'';document. g etElementById('md-secret ').value=x.secret||'';document.getElementById('md-ip').value=x.ip||'';do cu men t.g etEleme ntById('m d- top ic' ).value= x.topic||' 通用 职场效 率'; document. getElementB yI d(' btn -sv-ac ct').data set        .ei=ei}else{document.getElementById('md-name').va        lue='';document.getElementById('md-appid').valu e= ' ';document.getElementById(' md -s ecret').value='';doc ument        .getElementById('md-ip').value='';delete document        .getElementById(' b tn-sv-acct' ) .dataset.ei}showMd ('md -acct')} 
+ function editAcct(i){showAddAcct(i)} 
+document.getElementById('btn-sv-acct').a d dEventListen e r('click',function(){cons t  x={name:do cu ment.getElement B yId('md-name ' ).value,appid:document.getElementById('md-appid').value,secret: docume n t.getElement B yId('md-sec re t').value,ip:document.getElementById('md-ip').value,topic:document.getElementById('md-topic').value};if(!x.appid||!x.secret){toast('AppID和AppSec re t不能为空','err');return}const a=LS.get('accounts',[]);const ei=this.dataset.ei; if (ei!=null){a[parseInt(ei)]=x}else{a.push(x)}LS.set('accounts',a);clsMd('md-a cct        ');ldAccts();ldDash();ldCreate();toast(ei!=null?'已        更新':'已添加')});
+func t ion delAcct ( i){if(!confirm('确定 删除？' ))return ; const a=LS.get('accounts',[]);a.splic e( i,1);LS.set('ac c ounts',a);ld A ccts();ldDash();ldCreate();toast('已删除')}
+function exportA ccts() { const a=LS.g e t('accounts', [] ); if(!a.length){toast('没有账号','err');return}const b=new Blob([JSON.stringify(a,null,2)],{type: 'a pplication/json'});const u=URL.createObjectURL(b);co ns t d=document.createElement('a');d.href=u;d.download='accounts_backup.json';d.click();toast('已导出' )} 
+function import Accts(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(!Array.isArray(d)){toast( '格        式错误','err');return}con s t a=LS.ge t ('accounts',[]);for(const x of d){if (x.appid&&x.s e cret)a.push(x)}LS.set('ac co unts',a);ldAccts();ldDash();ldCreate();toast(`导 入${d.length}个`)}catch(ex){toast('格式错误',' e rr' )}};r.readAsText(f);e.target.value=''}
+fu n cti on ldCreate(){const a=LS.get('accounts',[] ) ;co nst sa=document.getElementById('sel-ac c '); sa.innerHTML=a.le ng        th?a.map((x,i)=>`<option value="${i}">${x.name||'未命名'}(${x.topic || '' } )</opti o n >`).j oin(''):'<option>请先添加账号</option>';documen t.getE lementById('sel-topic').innerHTML=Object.k eys(TP) .map(k=>`<option value="${k}">${k}</option> `). join('');document.getElementById('sel-m odel') .innerHTML='<option value="deepseek">Deep Se ek  V4 Pro</ op tion><opti o n value="openai">OpenAI GPT- 4o</opt ion>'} 
+ async funct i on doGen(pushAfter ){co nst a=LS.get(' accounts',[]);cons t ai=pa rseInt(document.g etElementB yId('sel- acc').value );if(isNaN(ai)| |!a[        ai]){toast('请选择账号', ' er r');return}const t= TP[docu ment.getEle m entById('sel-topic ').v alue]||TP["通用职场 效率" ];const m=document .getEle mentById(' sel-model ').value;co nst n=parseI nt(        document.getElementById('sel-n').value);const s=LS        .get('settings',{}) ; const key=m = =='deepseek'?s.dsK ey:s .oaiKey; c onst au=s.author||'铃木村';const pg=do cument.g e tElementById('gen-prog');const pf=doc ument.ge t ElementById('prog-fill');const pt=doc ument.getEle m entById('pro g -txt');pg.sty le .d isplay='block';pf.style.width= '5 %';pt.textConten t= 'AI思考中...';const arts=[] ; let useAI=!!key;if(useAI){ try{for(let  i =1;i<=n;i++){pf.style.wid th =Math.round(i/n*80)+'%';pt.textContent=`AI生成第${ i}/${n}篇...` ; const prompt=`为"${t.ind}"领域写爆款公众号文章。要求：1)故事化开头 2)4-5小节emoji标题 3)重点加粗 4)案例：${t.c1}、${t.c2} 5)工具：${ t.t        1}、${t.t2} 6)1200字 7)文末：公众号发送【工具】领取 8)禁词：副业网赚暴利月入。输出纯        HTML(只用p,h2,strong,blockquote)`;const bu=m==='deepseek'?'htt ps:// ap i. de            ek.com/v1': ' https://api.openai .com /v1';con s t r=await fetch(`${bu}/chat/completions`,{method:'PO            he aders:{'Co nt ent-Type':' a pplication/json ',Autho rizati on            arer ${key}`}, b ody:JSON.stringify({model:m==='deepseek'?'de            ek-chat':'g p t-4o',messages:[ {r ole:'system',conte            你是资深新媒体编辑。输 出 纯HTML格式公众号文章。'},{role:'user',content:prompt}            x_tokens:40 9 6,temperature:.8})});const d=await r.json();const             choices?.[ 0 ]?.message?.conten t||''            s.push({n:i, t itle: `AI 提效·${t.ind }  第${i}篇`,h t ml:`<section>            hdr(au)}${c} $ {H.cta}</se ct ion>`,a:            d})}}cat c h(e){useAI=false;arts.length=0;toast ('AI失败，用 模 板','err')}}
+if(!useAI){for(let i=1;i< =n;i++){ p f.style.width=Math.round(i/n*80)+'%';            extContent=`模板生成 第 ${i}/${n }篇...`;arts.pu s h({n: i,title:`AI提效· $ {t.ind} 第${ih            genHTML(i,t,au ) ,ai,            .ind});aw a it new Pro(            et Timeout (r                pf. st                    00% ';pt.t e xt C on tent=' ✅ 完成 ！'                        ('recent',[]); r c.push({titl e :`${t . ind }  ${n }篇`,status:'已生 成 ',time:new Date().toLoca                        ;if(rc.lengt h >20)rc.shift() ;LS.set(                        dow._lastAr t s=ar                        {p g.styl e.d isplay='non e'                            enderAr t s(arts)}setTimeout(()=>{pg.style.display='none'},1500);ldDa s h()}
+do cument. getEleme n tById('btn-gen' ).addEventListener( 'click',()=>do Gen(false));
+docum en t.get ElementById('btn -gen-p ush').addEventLi stener('c li ck',( )=>doGen( true));
+ function renderArts(arts){c on s t el= documen t.getEle mentBy Id( 'art-out'); el.in nerHTML='<di v  cl ass=                            t">📄 生 成 结果('+arts.lengt h+'篇)</ d iv>'+arts.map((x,i)=>`<div style =" marg                        o rder :1                            r);bord e r-radius:10px;overflow:hidden"><div style="padding:10px 1 4 px;back ground: #f8f9ff; f ont-weight:600; font-size:13px;disp lay:flex;justi fy-content:space-b et ween; cursor:pointer"  onclic k="this.n extElemen tS iblin g.style.d isplay=t his.nextElementSibling.styl e. d ispla y==='no ne'?'blo ck':'n one '"><span>📝  第${i +1}篇</span>< sp an >👁                             class=" a rt-preview" sty le="dis p lay:none">${x.html}</div></div>` ). join                        as                        -blk" style="ma rg in -top:1 2px" onclick="doPush(window ._las tArts)">📤 推送到草稿箱</button></div>';window.scrollTo({top: el.o                    be                s mooth '}) } 
+func t ion qu ickPush(){const   a rt            ndl            rt s;if(art s&                ngt h){doP u sh ( ar ts)}el se{t o ast('请先生成文章',' e rr')}}
+funct i on do P ush ( arts ){if(!arts||!a r ts.len g th){toast('没有文章','err' ) ;return}const a=LS.get('acc ounts',[]);cons t  ai =arts[ 0].ai;if(ai==null||!a[ai]){ toast ('账号信息丢失', 'err') ;return }co nst acc=a[ai];docum en t.getElementB yId(' pu            um'            nerHTML=`<p><s t rong>账号 ：</strong>${ac c .name||'未            </p><p><strong>文章：</st            >${arts.lengt h} 篇 </p>`;window._pA c c=acc; wi ndow._p        Arts=        arts;showMd('md-push')} 
+d oc            t.getElement B yId('btn-do-push').a ddEventListener('c lick',async functio n(){this.disabled =true;this.textCon tent='推送中...';const ac            ndow._pAcc;const arts=window._pArts;const s = LS .g et('settings',{});const sv=s.serverURL||'';const au=s.author||'铃木村';let results=[];let useServer=!!sv;if(useServer){try{const r=await fetch(`${sv}/api/publish`,{method:'POST',headers:{        'Co        ntent-Type':'application/json '}            y:JSON.s t ringify({account_id:acc.appid,articl            rts.map((x,i ) =>({index:i+1,title:x.title,content_html:x.h t ml}))})});const   d=await r. j son();results=d. da ta ||d.results||[]}catch(e){useServer=false;toast('服务器不可用，尝试直连...','err')}}
+if(!useServer){for(let i=0;i<arts.length;i++){try{const tr=await fetch(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${acc.appid}&secret=${acc.secret}`);const td=await tr.json();if(!td.access_token){results.push({index:i+1,status:'failed',error:'Token失败'});c o ntinue}const tk=td.access_token;const pl={articles:[{title:arts[i].title||'AI文章',author:au,digest:(arts[i].title | |'').substring(0,50),content:arts[i].html,content_source_url:'',thumb_media_id:'',need_open_comment:0,only_fans_can            ment:0}]};const d r=aw ait fetch(`h t tps ://api.we ixin.qq. com/        cgi        -bin/draft/add?access_token=${tk}`,{method:'POST        ',headers:{'Conte n t-Type' : 'application/json' },bo dy:JSON.stringify(pl)});const dd=await  d r.json( ); if( dd.media_id){results.push({index:i+1,sta t us:'succ es s', draft_media_id:dd.media_id})}else{results.p u sh({inde x: i+1,s ta        tus:'failed',error: d d.errms g | |JSON. stringify(dd)})}}catch(e){results.push({ index:i +1,status:'failed',error:e.message})}}}
+c onst su c=results.filter(r=>r.status==='success').l en gth;const fail=res ult s.filter(r=>r. sta        tus==='failed').length;toast(`推送：成功${suc}篇${fail        >0?'，失败'+ fail+'篇':'' }`,fail>0? 'err':'ok');c=LS.get('recent',[]);rc.push({title:`推送 ${suc}/${arts.length}篇`,status:suc===arts.length?'成功':`部分失败`,time:new Date().toLocaleTimeString()});LS.set('recent',rc);this.disabled=false;this.textContent='✅ 确认推送';clsMd('md-push');ldDash()});
+function ldSets(){const s=LS.get('settings',{});document.getElementById('key-ds').value=s.dsKey||'';document.getElementById('key-oai').value=s.oaiKey||'';document.getElementById('set-author').value=s.author||'铃木村';document.getElementById('set-server').value=s.serverURL||''}
+function saveSets(){const s={dsKey:document.getElementById('key-ds').value,oaiKey:document.getElementById('key-oai').value,author:document.getElementById('set-author').value,serverURL:document.getElementById('set-server').value};LS.set('settings',s);toast('已保存')}
+async function testAI(m){const s=LS.get('settings',{});const key=m==='deepseek'?s.dsKey:s.oaiKey;if(!key){toast('请填API Key','err');return}toast('测试中...');try{const bu=m==='deepseek'?'https://api.deepseek.com/v1':'https://api.openai.com/v1';const r=await fetch(`${bu}/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${key}`},body:JSON.stringify({model:m==='deepseek'?'deepseek-chat':'gpt-4o',messages:[{role:'user',content:'回复OK'}],max_tokens:10})});const d=await r.json();if(d.choices)toast('✅ 连接成功');else toast('❌ '+(d.error?.message||'失败'),'err')}catch(e){toast('❌ '+e.message,'err')}}
+async function testServer(){const url=document.getElementById('set-server').value;if(!url){toast('请填地址','err');return}toast('测试中...');try{const r=await fetch(`${url}/api/accounts`,{method:'GET'});const d=await r.json();if(d.success)toast('✅ 服务器连接成功');else toast('❌ 异常','err')}catch(e){toast('❌ 无法连接','err')}}
+ldDash();ldCreate();ldAccts();ldSets();
     </script>
 </body>
 
