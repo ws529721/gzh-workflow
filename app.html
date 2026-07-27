@@ -8,21 +8,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="AI创作助手" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#0f172a" />
+    <link rel="manifest" href="manifest.json" />
     <title>多账号AI创作助手</title>
     <style>
         :root {
             --bg: #f0f2f5;
-            --card: #fff;
-            --text: #1a1a2e;
-            --muted: #999;
-            --blue: #2563eb;
-            --green: #16a34a;
-            --orange: #ea580c;
-            --red: #dc2626;
-            --border: #e5e7eb;
-            --radius: 16px;
-            --safe: env(safe-area-inset-bottom, 0px)
+            --c: #fff;
+            --t: #1a1a2e;
+            --mu: #999;
+            --bl: #2563eb;
+            --gn: #16a34a;
+            --or: #ea580c;
+            --rd: #dc2626;
+            --bd: #e5e7eb;
+            --r: 16px;
+            --sf: env(safe-area-inset-bottom, 0px)
         }
 
         * {
@@ -35,112 +37,120 @@
         body {
             font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
             background: var(--bg);
-            color: var(--text);
+            color: var(--t);
             line-height: 1.6;
-            padding-bottom: calc(80px + var(--safe));
-            -webkit-font-smoothing: antialiased
+            padding-bottom: calc(80px + var(--sf));
+            -webkit-font-smoothing: antialiased;
+            overscroll-behavior: none
         }
 
         .hdr {
             background: linear-gradient(135deg, #0f172a, #1e3a8a);
             color: #fff;
-            padding: 16px;
+            padding: 14px 16px;
             position: sticky;
             top: 0;
             z-index: 100;
-            text-align: center
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
         }
 
         .hdr h1 {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 800
         }
 
         .hdr .st {
-            font-size: 11px;
-            opacity: .7;
-            margin-top: 2px
+            font-size: 10px;
+            opacity: .7
         }
 
         .ctn {
             max-width: 500px;
             margin: 0 auto;
-            padding: 12px 12px 40px
+            padding: 10px 10px 40px
         }
 
         .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
-            border: 1px solid var(--border)
+            background: var(--c);
+            border-radius: var(--r);
+            padding: 14px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .03);
+            border: 1px solid var(--bd)
         }
 
         .ct {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 8px
+            gap: 6px
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 12px 22px;
-            border-radius: 12px;
-            font-size: 14px;
+            gap: 5px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 600;
             border: none;
             cursor: pointer;
-            transition: all .15s;
-            touch-action: manipulation
+            transition: all .12s;
+            touch-action: manipulation;
+            white-space: nowrap
         }
 
         .btn:active {
-            transform: scale(.96);
-            opacity: .85
+            transform: scale(.95);
+            opacity: .8
         }
 
         .btn-p {
-            background: var(--blue);
+            background: var(--bl);
             color: #fff
         }
 
         .btn-s {
-            background: var(--green);
+            background: var(--gn);
             color: #fff
         }
 
         .btn-o {
             background: #fff;
-            border: 1.5px solid var(--blue);
-            color: var(--blue)
+            border: 1.5px solid var(--bl);
+            color: var(--bl)
         }
 
         .btn-r {
             background: #fff;
-            border: 1.5px solid var(--red);
-            color: var(--red)
+            border: 1.5px solid var(--rd);
+            color: var(--rd)
+        }
+
+        .btn-w {
+            background: var(--or);
+            color: #fff
         }
 
         .btn-sm {
-            padding: 7px 14px;
-            font-size: 12px;
+            padding: 7px 12px;
+            font-size: 11px;
             border-radius: 8px
         }
 
         .btn-blk {
-            width: 100%;
-            justify-content: center
+            width: 100%
         }
 
         .btn:disabled {
-            opacity: .5;
+            opacity: .4;
             pointer-events: none
         }
 
@@ -148,10 +158,10 @@
         select,
         textarea {
             width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid var(--border);
-            border-radius: 12px;
-            font-size: 15px;
+            padding: 10px 12px;
+            border: 1.5px solid var(--bd);
+            border-radius: 10px;
+            font-size: 14px;
             font-family: inherit;
             background: #f9fafb;
             -webkit-appearance: none
@@ -160,17 +170,17 @@
         input:focus,
         select:focus {
             outline: none;
-            border-color: var(--blue);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, .08)
+            border-color: var(--bl);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .06)
         }
 
         label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--muted);
-            margin-bottom: 4px;
-            margin-top: 10px
+            color: var(--mu);
+            margin-bottom: 3px;
+            margin-top: 8px
         }
 
         label:first-child {
@@ -179,10 +189,11 @@
 
         .badge {
             display: inline-block;
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600
+            font-size: 10px;
+            font-weight: 600;
+            vertical-align: middle
         }
 
         .badge-g {
@@ -200,9 +211,14 @@
             color: #854d0e
         }
 
+        .badge-r {
+            background: #fee2e2;
+            color: #991b1b
+        }
+
         .row {
             display: flex;
-            gap: 10px
+            gap: 8px
         }
 
         .col {
@@ -215,21 +231,21 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, .92);
+            background: rgba(255, 255, 255, .94);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
+            border-top: 1px solid var(--bd);
             display: flex;
-            padding: 6px 0 var(--safe);
+            padding: 4px 0 var(--sf);
             z-index: 100
         }
 
         .nav-btn {
             flex: 1;
             text-align: center;
-            padding: 6px;
+            padding: 4px;
             font-size: 10px;
-            color: var(--muted);
+            color: var(--mu);
             cursor: pointer;
             border: none;
             background: none;
@@ -237,13 +253,13 @@
         }
 
         .nav-btn .nv {
-            font-size: 22px;
+            font-size: 20px;
             display: block;
-            margin-bottom: 2px
+            margin-bottom: 1px
         }
 
         .nav-btn.on {
-            color: var(--blue)
+            color: var(--bl)
         }
 
         .pg {
@@ -256,15 +272,15 @@
 
         .toast {
             position: fixed;
-            top: 20px;
+            top: 16px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 12px 22px;
-            border-radius: 12px;
+            padding: 10px 20px;
+            border-radius: 10px;
             color: #fff;
             font-weight: 600;
             z-index: 999;
-            font-size: 14px;
+            font-size: 13px;
             pointer-events: none;
             opacity: 0;
             transition: opacity .3s
@@ -275,11 +291,11 @@
         }
 
         .toast-ok {
-            background: var(--green)
+            background: var(--gn)
         }
 
         .toast-err {
-            background: var(--red)
+            background: var(--rd)
         }
 
         .modal-overlay {
@@ -299,15 +315,15 @@
         .modal {
             background: #fff;
             border-radius: 20px 20px 0 0;
-            padding: 20px 16px calc(20px + var(--safe));
+            padding: 18px 14px calc(18px + var(--sf));
             width: 100%;
             max-width: 500px;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp .25s
+            animation: su .25s
         }
 
-        @keyframes slideUp {
+        @keyframes su {
             from {
                 transform: translateY(100%)
             }
@@ -319,46 +335,46 @@
 
         .empty {
             text-align: center;
-            padding: 36px 16px;
-            color: var(--muted)
+            padding: 30px 14px;
+            color: var(--mu)
         }
 
         .empty .ic {
-            font-size: 44px;
-            margin-bottom: 8px
+            font-size: 40px;
+            margin-bottom: 6px
         }
 
         .prog {
-            height: 5px;
+            height: 4px;
             background: #e5e7eb;
-            border-radius: 3px;
+            border-radius: 2px;
             overflow: hidden;
             margin: 8px 0
         }
 
         .prog-fill {
             height: 100%;
-            background: var(--blue);
-            border-radius: 3px;
+            background: var(--bl);
+            border-radius: 2px;
             transition: width .4s;
             width: 0%
         }
 
         .art-preview {
             background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
-            margin: 8px 0;
-            max-height: 260px;
+            border: 1px solid var(--bd);
+            border-radius: 8px;
+            padding: 14px;
+            margin: 6px 0;
+            max-height: 220px;
             overflow-y: auto;
-            font-size: 14px;
-            line-height: 1.8
+            font-size: 13px;
+            line-height: 1.7
         }
 
         .art-preview h2 {
-            font-size: 15px;
-            margin: 14px 0 6px
+            font-size: 14px;
+            margin: 10px 0 5px
         }
 
         .art-preview strong {
@@ -367,21 +383,83 @@
 
         .art-preview blockquote {
             background: #f0f4ff;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin: 10px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 8px 0;
             border-left: 3px solid #818cf8;
-            font-size: 13px;
+            font-size: 12px;
             color: #555
+        }
+
+        .install-banner {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 4px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid var(--bd);
+            border-bottom: none;
+            flex-wrap: wrap
+        }
+
+        .editor-toolbar button {
+            width: 32px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .editor-toolbar button:active {
+            background: #e5e7eb
+        }
+
+        .editor-area {
+            min-height: 200px;
+            max-height: 50vh;
+            overflow-y: auto;
+            padding: 12px;
+            border: 1px solid var(--bd);
+            border-radius: 0 0 8px 8px;
+            font-size: 14px;
+            line-height: 1.8;
+            outline: none;
+            background: #fff
+        }
+
+        .arts-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            flex-wrap: wrap
         }
     </style>
 </head>
 
 <body>
     <div class="hdr">
-        <h1>🤖 多账号AI创作助手</h1>
-        <div class="st" id="st">就绪</div>
+        <h1>🤖 AI创作助手</h1><span class="st" id="st"></span>
     </div>
+    <div class="install-banner" id="install-banner" onclick="installApp()">📲 点击安装到手机桌面，像App一样使用 →</div>
     <div class="ctn">
         <div class="pg on" id="pg-dash">
             <div class="card">
@@ -390,12 +468,12 @@
             </div>
             <div class="card">
                 <div class="ct">📝 最近记录</div>
-                <div id="dash-recent"></div>
+                <div id="dash-rec"></div>
             </div>
             <div class="card">
-                <div class="ct">⚡ 快捷操作</div>
-                <button class="btn btn-p btn-blk" onclick="swTab('create')">✍️ AI生成文章</button>
-                <button class="btn btn-s btn-blk" style="margin-top:8px" onclick="quickPush()">📤 推送最近文章</button>
+                <div class="ct">⚡ 快捷操作</div><button class="btn btn-p btn-blk" onclick="swTab('create')">✍️
+                    AI生成文章</button><button class="btn btn-s btn-blk" style="margin-top:6px" onclick="batchAll()">📤
+                    一键推送全部</button>
             </div>
         </div>
         <div class="pg" id="pg-create">
@@ -409,13 +487,12 @@
                     <option value="3">3篇</option>
                     <option value="6" selected>6篇</option>
                 </select>
-                <button class="btn btn-p btn-blk" style="margin-top:14px" id="btn-gen">🚀 生成文章</button>
-                <button class="btn btn-s btn-blk" style="margin-top:8px" id="btn-gen-push">🚀 生成并推送草稿箱</button>
-                <div id="gen-prog" style="display:none;margin-top:10px">
+                <button class="btn btn-p btn-blk" style="margin-top:12px" id="btn-gen">🚀 生成文章</button>
+                <div id="gen-prog" style="display:none;margin-top:8px">
                     <div class="prog">
                         <div class="prog-fill" id="prog-fill"></div>
                     </div>
-                    <p style="font-size:11px;color:var(--muted);text-align:center" id="prog-txt"></p>
+                    <p style="font-size:10px;color:var(--mu);text-align:center" id="prog-txt"></p>
                 </div>
             </div>
             <div id="art-out"></div>
@@ -423,27 +500,25 @@
         <div class="pg" id="pg-accts">
             <div id="acct-list"></div>
             <button class="btn btn-p btn-blk" onclick="showAddAcct()">➕ 添加账号</button>
-            <button class="btn btn-o btn-blk" style="margin-top:8px" onclick="exportAccts()">📋 导出账号</button>
-            <button class="btn btn-o btn-blk" style="margin-top:8px" onclick="document.getElementById('fi').click()">📥
-                导入账号</button>
+            <button class="btn btn-o btn-blk" style="margin-top:6px" onclick="exportAccts()">📋 导出</button>
+            <button class="btn btn-o btn-blk" style="margin-top:6px" onclick="document.getElementById('fi').click()">📥
+                导入</button>
             <input type="file" id="fi" style="display:none" accept=".json" onchange="importAccts(event)" />
         </div>
         <div class="pg" id="pg-set">
             <div class="card">
-                <div class="ct">🔑 AI模型密钥</div>
-                <label>DeepSeek API Key</label><input type="password" id="key-ds" placeholder="sk-..." />
-                <button class="btn btn-sm btn-o" style="margin-top:6px" onclick="testAI('deepseek')">🔍 测试</button>
-                <label>OpenAI Key (可选)</label><input type="password" id="key-oai" placeholder="sk-..." />
+                <div class="ct">🔑 AI密钥</div><label>DeepSeek Key</label><input type="password" id="key-ds"
+                    placeholder="sk-..." /><label>OpenAI Key</label><input type="password" id="key-oai"
+                    placeholder="sk-..." />
             </div>
             <div class="card">
-                <div class="ct">🖥️ 推送服务器</div>
-                <label>服务器地址（电脑运行启动服务器.bat后填IP）</label><input id="set-server" placeholder="http://192.168.x.x:3456" />
-                <button class="btn btn-sm btn-o" style="margin-top:6px" onclick="testServer()">🔍 测试连接</button>
+                <div class="ct">🖥️ 推送服务器</div><label>地址（电脑IP:3456）</label><input id="set-sv"
+                    placeholder="http://192.168.x.x:3456" /><button class="btn btn-sm btn-o" style="margin-top:6px"
+                    onclick="testSv()">🔍 测试</button>
             </div>
             <div class="card">
-                <div class="ct">✏️ 作者</div>
-                <label>作者名称</label><input id="set-author" value="铃木村" />
-                <button class="btn btn-p btn-blk" style="margin-top:12px" onclick="saveSets()">💾 保存设置</button>
+                <div class="ct">✏️ 作者</div><label>名称</label><input id="set-au" value="铃木村" /><button
+                    class="btn btn-p btn-blk" style="margin-top:10px" onclick="saveSets()">💾 保存设置</button>
             </div>
         </div>
     </div>
@@ -455,70 +530,88 @@
     </div>
     <div class="modal-overlay" id="md-acct">
         <div class="modal">
-            <h2 style="margin-bottom:14px">➕ 添加公众号</h2>
-            <label>账号名称</label><input id="md-name" placeholder="如：电商运营号" />
-            <label>AppID</label><input id="md-appid" placeholder="wx..." />
-            <label>AppSecret</label><input id="md-secret" placeholder="请输入" />
-            <label>白名单IP</label><input id="md-ip" placeholder="115.206.224.39" />
-            <label>垂直主题</label><select id="md-topic"></select>
-            <div class="row" style="margin-top:14px"><button class="btn btn-o col"
+            <h2 style="margin-bottom:12px">➕ 公众号账号</h2><label>名称</label><input id="md-nm" /><label>AppID</label><input
+                id="md-ap" /><label>AppSecret</label><input id="md-sc" /><label>IP</label><input id="md-ip"
+                value="115.206.224.39" /><label>主题</label><select id="md-tp"></select>
+            <div class="row" style="margin-top:12px"><button class="btn btn-o col"
                     onclick="clsMd('md-acct')">取消</button><button class="btn btn-p col" id="btn-sv-acct">保存</button>
             </div>
         </div>
     </div>
+    <div class="modal-overlay" id="md-edit">
+        <div class="modal">
+            <h2 style="margin-bottom:8px">✏️ 编辑文章</h2>
+            <div class="editor-toolbar"><button onclick="docCmd('bold')" title="加粗"><b>B</b></button><button
+                    onclick="docCmd('italic')" title="斜体"><i>I</i></button><button onclick="docCmd('underline')"
+                    title="下划线"><u>U</u></button><button onclick="docCmd('formatBlock','h2')"
+                    title="标题">H</button><button onclick="docCmd('insertUnorderedList')" title="列表">•</button><button
+                    onclick="docCmd('formatBlock','blockquote')" title="引用">❝</button></div>
+            <div class="editor-area" id="editor-area" contenteditable="true"></div>
+            <div class="row" style="margin-top:10px"><button class="btn btn-o col"
+                    onclick="clsMd('md-edit')">取消</button><button class="btn btn-p col" id="btn-sv-edit">💾
+                    保存修改</button></div>
+        </div>
+    </div>
     <div class="modal-overlay" id="md-push">
         <div class="modal">
-            <h2 style="margin-bottom:14px">📤 推送到草稿箱</h2>
-            <div id="push-summary"></div>
-            <div class="row" style="margin-top:14px"><button class="btn btn-o col"
-                    onclick="clsMd('md-push')">取消</button><button class="btn btn-s col" id="btn-do-push">✅ 确认推送</button>
+            <h2 style="margin-bottom:10px">📤 推送确认</h2>
+            <div id="push-sum"></div>
+            <div class="row" style="margin-top:10px"><button class="btn btn-o col"
+                    onclick="clsMd('md-push')">取消</button><button class="btn btn-s col" id="btn-do-push">✅ 确认</button>
             </div>
         </div>
     </div>
     <script>
-const)        {try{const v=localStorage.getItem('gzh_'+k);return         v?JSON.parse            d}catc h( e ){r e turn d} } ,set(k,v){localStorage.setI t em( 'gzh_'+k , JSON.stringif y ( v ))}}; 
-co n st TP={" 通 用职场            {ind:" 职场 办 公",ds:"销售CSV",dd:"8900行数据", t 1: "【Notion】",t2:"【飞书 妙记        】",t        3:"【Gamma.app】",c1:"一份50页报告",c2:"1500字方案",c3:"合作方邮        件",m1:"日销售额",m2:"            ,m3:"完成率" , rt:" 季度汇报PPT ",e x:"知识工作者"} ,"电 商运营":{ind:"电 商运营 ",ds:"直播数据C SV" ,dd:"2000 0行订 单",t1:"【抖店】",t 2:" 【生意参谋】",t3:"【 有米云 】",c1:"50页竞品报告" ,c2 :"直播脚本",c3:"供 应商邮 件",m1:" GMV ",m2:"转化 率", m3:"ROI" ,rt :"双十一复盘PPT ",e x:"电商运营 人"}            培训":{in d :"教育 培训",ds: "学员 数据CSV",dd:"5 000 条记录",t1:"【ClassI n】" ,t2:"【小 鹅通】 ",t3:"【Ca nva 】",c1:"3 0页课 程标准",c2:"教案",c3 :"家 长邮件",m1:"完课 率", m2:"续费率",m3:"满 意度" ,rt:"教 学总结 PPT",e x:" 教育工作者" }," 金融分析":{ind: "金融 分析",ds: "财报            ,dd:"50 家 公司", t1:"【Wi nd】 ",t2:"【同花顺】" ,t3 :"【Tableau】",c1: "20 0页研报",c2:"投资 备忘录 ",c3:"客户 邮件" ,m1:"ROE",m2:" 净利率 ",m3:"PE",rt:"投 研PP T",ex:"金融分析师 "}, "医疗健康":{ind:" 医疗健 康",ds: "诊疗 CSV",d d:" 3000份病历" ,t1 :"【杏仁医生】",t2 :"【 丁香园】",t 3:"            Peer】", c 1:"4 0页论文",c 2:" 病例报告",c3:"会诊邮件 ",m 1:"治愈率",m2:"住院日 ",m 3:"满意度",r t:" 科室汇报PPT" ,ex :"医疗从业者"},"法 律咨询 ":{ind:"法律咨询",ds :"卷 宗CSV",dd:"20 0个案 件",t1:"【北大法宝】", t2: "【威科先行 】", t3:"【法信 】", c1:"80页 法规" ,c2:"法律意见书 ",c 3:"客户邮件 ",m            诉率",m2: " 案件周期 ",m3:"满 意度" ,rt:"案件分析PPT ",e x:"法律从业者"},"设计创 意": {ind:"设计创 意", ds:"反馈CS V", dd:"1000条反馈" ,t1 :"【Figma】",t2:" 【即时 设计】",t3:"【M idj ourney】",c1:"5 0页趋 势报告",c 2:" 品牌方案",c3 :"甲 方邮件",m1: "通过 率",m2:"满意度", m3: "改稿次数", rt:            案PPT",e x :"设计 师"},"软件 开发" :{ind:"软件开发",ds :"日 志CSV",dd:"50000条 日志" ,t1:"【Git Hub  Copilot】 ",t 2:"【Cur sor 】",t3:"【Linear】 ",c 1:"100页架构文 档", c2:"技术方案",c3:"P M邮件 ",m1:" 可用率 ",m2:"B ug周 期",m3:"迭 代速度 ",rt:"技术复盘PP T", ex:"开发者 "},            销":{ind : "市场营 销",ds:" 投放C SV",dd:"1500 0条数 据",t1:"【巨量引擎】",t2 :"【 腾讯广告】",t3: "【新 榜】",c1:"6 0页洞 察报告",c2:"营销方案", c3: "客户邮件",m1:"ROI" ,m2 :"获客成本",m3:"品牌声量 ",r t:"月度复盘PPT",ex: "市场 营销人"},"房 产经纪 ":{ind:" 房产经 纪",ds:" 带看C SV",dd:"30 00条 记录",t 1:"            ",t2:"【 房 天下】" ,t3:"【安 居客】 ",c1:"40页市场报 告", c2:"房源方案",c3:"客户邮件 ",m 1:"转化率",m2:"成交周期",m 3:" 满意度",rt:"区域 分析P PT",ex:"房产经 纪人" },"自媒体运营":{ind:" 自媒体 运营",ds:"后台C SV" ,dd:"200篇数据",t1:" 【新榜 】",t2:"【 135 编辑器】",t3:" 【西瓜 数据】",c1 :"3 0页趋势报告",c2 :"深 度内容方案 ",c            牌邮件",m1 : "打开率 ",m2:"分 享率" ,m3:"粉丝增长",r t:" 月度复盘PPT",ex:"自媒体运营 者"} };
-const  H={ hdr:a=>`< p s tyle="c olo r:#999;font-size :13 px;text-align :ce nter">${a} · 原创 </p ><hr s tyl e="bord er: .5px da she d #e0e0e0"/> `,p :t=>`<p  st            "margin : 14px  0;colo r:# 555;font-siz e:1 5px;line-height:2 ">$ {t}</p> `,b :t=>`<st ron g style= "co lor:#1a1a2e">${t} </s trong>`,h2: t=> `<h2 style="fon t-s ize:17px ;co lor:#1a 1a2 e;margin :24 px 0 12px;pa ddi ng-left :10            order-le f t:3p x solid  #25 63eb">${t}</h 2>` ,tip:t=>`<blockqu ote  style= "ba ckground:#f 0f4 ff;paddin g:1 2px 16px;border -ra dius:10px;marg in: 14px 0;border-le ft: 4px so lid  #818c f8; font-siz e:1 3px;color:#5 55" >💡 ${t} </b        lock        quote>`,q:t=>`<p style="text-align:center;font-siz        e:15px;color            63eb ; ma rgin:20px 0;font-weight:bold">💬 ${t}</p>`,hr:'<hr style="border:.5px solid #eee;margin:20px 0"/>',cta:'<hr style="border:2px solid            63 e b; margin:24px 0 14px"/><p style="text-align:center;color:#2563eb;font-size:14px            t- w ei ght:bold">🔑 公众号发送<strong>【工具】</strong>免费领取AI提效            /p> ' }; 
-function genHTML(n,t,auth){let s='<section>'+H.hdr(auth);const A=[()=>{let x='';x+=H.p(`一天8小时里${H.b('真正创造价值的时间有几小时？')}`)            H.q( ' 「原 来我每天有3.5小时在做AI可以代劳的事」')+H.hr;x+=H.h2('📖 信息摄入：3分钟掌握全局');x+=H.p(`${t.c1}，拖进${H.b('【Claude】或【Kimi Chat】')}：500字提炼核心。${H.b('8分钟，效率提升93%')}。`);x+=H.tip('追问「结论基于哪些假设？如果假设不成立呢？」');x+=H.h2('✍️ 内容产出：下笔如有神');x+=            `搭 骨 架→ 填血肉→注入灵魂。${t.c2}，${H.b('47分钟完成，以前3小时+')}。`)+H.hr;x+=H.h2('📊 数据处理：秒级锁定');x+=H.p(`${t.dd}，40秒AI分析。${H.b('效率提升86%')}。`)+H.hr;x            h2( '💬 沟通协作：一键得体回复');x+=H.p(`${t.c3}。AI生成三版→微调。${H.b('8分钟            }。`) +H.hr;x+=H.p(`四个场景叠加，${H.b('9小时→5.5小时')}。`)+H.q('前提是：迈出第一步 🏃')+H.cta;return x},()=>{let x='';x+=H.p(`周一早上邮箱12封未读。${H.b('不是事情太多，是你在用「手工模式」处理信息。')}`)+H.hr;x+=H.h2('🔍 AI信息守门人');x+=H.p(`聚合        →AI初        筛→300字洞察→归档${t.t1}。 ${ H.b(' 12            分钟')}。`) + H. hr;x+=H.h 2 ('✍️ 四阶 段AI加速 ' );x+=H.p(`构 思 →结构化→扩写→打磨。${            '3000字9 0 分钟                `)+H.                += H. q
-                    ('AI是 杠 杆，你 是 支点 。')+H.cta;return x},()=>{let x='';x+=H.p(`每天信息量=15世纪一生总和。${H.b('「怎么 学 」比 「学什么」重要100倍')}。`)+H.hr;x+=H.h2 ( '🧠 搭建                    大 脑' );x+=H.p(`内容→${t.t1}→AI标签+ 摘 要→ 检索。${H.b('核心是可检索+可关联')}。`)+H.hr;x+=H.q('更快找到「什么值得读」。')+H.cta;return x},()=>{let x='';x+=H.p(`残酷事实：${H.b('70 % 时间 花在不创造价值的事上')}。`)+H.hr;x+=H.h2('🎙️ 会                    1 小时 →3分钟');x+=H.p(`${t.t2}转写 → AI 整理。${H.b('效率提升92%')}。`)+H.hr;x+=H.q('聚焦只有你能做的事。')+H.c t a;retu                    } ,( )=>{let x='';x+=H.p(`写了30 0 字卡 住了。${H.b('缺乏「不依赖灵感」的内容生产系统')}。`)+H.hr;x+=H.h2('🎯 选 题 ：跳出「自嗨                    x += H.p(`热点雷达→选题发散→受众匹配。${H.b ( '好 选题=痛点×独特视角')}。`)+H.hr;x+=H.q('AI效率×人类温度=不可替代的作品。')+H.cta; r eturn                     ) => {let x='';x+=H.p(`复盘=罗 列 +「 下次注意」+永不打开的文件。${H.b('给大脑制造虚假安 全 感')}。`)+H.hr;x+=H.h2('🏗️ AI四层提炼法');x+=H.p(`事实还原→模式识别→$ { H.b('根                    追 问3 次为什么)')}→行动转化。`)+H.hr;x+=H.q('最好的复盘， 是 写给未来的自己用的。')+H.cta;ret u rn x}] ;s+=(A[n-
-                1]|                ])();                </ se c
-                    tion> ' ;re t ur n s}
-function toast(m,t='ok'){const e=document.createElement('div');e.cla s sName=                    s t  toast-${t} show`;e.te x tC ontent=m;document.body.appendChild(e);setTimeout(()=>{e. c lassLi                    e mo ve('show');setTimeout(( ) => e.remove(),300)},2200)}
-function clsMd(id){document.getElementById( i d).cla                    s t. remove('show')}
-funct i on  showMd(id){document.getElementById(id).classList.add('show' ) }
-func                      sw Tab(pg){document.qu e ry SelectorAll('.pg').forEach(p=>p.cla s sList.                    v e( 'on'));document.qu e rySele ctorAll('
-                .na                n').f                ch (b =
-                    >b.cl a ssL i st .remove('on'));document.getElementById('pg-'+pg).classLi s t.add(                    ) ;d ocument.querySelector( ` .n av-btn[data-pg="${pg}"]`).classList.add('on');if(pg==='dash ' )ldDas                    i f( pg==='accts')ldAcct s () ;if(pg==='create')ldCreate();if(pg==='set')l d Sets()                    c um ent.querySelectorAll ( '. nav-btn').forEach(b=>b.addEventListener('cli c k',()=                    a b( b.dataset.pg)));
-function ld D ash(){ const a=L
-                S.g                accou                ,[ ]) ;
-                    const   r=L S .g et('recent',[]);document.getElementById('st').textContent=a. l ength?                    . le ngth}个账号 · 就绪`:'轻触底部导航开始';c o ns t da=document.getElementById('dash-acc');da.inne r HTML=a                    g th ?a.map(x=>`<div style="disp l ay :flex;justify-content:space-between; a lign-i                    : ce nter;padding:10px  0 ;b order-bottom:1px solid #f0f0f0"><div><strong>${x.name||'未命名 ' }</str                    < sp an class="badge badge-b" style="ma r gin-le ft:8px">$
-                {x.                c||''                pa n> <
-                    /div> < spa n  c lass="badge badge-g">🟢</span></div>`).join(''):'<div  c lass="                    y "> <div class="ic">📭</div > 去「 账号」页添加</div>';const dr=document.getElementById('das h -recen                    d r. innerHTML=r.length?r.s l ic e(-5).reverse().map(x=>`<div style="padding:6px 0;font - size:1                    b or der-bottom:1px solid #f0 f 0f 0">📄 ${x.title} <span class="badge badge-y">${x. s tatus}                    a n> <span style="color:var(--mu t ed);fo nt-size:1
-                1px                gin-l                8p x" >
-                    ${x.t i me| | '' }</span></div>`).join(''):'<div class="empty"><div class="i c ">📝</                    暂 无记 录</div>'}
-function l d Ac cts(){const a=LS.get('accounts',[]);const el=docum e nt.get                    e nt ById('acct-list');el.i n ne rHTML=a.length?a.map((x,i)=>`<div class="card"><div style="di s play:f                    j us tify-content:space-b e tw een"><strong>${x.name||'未命名'}</strong><span class = "badge                    g e- b">${x.topic||''}</span> < /div>< div style
-                ="f            siz            p x; colo r :v ar (--muted ) ;m argin:6px 0"> AppID: ${(        x.a        ppid||'').substring(0,14)}...</div><div class="row        "><button class=" b t n btn - sm btn- o  col" onclick="editAcct(${i})" >✏️</button > <button class="btn btn-s m btn-r col"  o nc lick="delAcct(${i})">🗑</butt on></div></di v> ` ).join(''):'<div class="emp ty"><div clas s= "ic">📭</di v>还没 有账 号</di v>        '}
-function showAd d Acct(ei){const sel=document.getElementById('md-topic ')        ;sel.innerHTML=Obje c t.keys(TP).map(k=>`<option value="${k}">${k}</opt io        n>`).join('');cons t  a=LS.get('accounts',[]);if(ei!=null&&a[ei ]) {const x=a[ei];document.ge tElementById('md-name').value=x.name||'';docume nt .getElementById('md-appid' ).value=x.appid||'';document. g etElementById('md-secret ').value=x.secret||'';document.getElementById('md-ip').value=x.ip||'';do cu men t.g etEleme ntById('m d- top ic' ).value= x.topic||' 通用 职场效 率'; document. getElementB yI d(' btn -sv-ac ct').data set        .ei=ei}else{document.getElementById('md-name').va        lue='';document.getElementById('md-appid').valu e= ' ';document.getElementById(' md -s ecret').value='';doc ument        .getElementById('md-ip').value='';delete document        .getElementById(' b tn-sv-acct' ) .dataset.ei}showMd ('md -acct')} 
- function editAcct(i){showAddAcct(i)} 
-document.getElementById('btn-sv-acct').a d dEventListen e r('click',function(){cons t  x={name:do cu ment.getElement B yId('md-name ' ).value,appid:document.getElementById('md-appid').value,secret: docume n t.getElement B yId('md-sec re t').value,ip:document.getElementById('md-ip').value,topic:document.getElementById('md-topic').value};if(!x.appid||!x.secret){toast('AppID和AppSec re t不能为空','err');return}const a=LS.get('accounts',[]);const ei=this.dataset.ei; if (ei!=null){a[parseInt(ei)]=x}else{a.push(x)}LS.set('accounts',a);clsMd('md-a cct        ');ldAccts();ldDash();ldCreate();toast(ei!=null?'已        更新':'已添加')});
-func t ion delAcct ( i){if(!confirm('确定 删除？' ))return ; const a=LS.get('accounts',[]);a.splic e( i,1);LS.set('ac c ounts',a);ld A ccts();ldDash();ldCreate();toast('已删除')}
-function exportA ccts() { const a=LS.g e t('accounts', [] ); if(!a.length){toast('没有账号','err');return}const b=new Blob([JSON.stringify(a,null,2)],{type: 'a pplication/json'});const u=URL.createObjectURL(b);co ns t d=document.createElement('a');d.href=u;d.download='accounts_backup.json';d.click();toast('已导出' )} 
-function import Accts(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(!Array.isArray(d)){toast( '格        式错误','err');return}con s t a=LS.ge t ('accounts',[]);for(const x of d){if (x.appid&&x.s e cret)a.push(x)}LS.set('ac co unts',a);ldAccts();ldDash();ldCreate();toast(`导 入${d.length}个`)}catch(ex){toast('格式错误',' e rr' )}};r.readAsText(f);e.target.value=''}
-fu n cti on ldCreate(){const a=LS.get('accounts',[] ) ;co nst sa=document.getElementById('sel-ac c '); sa.innerHTML=a.le ng        th?a.map((x,i)=>`<option value="${i}">${x.name||'未命名'}(${x.topic || '' } )</opti o n >`).j oin(''):'<option>请先添加账号</option>';documen t.getE lementById('sel-topic').innerHTML=Object.k eys(TP) .map(k=>`<option value="${k}">${k}</option> `). join('');document.getElementById('sel-m odel') .innerHTML='<option value="deepseek">Deep Se ek  V4 Pro</ op tion><opti o n value="openai">OpenAI GPT- 4o</opt ion>'} 
- async funct i on doGen(pushAfter ){co nst a=LS.get(' accounts',[]);cons t ai=pa rseInt(document.g etElementB yId('sel- acc').value );if(isNaN(ai)| |!a[        ai]){toast('请选择账号', ' er r');return}const t= TP[docu ment.getEle m entById('sel-topic ').v alue]||TP["通用职场 效率" ];const m=document .getEle mentById(' sel-model ').value;co nst n=parseI nt(        document.getElementById('sel-n').value);const s=LS        .get('settings',{}) ; const key=m = =='deepseek'?s.dsK ey:s .oaiKey; c onst au=s.author||'铃木村';const pg=do cument.g e tElementById('gen-prog');const pf=doc ument.ge t ElementById('prog-fill');const pt=doc ument.getEle m entById('pro g -txt');pg.sty le .d isplay='block';pf.style.width= '5 %';pt.textConten t= 'AI思考中...';const arts=[] ; let useAI=!!key;if(useAI){ try{for(let  i =1;i<=n;i++){pf.style.wid th =Math.round(i/n*80)+'%';pt.textContent=`AI生成第${ i}/${n}篇...` ; const prompt=`为"${t.ind}"领域写爆款公众号文章。要求：1)故事化开头 2)4-5小节emoji标题 3)重点加粗 4)案例：${t.c1}、${t.c2} 5)工具：${ t.t        1}、${t.t2} 6)1200字 7)文末：公众号发送【工具】领取 8)禁词：副业网赚暴利月入。输出纯        HTML(只用p,h2,strong,blockquote)`;const bu=m==='deepseek'?'htt ps:// ap i. de            ek.com/v1': ' https://api.openai .com /v1';con s t r=await fetch(`${bu}/chat/completions`,{method:'PO            he aders:{'Co nt ent-Type':' a pplication/json ',Autho rizati on            arer ${key}`}, b ody:JSON.stringify({model:m==='deepseek'?'de            ek-chat':'g p t-4o',messages:[ {r ole:'system',conte            你是资深新媒体编辑。输 出 纯HTML格式公众号文章。'},{role:'user',content:prompt}            x_tokens:40 9 6,temperature:.8})});const d=await r.json();const             choices?.[ 0 ]?.message?.conten t||''            s.push({n:i, t itle: `AI 提效·${t.ind }  第${i}篇`,h t ml:`<section>            hdr(au)}${c} $ {H.cta}</se ct ion>`,a:            d})}}cat c h(e){useAI=false;arts.length=0;toast ('AI失败，用 模 板','err')}}
-if(!useAI){for(let i=1;i< =n;i++){ p f.style.width=Math.round(i/n*80)+'%';            extContent=`模板生成 第 ${i}/${n }篇...`;arts.pu s h({n: i,title:`AI提效· $ {t.ind} 第${ih            genHTML(i,t,au ) ,ai,            .ind});aw a it new Pro(            et Timeout (r                pf. st                    00% ';pt.t e xt C on tent=' ✅ 完成 ！'                        ('recent',[]); r c.push({titl e :`${t . ind }  ${n }篇`,status:'已生 成 ',time:new Date().toLoca                        ;if(rc.lengt h >20)rc.shift() ;LS.set(                        dow._lastAr t s=ar                        {p g.styl e.d isplay='non e'                            enderAr t s(arts)}setTimeout(()=>{pg.style.display='none'},1500);ldDa s h()}
-do cument. getEleme n tById('btn-gen' ).addEventListener( 'click',()=>do Gen(false));
-docum en t.get ElementById('btn -gen-p ush').addEventLi stener('c li ck',( )=>doGen( true));
- function renderArts(arts){c on s t el= documen t.getEle mentBy Id( 'art-out'); el.in nerHTML='<di v  cl ass=                            t">📄 生 成 结果('+arts.lengt h+'篇)</ d iv>'+arts.map((x,i)=>`<div style =" marg                        o rder :1                            r);bord e r-radius:10px;overflow:hidden"><div style="padding:10px 1 4 px;back ground: #f8f9ff; f ont-weight:600; font-size:13px;disp lay:flex;justi fy-content:space-b et ween; cursor:pointer"  onclic k="this.n extElemen tS iblin g.style.d isplay=t his.nextElementSibling.styl e. d ispla y==='no ne'?'blo ck':'n one '"><span>📝  第${i +1}篇</span>< sp an >👁                             class=" a rt-preview" sty le="dis p lay:none">${x.html}</div></div>` ). join                        as                        -blk" style="ma rg in -top:1 2px" onclick="doPush(window ._las tArts)">📤 推送到草稿箱</button></div>';window.scrollTo({top: el.o                    be                s mooth '}) } 
-func t ion qu ickPush(){const   a rt            ndl            rt s;if(art s&                ngt h){doP u sh ( ar ts)}el se{t o ast('请先生成文章',' e rr')}}
-funct i on do P ush ( arts ){if(!arts||!a r ts.len g th){toast('没有文章','err' ) ;return}const a=LS.get('acc ounts',[]);cons t  ai =arts[ 0].ai;if(ai==null||!a[ai]){ toast ('账号信息丢失', 'err') ;return }co nst acc=a[ai];docum en t.getElementB yId(' pu            um'            nerHTML=`<p><s t rong>账号 ：</strong>${ac c .name||'未            </p><p><strong>文章：</st            >${arts.lengt h} 篇 </p>`;window._pA c c=acc; wi ndow._p        Arts=        arts;showMd('md-push')} 
-d oc            t.getElement B yId('btn-do-push').a ddEventListener('c lick',async functio n(){this.disabled =true;this.textCon tent='推送中...';const ac            ndow._pAcc;const arts=window._pArts;const s = LS .g et('settings',{});const sv=s.serverURL||'';const au=s.author||'铃木村';let results=[];let useServer=!!sv;if(useServer){try{const r=await fetch(`${sv}/api/publish`,{method:'POST',headers:{        'Co        ntent-Type':'application/json '}            y:JSON.s t ringify({account_id:acc.appid,articl            rts.map((x,i ) =>({index:i+1,title:x.title,content_html:x.h t ml}))})});const   d=await r. j son();results=d. da ta ||d.results||[]}catch(e){useServer=false;toast('服务器不可用，尝试直连...','err')}}
-if(!useServer){for(let i=0;i<arts.length;i++){try{const tr=await fetch(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${acc.appid}&secret=${acc.secret}`);const td=await tr.json();if(!td.access_token){results.push({index:i+1,status:'failed',error:'Token失败'});c o ntinue}const tk=td.access_token;const pl={articles:[{title:arts[i].title||'AI文章',author:au,digest:(arts[i].title | |'').substring(0,50),content:arts[i].html,content_source_url:'',thumb_media_id:'',need_open_comment:0,only_fans_can            ment:0}]};const d r=aw ait fetch(`h t tps ://api.we ixin.qq. com/        cgi        -bin/draft/add?access_token=${tk}`,{method:'POST        ',headers:{'Conte n t-Type' : 'application/json' },bo dy:JSON.stringify(pl)});const dd=await  d r.json( ); if( dd.media_id){results.push({index:i+1,sta t us:'succ es s', draft_media_id:dd.media_id})}else{results.p u sh({inde x: i+1,s ta        tus:'failed',error: d d.errms g | |JSON. stringify(dd)})}}catch(e){results.push({ index:i +1,status:'failed',error:e.message})}}}
-c onst su c=results.filter(r=>r.status==='success').l en gth;const fail=res ult s.filter(r=>r. sta        tus==='failed').length;toast(`推送：成功${suc}篇${fail        >0?'，失败'+ fail+'篇':'' }`,fail>0? 'err':'ok');c=LS.get('recent',[]);rc.push({title:`推送 ${suc}/${arts.length}篇`,status:suc===arts.length?'成功':`部分失败`,time:new Date().toLocaleTimeString()});LS.set('recent',rc);this.disabled=false;this.textContent='✅ 确认推送';clsMd('md-push');ldDash()});
-function ldSets(){const s=LS.get('settings',{});document.getElementById('key-ds').value=s.dsKey||'';document.getElementById('key-oai').value=s.oaiKey||'';document.getElementById('set-author').value=s.author||'铃木村';document.getElementById('set-server').value=s.serverURL||''}
-function saveSets(){const s={dsKey:document.getElementById('key-ds').value,oaiKey:document.getElementById('key-oai').value,author:document.getElementById('set-author').value,serverURL:document.getElementById('set-server').value};LS.set('settings',s);toast('已保存')}
-async function testAI(m){const s=LS.get('settings',{});const key=m==='deepseek'?s.dsKey:s.oaiKey;if(!key){toast('请填API Key','err');return}toast('测试中...');try{const bu=m==='deepseek'?'https://api.deepseek.com/v1':'https://api.openai.com/v1';const r=await fetch(`${bu}/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${key}`},body:JSON.stringify({model:m==='deepseek'?'deepseek-chat':'gpt-4o',messages:[{role:'user',content:'回复OK'}],max_tokens:10})});const d=await r.json();if(d.choices)toast('✅ 连接成功');else toast('❌ '+(d.error?.message||'失败'),'err')}catch(e){toast('❌ '+e.message,'err')}}
-async function testServer(){const url=document.getElementById('set-server').value;if(!url){toast('请填地址','err');return}toast('测试中...');try{const r=await fetch(`${url}/api/accounts`,{method:'GET'});const d=await r.json();if(d.success)toast('✅ 服务器连接成功');else toast('❌ 异常','err')}catch(e){toast('❌ 无法连接','err')}}
+// == == =  数据 层  =====
+ c onst LS={get(k,d){try{const   v=l ocalStor a ge.getItem('g z _ ' +k);r etu r n v?JSON . par            ):d}ca tc h (e){return d}},set(k,v){loc a lS torage.setItem('gz _'        +k,J        SON.stringify(v))}};
+const TP={"通用职场效率":{ind:"职场办公        ",ds:"销售CSV",dd:"            行",t1:"【N o tion 】",t2:" 【飞书 妙记】",t3:"【 Gam ma】",c1:"50页 行业报 告",c2:"1500 字方案 ",c3:"合作方 邮件" ,m1:"日销售额",m2: "留存 率",m3:"完成率",r t:" 季度汇报",ex:"知识工作者 "}, "电商运营":{ind:" 电商运 营",ds:" 直播C SV",dd:" 200 00行",t1: "【抖 店】",t2:"【生 意参谋 】",t3:" 【有米            c1:"50页 竞 品报告" ,c2:"直播 脚本" ,c3:"供应商邮件", m1: "GMV",m2:"转化率",m 3:" ROI",rt :"双 十一复盘",ex: "电商 运营人"},"教 育培训 ":{ind:"教育培训",d s:" 学员CSV",dd:" 500 0条",t1:"【Class In】 ",t2:" 【小鹅 通】",t3 :"【 Canva】 ",c 1:"30页课程标准" ,c2 :"教案",c 3:"            ",m1:"完 课 率",m 2:"续费率" ,m3 :"满意度",rt:"教 学总结 ",ex:"教育工作者"},"金 融分析 ":{ind:"金融分析 ",d s:"财报CSV ",d d:"50家公司",t1:" 【Wi nd】",t2:"【同花顺】" ,t3 :"【Tableau】" ,c1 :"200页研报",c2: "投资 备忘录",c 3:" 客户邮件", m1: "ROE",m2 :"净 利率",m3:"PE", rt: "投研分析", ex:            析师"},"医 疗 健康": {ind:"医 疗健康 ",ds:"诊疗CSV",d d:" 3000份",t1:"【杏仁医 生】" ,t2:"【丁香园 】", t3:"【Med Pee r】",c1:"40页论 文", c2:"病例报告",c3:"会诊 邮件" ,m1:"治愈率",m2 :"住 院日",m3:"满意度",rt :"科 室汇报",e x:" 医疗从业者"} ,"法 律咨询":{i nd: "法律咨询",ds: "卷宗 CSV",dd :"2            ,t1:"【北 大 法宝】" ,t2:"【威 科先行 】",t3:"【法信】" ,c1 :"80页法规",c2:"法律 意见书 ",c3:"客户邮 件", m1:"胜诉率" ,m2 :"周期",m3:"满意 度", rt:"案件分析",ex:"法 律从业 者"},"设计创意": {in d:"设计创意",ds:"反 馈CS V",dd: "10 00条",t1: "【F igma】",t 2:" 【即时设计】",t3:" 【Mi djourne y】"            "50页趋势" , c2:" 品牌方案",c 3:" 甲方邮件",m1:"通过率", m2: "满意度",m3:"改稿次数", rt: "设计提案",ex :"设 计师"},"软件开 发": {ind:"软 件开发 ",ds:"日志CSV",dd :"5 0000条",t1: "【G itHub Copilot】" ,t2 :"【Cur sor 】",t3:" 【Li near】",c 1:" 100页架构",c2:" 技术方 案",c3:" PM邮            1:"可用率" , m2:" Bug周期", m3: "迭代速度",rt:"技 术复盘 ",ex:"开发者"},"市场营销 ":{ ind:"市场营销" ,ds :"投放CSV", dd: "15000条",t1:"【巨 量引擎 】",t2:"【腾讯广告】", t3: "【新榜】",c1:"60页洞察 ",c 2:"营销方案",c3:"客户 邮件" ,m1:"ROI ",m 2:"获客成本" ,m3 :"品牌声量" ,rt :"月度复盘",ex :"市 场营销人" },"            ":{ind: " 房产经纪 ",ds:"带 看CS V",dd:"3000条 ",t 1:"【贝壳】",t2:"【房天下】 ",t 3:"【安居客】",c1:"40页市场 报告" ,c2:"房源方案", c3: "客户邮件",m1:" 转化率 ",m2:"成交周期",m3:" 满意度 ",rt:"区域分析" ,ex :"房产经纪人"},"自媒体运营" :{i nd:"自媒体运 营", ds:"后台CSV" ,dd :"200篇" ,t1 :"【新榜】",t2 :"【 135编辑 器】"            "【西瓜数据】 " ,c1: "30页趋势" ,c2 :"深度方案",c3:" 品牌邮 件",m1:"打开率",m2:"分享 率", m3:"粉丝增长" ,rt :"月度复盘",e x:" 自媒体运营者" }}; 
+const H={hdr:a= >`< p style="colo r:# 999;font-size:1 2px ;text- ali gn:cent er" >${a} ·  原创 </p><hr styl e=" border: .5p            shed #e 0 e0e0 "/>`,p: t=> `<p style="m arg in:12px 0;color:# 555 ;font-s ize :14px;li ne- height:2 ">$ {t}</p>`,b:t=>`<s tro ng style="c olo r:#1a1a2e">${t} </s trong>`, h2: t=>`<h2  st yle="fon t-s ize:16px;col or: #1a1a2e ;ma            :20px 0  1 0px; padding- lef t:8px;border- lef t:3px solid #2563 eb" >${t}</ h2> `,tip:t=>`< blo ckquote s tyl e="background:# f0f 4ff;padding:10 px  14px;border-radi us: 8px;ma rgi n:12px  0; border-l eft :4px solid # 818 cf8;font -si        ze:1        2px;color:#555">💡 ${t}</blockquote>`,q:t=>`<p sty        le="text-ali            ente r ;f ont-size:14px;color:#2563eb;margin:16px 0;font-weight:bold">💬 ${t}</p>`,hr:'<hr style="border:.5px solid #eee;margin:16px 0"/>',ct            hr   st yle="border:2px solid #2563eb;margin:20px 0 12px"/><p style="text-align:cente            lo r :# 2563eb;font-size:13px;font-weight:bold">🔑 公众号发            ron g >【 工具】</strong>免费领取AI提效工具包</p>'};
+function genHTML(n,t,au){let s='<section>'+H.hdr(au);const A=[()=>{let x='';x+=H.p(`一天8小时$            ('真正 创 造价 值的时间有几小时？')}`);x+=H.q('「原来每天有3.5小时AI可以代劳」')+H.hr;x+=H.h2('📖 信息摄入：3分钟掌握全局');x+=H.p(`${t.c1}→${H.b('【Claude】或【Kimi Chat】')}：500字提炼。${H.b('8分钟，效率+93%')}。`)+H.hr;x+=H.h2('✍️ 内容产出：下笔如有神');x+=H.p(`搭骨架→填血肉→注入            {t . c2 }，${H.b('47分钟，以前3h+')}。`)+H.hr;x+=H.h2('📊 数据处理：秒级锁定');x+=H.p(`${t.dd}，40秒AI分析。${H.b('效率+86%')}。`)+H.hr;x+=H.h2('💬 沟通协作');x            p(` ${t.c3}→AI三版→微调。${H.b('8分钟搞定')}。`)+H.hr;x+=H.p(`四个场景叠加            b('9 h→5.5h')}。`)+H.q('前提：迈出第一步🏃')+H.cta;return x},()=>{let x='';x+=H.p(`周一早上邮箱12封未读。${H.b('不是事情多，是手工模式处理工业化信息。')}`)+H.hr;x+=H.h2('🔍 AI信息守门人');x+=H.p(`聚合→AI初筛→300字洞察→归档${t.t1}。${H.b('120→25        分钟')        }。`)+H.hr;x+=H.h2(' ✍️  四阶段A I加            x+=H.p(` 构 思→ 结构化→扩写→打磨 。 ${H.b(' 3000字 9 0分钟')}。`)+H . hr;x+=H.q('AI            你是支点。') + H.                retur                ,( )= >
+                    {let  x ='' ; x+ =H.p(`每天信息量=15世纪一生总和。${H.b('「怎么学」比「学什么」重要100倍')}。`)+H.hr;x+=H.h2('� �  搭 建AI第二大脑');x+=H.p(`内容→${t.t1}→A I 标签+摘要→                    { H. b('核心：可检索+可关联')}。`)+H.hr;x + =H .q('更快找到「什么值得读」。')+H.cta;return x},()=>{let x='';x+=H.p(`残酷事实：${H.b('70%时间不创造价值')}。`)+H.hr;x+=H.h2('🎙️ 会议纪 要 ：1 h→3min');x+=H.p(`${t.t2}转写→AI整理。${H.                    率 +9 2%')}。`)+H.hr;x+=H.q('聚焦 只 有你 能做的事。')+H.cta;return x},()=>{let x='';x+=H.p(`写300字卡住 。 ${H.b(                    依 赖灵 感」的内容系统')}。`)+H.hr;x+=H.h 2 (' 🎯 选题：跳出「自嗨」');x+=H.p(`热点雷达→选题发散→受众匹配。${H.b('好选题=痛点 × 视角')}。                    . hr ;x+=H.q('AI效率×人类温度=不可替代。' ) +H .cta;return x},()=>{let x='';x+=H.p(`复盘=罗列+「下次注意」+永不打开。${ H .b('给大                    假 安全 感')}。`)+H.hr;x+=H.h2(' � �️  AI四层提炼法');x+=H.p(`事实还原→模式识别→ $ {H.b('根因分析(追问3次为什么)')}→行动转化。`)+H.hr;x+=H.q('最好的复盘，写给未来的 自 己。')+H                    ; re turn x}];s+=(A[n-1]||A[0])();s+='</s e ction>';return s}
+func t ion to ast(m,t='
+                ok'                nst e                um en t
+                    .crea t eEl e me nt('div');e.className=`toast toast-${t} show`;e.textContent=m;document.bo d y.appe                    i ld (e);setTimeout(()=>{e . cl assList.remove('show');setTimeout(()=>e.remove(),300)},2 0 00)}
+f                    i on  clsMd(id){document.get E le mentById(id).classList.remove('show')}
+function showMd(id){document . getEle                    B yI d(id).classList.add(' s ho w')}
+function swTab(pg){document.querySelectorAll('.pg').for E ach(p=                    l as sList.remove('on')) ; do cument.querySelectorAll('.nav-btn') . forEac                    > b. classList.remove(' o n'));d ocument.g
+                etE                ntByI                g- '+ p
+                    g).cl a ssL i st .add('on');document.querySelector(`.nav-btn[data-pg="${p g }"]`).                    s Li st.add('on');if(pg===' d as h')ldDash();if(pg==='accts')ldAccts();if(pg==='create')ldCr e ate();                    g == ='set')ldSets()}
+do c um ent.querySelectorAll('.nav-btn').forEach(b=> b .addEv                    i st ener('click',()=>swT a b( b.dataset.pg)));
+function ldDash(){const a=L S .get('                    s ', []),r=LS.get('rec',[]);docum e nt.get ElementBy
+                Id(                ).tex                te nt =
+                    a.len g th? ` ${ a.length}账号·就绪`:'轻触导航';document.getElementById('dash-acc').i n nerHTM                    l en gth?a.map(x=>`<div style="d i sp lay:flex;justify-content:space-between;align-ite m s:cent                    a dd ing:8px 0;border-bottom:1px   so lid #f0f0f0"><div><strong>${x.nm||'未 命 名'}</s                    g >< span class="badge  b ad ge-b" style="margin-left:6px">${x.tp||''}</span></div><span   class=                    g e  badge-g">🟢</span></div>`).join('' ) :'<div  class="e
+                mpt                div c                =" ic "
+                    >📭</ d iv> 去 「账 号」页添加</div>';document.getElementById('dash-rec').inner H TML=r.                    t h? r.slice(-5).reverse().m a p( x=>`<div style="padding:5px 0;font-size:12px;border - bottom                      so lid #f0f0f0">📄 ${x.t} < sp an class="badge badge-y">${x.s}</span><span style="col o r:var(                    ) ;f ont-size:10px;margin-lef t :6 px">${x.tm||''}</span></div>`).join(''):'<div cla s s="emp                    < di v class="ic">📝</div>暂无记录</ d iv>'}
+ function 
+                ldA                (){co                a= LS .
+                    get(' a cct s ', []);document.getElementById('acct-list').innerHTML=a.length ? a.map(                    ) => `<div class="card">< d iv  style="display:flex;justify-content:space-between " ><stro                    { x. nm||'未命名'}</strong><sp a n  class="badge badge-b">${x.tp||''}</span></div><div style="fon t -size:                    ; co lor:var(--mu);margin : 4p x 0">AppID:${(x.ap||'').substring(0,12)}...</div> < div cl                    " ro w"><button class="btn bt n -sm bt n-o col" 
+                onc            ="e            c ct (${i } )" >✏ ️</butto n >< button class= "btn btn-s        m b        tn-r col" onclick="delAcct(${i})">🗑</button></div        ></div>`).join('' ) : '<div   class=" e mpty"><div class="ic">📭</div> 无账号</div>'} 
+ function showAddAcct(ei) {document.get E le mentById('md-tp').innerHTML=O bject.keys(TP ). m ap(k=>`<option value="${k}" >${k}</option >` ).join(''); cons t  a=LS. ge        t('accts',[]);if(e i !=null&&a[ei]){const x=a[ei];document.getElementById ('        md-nm').value=x.nm| | '';document.getElementById('md-ap').value=x.ap||' ';        document.getElemen t ById('md-sc').value=x.sc||'';document.getE le mentById('md-ip').value=x. ip||'';document.getElementById('md-tp').value=x .t p||'通用职场效率';document.getEl ementById('btn-sv-acct').data s et.ei=ei}else{document.g etElementById('md-nm').value='';document.getElementById('md-ap').value=' '; doc ume nt.getE lementByI d( 'md -sc ').value ='';docume nt .ge tEl ementById ('md-ip').v al ue= ''; delete  document .ge        tElementById('btn-sv-acct').dataset.ei}showMd('md        -acct')}
+function editAcct(i){showAddAcct(i)}
+d oc u ment.getElementById('btn-sv -a cc t').addEventListener ('cli        ck',function(){const x={nm:document.getElementByI        d('md-nm').value, a p:document. g etElementById('md- ap') .value,s c :document.getElementById('md-sc').va lue,ip:document.getElementById('md-ip').v a lue,tp:docum e nt.getElementById('md-tp' ) .value};if( !x .ap||!x.sc){toa s t('AppID/Sec r et必填','err');return}const a=LS.get('accts',[]);const ei=this.da taset. e i;if(ei!=nul l ){a[parseIn t( ei)]=x}else{a.push(x)}LS.set('accts',a);clsMd('md-acct');ldAccts();ldDash();ldCreate();toast(ei!=null?'已更新':'已添加')});
+function delAcct(i){if(!co nf irm('删除？'))return;const a=LS.get('accts',[]);a.splice(i,1);LS.set('accts',a) ;l dAccts();ldDash();ldCreate();toast('已删除')}
+function exportAccts(){const a=LS .ge        t('accts',[]);if(!a.length){toast('无账号','err');ret        urn}const b=new Bl o b([JSON.str i ngify(a,null,2)],{ type :'applic a tion/json'});const u=URL.createObject UR L(b);const d=do c ument.create E lement('a');d.href=u;d.download='accounts_backup.json';d. click( ) ;toast('已导出' ) }
+function im po rt Accts(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=function( ev ){try{const d=JSON.parse(ev.target.result);if(!Array .i sArray(d)){toast('格式错','err');return}const a=LS.get('accts',[]);for(const x of d){if(x.ap&&x.sc) a. push({nm:x.nm||x .name,ap:x.ap||x.appid,sc:x.sc||x.secret,ip:x.ip||'',tp:x.tp||x.topic||'通用职场效率'})}LS.set('accts',a);ldAccts();ldDash();ldCreate();toast(`导入${d.length}个`)}catch(ex){ to        ast('格式错','err')}};r.r e adAsText( f );e.target.value=''}
+function ldCrea te(){const a= L S.get('accts',[]);documen t. getElementById('sel-acc').innerHTML=a.length?a. map((x,i)=>`<option value="${i}">${x.nm| | '未命 名'}(${x.tp||''})</option>`).join(''):'<op t ion >请先加账号</option>';document.getElementById(' s el- topic').innerHTML=Object.keys(TP).map( k =>` <option value="${ k}        ">${k}</option>`).join('');document.getElementById('sel-model'). in ne r HTML='< o p tion  value="deepseek">DeepSeek V4 Pro</option> <optio n value="openai">OpenAI GPT-4o</option>'}
+ async f unction doGen(){const a=LS.get('accts',[]); con st ai=parseInt(document.getElementById( 'sel-a cc').value);if(isNaN(ai)||!a[ai]){toast(' 选账 号' ,'err');r et urn}const  t =TP[document.getElementById( 'sel-to pic'). v alue]||TP[" 通 用职场效率"];const m=do cume nt.getElementB yId('sel-model').v alue;co nst n=parseInt(do cument.get ElementBy Id('sel-n') .value);const s =LS.        get('stt',{});const   ke y=m==='deepseek'?s. ds:s.oa ;const au=s . au||'铃木村';const pg =doc ument.getElemen tBy Id('gen-prog');con st pf=d ocument.ge tElementB yId('prog-f ill');const  pt=        document.getElementById('prog-txt');pg.style.displ        ay='block';pf.style . width='5%'; p t.textContent='生成中 ...' ;const a r ts=[];let useAI=!!key;if(useAI){try {for(let   i=1;i<=n;i++){pf.style.width=Math.rou nd(i/n*8 0 )+'%';pt.textContent=`AI第${i}/${n}篇.. .`;const pr= ` 为"${t.ind}"领 域 写爆款公众号文章。要求：1 )故 事化 开头2)4-5小节emoji标题3)重点加粗4)案例:${t .c 1}${t.c2}5)工具:${ t. t1}${t.t2}6)1200字7)文末:发送 【 工具】领取8)禁词:副业网赚暴利月入。纯HTML(只 用p,h2,strong , blockquote)`;const bu=m== =' deepseek'?'https://api.deepseek.com/v1':'https: //api.openai . com/v1';const r=await fetch(`${bu}/chat/completions`,{method:'POST',headers:{'Content-Type':'appl ica        tion/json',Authorization:`Bearer ${key}`},body:JSON.s        tringify({model:m==='deepseek'?'deepseek-chat':'gpt-4o',mess ages: [{ ro le            stem',conte n t:'你是资深新媒体编辑。输出纯HT ML公众 号文章。'},{ r ole:'user',content:pr}],max_tokens:4096,temperature:            }) ;const d=a wa it r.json() ; const c=d.choic es?.[0] ?.mess ag            ontent||'';art s .push({n:i,title:`${t.ind}·AI提效第${i}篇`,html:            ction>${H.h d r(au)}${c}${H.ct a} </section>`,ai})}}            h(e){useAI= f alse;arts.length=0;toast('AI失败用模板','err')}}
+            useAI){for( l et i=1;i<=n;i++){pf.style.width=Math.round(i/n*80)            ;pt.textCo n tent=`模板${i}/${n}. ..`;a            push({n:i,ti t le:`$ {t. ind}·AI提效第 $ {i}篇`,html : genHTML(i,t,a            i});await ne w  Promise(r= >s etTimeo,            }}
+pf.st y le.width='100%';pt.textContent='✅';w indow._a r ts=arts;renderArts(arts);const rc=LS. get('rec ' ,[]);rc.push({t:`${t.ind} ${n}篇`,s:'已            tm:new Date().to L ocaleTim eString()});if ( rc.le ngth>30)rc.shi f t();LS.set(',            setTimeout(()= > {pg.            e.display = 'none'},12l            h( )}
+docu me                eme nt                    n') .addEv e nt L is tener( 'cli ck                        on renderArts( a rts){const e l =docu m ent . getE lementById('ar t -out');el.innerHTML='<di                        div class="c t ">📄 结果('+arts .length+                        map((x,i)=> ` <div                        ot tom:8p x;b order:1px s ol                            radius: 8 px;overflow:hidden"><div style="padding:8px 12px;background : #f8f9ff ;font-w eight:60 0 ;font-size:12px ;display:flex;justi fy-content:spa ce-between;cursor: po inter " onclick="this. nextEl ementSibling.sty le.displa y= this. nextEleme ntSiblin g.style.display==='none'?'b lo c k':'n one'">< span>📝第 ${i+1} 篇</ span><span> 👁</s pan></div><d iv  c lass                            ="displ a y:none">${x.htm l}</div > <div class="arts-actions" style= "p addi                        e r-to p:                            ><butto n  class="btn btn-sm btn-s col" onclick="pushOne(${i})">📤推 送 </butto n><butt on class = "btn btn-sm btn -o col" onclick="ed itArt(${i})">✏ ️修改</button></div> </ div>` ).join('')+'<but ton cl ass="btn  btn-w btn -b lk" s tyle="mar gin-top: 8px" onclick="batchAll()">⚡ 一键 推 送全部(' +arts.l ength+'篇 )</but ton ></div>';wi ndow. scrollTo({to p: el .off                            smooth' } )}
+function bat chAll() { const arts=window._arts;if(!arts || !art                        '先                        urn}doPush(arts ,' al l')}
+f unction pushOne(i){const ar ts=wi ndow._arts;if(!arts||!arts[i])return;doPush([arts[i]],' one'                    ed                { const  ar t s=win d ow._ar ts;if(!arts||!a r t s[            etw            w. _editIdx =i                t.g etElem e nt B yI d('edi tor- a rea').innerHTM L =arts[i].htm l ;show M d(' m d-ed it')}
+document . getEle m entById('btn-sv-edit') . addEventListener('click',() =>{const i=wind ow ._ editId x;if(i==null||!window._arts ||!wi ndow._arts [i])re turn;wi ndo w._arts[i].html=doc um ent.getElemen tById ('            ora            nnerHTML;rende r Arts(wi ndow._arts);cl s Md('md-ed            ;toast('已保存修改')});
+fun            n docCmd(cmd, va l ){document.execC o mmand( cm d,false        ,val)        ;document.getElementByI d( 'e            r-area').foc u s()}
+function doPush (arts,type){if(!ar ts||!arts.length){t oast('无文章','err') ;return}const a=LS .get('accts',[]);const            arts[0].ai;if(ai==null||!a[ai]){toast('账号丢失 ' ,' er r');return}const acc=a[ai];document.getElementById('push-sum').innerHTML=`<p><strong>账号：</strong>${acc.nm||'未命名'}</p><p><strong>文章：</strong>${arts.length}篇</p>`;window._pAcc=acc;window        ._p        Arts=arts;showMd('md-push')}
+ do            nt.getEl e mentById('btn-do-push').addEventList            ('click',asy n c function(){this.disabled=true;this.textCon t ent='推送中...';co n st acc=win d ow._pAcc;const a rt s= window._pArts;const s=LS.get('stt',{});const sv=s.sv||'';const au=s.au||'铃木村';let results=[];if(sv){try{const r=await fetch(`${sv}/api/publish`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({account:{app_id:acc.ap,app_secret:acc.sc},articles:arts.map((x,i)=>({index:i+1,title:x.title,content_html:x.html})),author:au})});const d = await r.json();results=d.data||d.results||[]}catch(e){toast('服务器不可用，尝试直连','err');sv=''}}
+if(!sv){for(let i=0;i<a r ts.length;i++){try{const tr=await fetch(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid            cc.ap}&secret=${a cc.s c}`);const t d =aw ait tr.js on();if( !td.        acc        ess_token){results.push({index:i+1,status:'faile        d',error:'Token'} ) ;contin u e}const tk=td.acce ss_t oken;const pl={articles:[{title:arts[i] . title|| 'A I文章 ',author:au,digest:(arts[i].title||'').s u bstring( 0, 50) ,content:arts[i].html,content_source_url:'' , thumb_me di a_id: ''        ,need_open_comment: 0 ,only_f a n s_can_ comment:0}]};const dr=await fetch(`https ://api. weixin.qq.com/cgi-bin/draft/add?access_to ken=${t k}`,{method:'POST',headers:{'Content-Type': 'a pplication/json'}, bod y:JSON.stringi fy(        pl)});const dd=await dr.json();if(dd.media_id){r        esults.pu sh({index:i +1,status: 'success',draa_id:dd.media_id})}else{results.push({index:i+1,status:'failed',error:dd.errmsg||'unknown'})}}catch(e){results.push({index:i+1,status:'failed',error:e.message})}}}
+const suc=results.filter(r=>r.status==='success').length;const fail=results.filter(r=>r.status==='failed').length;toast(`推送：成功${suc}${fail>0?'/失败'+fail:''}`,fail>0?'err':'ok');const rc=LS.get('rec',[]);rc.push({t:`推送${suc}/${arts.length}篇`,s:suc===arts.length?'成功':'部分失败',tm:new Date().toLocaleTimeString()});LS.set('rec',rc);this.disabled=false;this.textContent='✅ 确认';clsMd('md-push');ldDash()});
+function ldSets(){const s=LS.get('stt',{});document.getElementById('key-ds').value=s.ds||'';document.getElementById('key-oai').value=s.oa||'';document.getElementById('set-au').value=s.au||'铃木村';document.getElementById('set-sv').value=s.sv||''}
+function saveSets(){LS.set('stt',{ds:document.getElementById('key-ds').value,oa:document.getElementById('key-oai').value,au:document.getElementById('set-au').value,sv:document.getElementById('set-sv').value});toast('已保存')}
+async function testSv(){const u=document.getElementById('set-sv').value;if(!u){toast('填地址','err');return}toast('测试...');try{const r=await fetch(`${u}/api/accounts`);const d=await r.json();toast(d.success?'✅已连接':'❌异常','err'?null:'ok')}catch(e){toast('❌不可达','err')}}
+function installApp(){if(window.deferredPrompt){window.deferredPrompt.prompt();window.deferredPrompt.userChoice.then(r=>{document.getElementById('install-banner').style.display='none'})}else{toast('iOS: Safari分享→添加到主屏幕')}}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.deferredPrompt=e;document.getElementById('install-banner').style.display='flex'});
+if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches){document.getElementById('install-banner').style.display='none'}
+if(!window.deferredPrompt&&!/iPhone|iPad|iPod/.test(navigator.userAgent)){setTimeout(()=>{if(!window.deferredPrompt)document.getElementById('install-banner').style.display='flex'},2000)}
 ldDash();ldCreate();ldAccts();ldSets();
     </script>
 </body>
